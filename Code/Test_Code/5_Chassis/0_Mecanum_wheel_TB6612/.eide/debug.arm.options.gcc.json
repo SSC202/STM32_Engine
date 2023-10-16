@@ -5,7 +5,7 @@
     "global": {
         "$float-abi-type": "softfp",
         "output-debug-info": "enable",
-        "misc-control": "--specs=nosys.specs --specs=nano.specs"
+        "misc-control": "--specs=nosys.specs --specs=nano.specs -u _printf_float -u _scanf_float"
     },
     "c/cpp-compiler": {
         "language-c": "c11",
@@ -13,17 +13,12 @@
         "optimization": "level-debug",
         "warnings": "all-warnings",
         "one-elf-section-per-function": true,
-        "one-elf-section-per-data": true,
-        "C_FLAGS": "",
-        "CXX_FLAGS": ""
+        "one-elf-section-per-data": true
     },
-    "asm-compiler": {
-        "ASM_FLAGS": ""
-    },
+    "asm-compiler": {},
     "linker": {
         "output-format": "elf",
         "remove-unused-input-sections": true,
-        "LD_FLAGS": "",
         "LIB_FLAGS": "-lm"
     }
 }
