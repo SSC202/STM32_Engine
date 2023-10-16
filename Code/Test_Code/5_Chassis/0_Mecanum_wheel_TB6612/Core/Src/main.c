@@ -112,7 +112,7 @@ int main(void)
 
         /* USER CODE BEGIN 3 */
         // Motor_Speed_Set(&motor1,200);
-        // printf("%.2f\r\n", motor1.pid.Error);
+        printf("%.2f\r\n", motor1.pid.Error);
     }
     /* USER CODE END 3 */
 }
