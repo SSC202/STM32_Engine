@@ -6,7 +6,7 @@ static volatile int encode_count2 = 0;
 static volatile int encode_count3 = 0;
 static volatile int encode_count4 = 0;
 /*******************宏定义段*******************/
-
+#ifdef TB6612
 #define ENABLE_MOTOR(x)                                                              \
     do {                                                                             \
         if (x == 1) {                                                                \
@@ -46,6 +46,8 @@ static volatile int encode_count4 = 0;
             HAL_GPIO_WritePin(Motor4_IN2_GPIO_Port, Motor4_IN2_Pin, GPIO_PIN_RESET); \
         }                                                                            \
     } while (0)
+
+#endif
 #define Encoder_Timer_Channel_1 TIM_CHANNEL_1 // 编码器通道1
 #define Encoder_Timer_Channel_2 TIM_CHANNEL_2 // 编码器通道2
 /******************驱动函数段******************/
@@ -56,6 +58,7 @@ static volatile int encode_count4 = 0;
 static void uMotor_Start(Motor *umotor)
 {
     umotor->state = Motor_RUN;
+#ifdef TB6612
     ENABLE_MOTOR(umotor->id);
     switch (umotor->id) {
         case 1:
@@ -73,6 +76,45 @@ static void uMotor_Start(Motor *umotor)
         default:
             break;
     }
+#endif
+#ifdef AT8236
+    switch (umotor->id) {
+        case 1:
+            // HAL_GPIO_WritePin(Motor1_IN2_GPIO_Port, Motor1_IN2_GPIO_Pin, GPIO_PIN_RESET);
+            HAL_TIM_PWM_Start(Motor1_IN1_PWM_Timer, Motor1_IN1_PWM_Timer_Channel);
+            __HAL_TIM_SET_COMPARE(Motor1_IN1_PWM_Timer, Motor1_IN1_PWM_Timer_Channel, 0);
+            // HAL_GPIO_WritePin(Motor1_IN1_GPIO_Port, Motor1_IN1_GPIO_Pin, GPIO_PIN_RESET);
+            HAL_TIM_PWM_Start(Motor1_IN2_PWM_Timer, Motor1_IN2_PWM_Timer_Channel);
+            __HAL_TIM_SET_COMPARE(Motor1_IN2_PWM_Timer, Motor1_IN2_PWM_Timer_Channel, 0);
+            break;
+        case 2:
+            // HAL_GPIO_WritePin(Motor2_IN2_GPIO_Port, Motor2_IN2_GPIO_Pin, GPIO_PIN_RESET);
+            HAL_TIM_PWM_Start(Motor2_IN1_PWM_Timer, Motor2_IN1_PWM_Timer_Channel);
+            __HAL_TIM_SET_COMPARE(Motor2_IN1_PWM_Timer, Motor2_IN1_PWM_Timer_Channel, 0);
+            // HAL_GPIO_WritePin(Motor2_IN1_GPIO_Port, Motor2_IN1_GPIO_Pin, GPIO_PIN_RESET);
+            HAL_TIM_PWM_Start(Motor2_IN2_PWM_Timer, Motor2_IN2_PWM_Timer_Channel);
+            __HAL_TIM_SET_COMPARE(Motor2_IN2_PWM_Timer, Motor2_IN2_PWM_Timer_Channel, 0);
+            break;
+        case 3:
+            // HAL_GPIO_WritePin(Motor3_IN2_GPIO_Port, Motor3_IN2_GPIO_Pin, GPIO_PIN_RESET);
+            HAL_TIM_PWM_Start(Motor3_IN1_PWM_Timer, Motor3_IN1_PWM_Timer_Channel);
+            __HAL_TIM_SET_COMPARE(Motor3_IN1_PWM_Timer, Motor3_IN1_PWM_Timer_Channel, 0);
+            // HAL_GPIO_WritePin(Motor3_IN1_GPIO_Port, Motor3_IN1_GPIO_Pin, GPIO_PIN_RESET);
+            HAL_TIM_PWM_Start(Motor3_IN2_PWM_Timer, Motor3_IN2_PWM_Timer_Channel);
+            __HAL_TIM_SET_COMPARE(Motor3_IN2_PWM_Timer, Motor3_IN2_PWM_Timer_Channel, 0);
+            break;
+        case 4:
+            // HAL_GPIO_WritePin(Motor4_IN2_GPIO_Port, Motor4_IN2_GPIO_Pin, GPIO_PIN_RESET);
+            HAL_TIM_PWM_Start(Motor4_IN1_PWM_Timer, Motor4_IN1_PWM_Timer_Channel);
+            __HAL_TIM_SET_COMPARE(Motor4_IN1_PWM_Timer, Motor4_IN1_PWM_Timer_Channel, 0);
+            // HAL_GPIO_WritePin(Motor4_IN1_GPIO_Port, Motor4_IN1_GPIO_Pin, GPIO_PIN_RESET);
+            HAL_TIM_PWM_Start(Motor4_IN2_PWM_Timer, Motor4_IN2_PWM_Timer_Channel);
+            __HAL_TIM_SET_COMPARE(Motor4_IN2_PWM_Timer, Motor4_IN2_PWM_Timer_Channel, 0);
+            break;
+        default:
+            break;
+    }
+#endif
 }
 
 /**
@@ -81,6 +123,7 @@ static void uMotor_Start(Motor *umotor)
 static void Motor_Stop(Motor *umotor)
 {
     umotor->state = Motor_STOP;
+#ifdef TB6612
     DISABLE_MOTOR(umotor->id);
     switch (umotor->id) {
         case 1:
@@ -98,6 +141,36 @@ static void Motor_Stop(Motor *umotor)
         default:
             break;
     }
+#endif
+#ifdef AT8236
+    switch (umotor->id) {
+        case 1:
+            HAL_TIM_PWM_Stop(Motor1_IN1_PWM_Timer, Motor1_IN1_PWM_Timer_Channel);
+            // HAL_GPIO_WritePin(Motor1_IN1_GPIO_Port, Motor1_IN1_GPIO_Pin, GPIO_PIN_RESET);
+            HAL_TIM_PWM_Stop(Motor1_IN2_PWM_Timer, Motor1_IN2_PWM_Timer_Channel);
+            // HAL_GPIO_WritePin(Motor1_IN2_GPIO_Port, Motor1_IN2_GPIO_Pin, GPIO_PIN_RESET);
+            break;
+        case 2:
+            HAL_TIM_PWM_Stop(Motor2_IN1_PWM_Timer, Motor2_IN1_PWM_Timer_Channel);
+            // HAL_GPIO_WritePin(Motor2_IN1_GPIO_Port, Motor2_IN1_GPIO_Pin, GPIO_PIN_RESET);
+            HAL_TIM_PWM_Stop(Motor2_IN2_PWM_Timer, Motor2_IN2_PWM_Timer_Channel);
+            // HAL_GPIO_WritePin(Motor2_IN2_GPIO_Port, Motor2_IN2_GPIO_Pin, GPIO_PIN_RESET);
+            break;
+        case 3:
+            HAL_TIM_PWM_Stop(Motor3_IN1_PWM_Timer, Motor3_IN1_PWM_Timer_Channel);
+            // HAL_GPIO_WritePin(Motor3_IN1_GPIO_Port, Motor3_IN1_GPIO_Pin, GPIO_PIN_RESET);
+            HAL_TIM_PWM_Stop(Motor3_IN2_PWM_Timer, Motor3_IN2_PWM_Timer_Channel);
+            // HAL_GPIO_WritePin(Motor3_IN2_GPIO_Port, Motor3_IN2_GPIO_Pin, GPIO_PIN_RESET);
+        case 4:
+            HAL_TIM_PWM_Stop(Motor4_IN1_PWM_Timer, Motor4_IN1_PWM_Timer_Channel);
+            // HAL_GPIO_WritePin(Motor4_IN1_GPIO_Port, Motor4_IN1_GPIO_Pin, GPIO_PIN_RESET);
+            HAL_TIM_PWM_Stop(Motor4_IN2_PWM_Timer, Motor4_IN2_PWM_Timer_Channel);
+            // HAL_GPIO_WritePin(Motor4_IN2_GPIO_Port, Motor4_IN2_GPIO_Pin, GPIO_PIN_RESET);
+            break;
+        default:
+            break;
+    }
+#endif
 }
 
 /**
@@ -106,6 +179,7 @@ static void Motor_Stop(Motor *umotor)
  */
 static void Motor_DIR_Set(Motor *umotor, uint8_t dir)
 {
+#ifdef TB6612
     // 关闭输出
     switch (umotor->id) {
         case 1:
@@ -177,8 +251,86 @@ static void Motor_DIR_Set(Motor *umotor, uint8_t dir)
         default:
             break;
     }
+#endif
+#ifdef AT8236
+    // 关闭输出
+    switch (umotor->id) {
+        case 1:
+            HAL_TIM_PWM_Stop(Motor1_IN1_PWM_Timer, Motor1_IN1_PWM_Timer_Channel);
+            // HAL_GPIO_WritePin(Motor1_IN1_GPIO_Port, Motor1_IN1_GPIO_Pin, GPIO_PIN_RESET);
+            HAL_TIM_PWM_Stop(Motor1_IN2_PWM_Timer, Motor1_IN2_PWM_Timer_Channel);
+            // HAL_GPIO_WritePin(Motor1_IN2_GPIO_Port, Motor1_IN2_GPIO_Pin, GPIO_PIN_RESET);
+            break;
+        case 2:
+            HAL_TIM_PWM_Stop(Motor2_IN1_PWM_Timer, Motor2_IN1_PWM_Timer_Channel);
+            // HAL_GPIO_WritePin(Motor2_IN1_GPIO_Port, Motor2_IN1_GPIO_Pin, GPIO_PIN_RESET);
+            HAL_TIM_PWM_Stop(Motor2_IN2_PWM_Timer, Motor2_IN2_PWM_Timer_Channel);
+            // HAL_GPIO_WritePin(Motor2_IN2_GPIO_Port, Motor2_IN2_GPIO_Pin, GPIO_PIN_RESET);
+            break;
+        case 3:
+            HAL_TIM_PWM_Stop(Motor3_IN1_PWM_Timer, Motor3_IN1_PWM_Timer_Channel);
+            // HAL_GPIO_WritePin(Motor3_IN1_GPIO_Port, Motor3_IN1_GPIO_Pin, GPIO_PIN_RESET);
+            HAL_TIM_PWM_Stop(Motor3_IN2_PWM_Timer, Motor3_IN2_PWM_Timer_Channel);
+            // HAL_GPIO_WritePin(Motor3_IN2_GPIO_Port, Motor3_IN2_GPIO_Pin, GPIO_PIN_RESET);
+        case 4:
+            HAL_TIM_PWM_Stop(Motor4_IN1_PWM_Timer, Motor4_IN1_PWM_Timer_Channel);
+            // HAL_GPIO_WritePin(Motor4_IN1_GPIO_Port, Motor4_IN1_GPIO_Pin, GPIO_PIN_RESET);
+            HAL_TIM_PWM_Stop(Motor4_IN2_PWM_Timer, Motor4_IN2_PWM_Timer_Channel);
+            // HAL_GPIO_WritePin(Motor4_IN2_GPIO_Port, Motor4_IN2_GPIO_Pin, GPIO_PIN_RESET);
+            break;
+        default:
+            break;
+    }
+    // 设置方向
+    switch (umotor->id) {
+        case 1:
+            if (dir == 0) /* 正转 */
+            {
+                // HAL_GPIO_WritePin(Motor1_IN2_GPIO_Port, Motor1_IN2_GPIO_Pin, GPIO_PIN_RESET);
+                HAL_TIM_PWM_Start(Motor1_IN1_PWM_Timer, Motor1_IN1_PWM_Timer_Channel); /* 开启通道输出 */
+            } else if (dir == 1) {
+                // HAL_GPIO_WritePin(Motor1_IN1_GPIO_Port, Motor1_IN1_GPIO_Pin, GPIO_PIN_RESET);
+                HAL_TIM_PWM_Start(Motor1_IN2_PWM_Timer, Motor1_IN2_PWM_Timer_Channel); /* 开启通道输出 */
+            }
+            break;
+        case 2:
+            if (dir == 0) /* 正转 */
+            {
+                // HAL_GPIO_WritePin(Motor2_IN2_GPIO_Port, Motor2_IN2_GPIO_Pin, GPIO_PIN_RESET);
+                HAL_TIM_PWM_Start(Motor2_IN1_PWM_Timer, Motor2_IN1_PWM_Timer_Channel); /* 开启通道输出 */
+            } else if (dir == 1) {
+                // HAL_GPIO_WritePin(Motor2_IN1_GPIO_Port, Motor2_IN1_GPIO_Pin, GPIO_PIN_RESET);
+                HAL_TIM_PWM_Start(Motor2_IN2_PWM_Timer, Motor2_IN2_PWM_Timer_Channel); /* 开启通道输出 */
+            }
+            break;
+        case 3:
+            if (dir == 0) /* 正转 */
+            {
+                // HAL_GPIO_WritePin(Motor3_IN2_GPIO_Port, Motor3_IN2_GPIO_Pin, GPIO_PIN_RESET);
+                HAL_TIM_PWM_Start(Motor3_IN1_PWM_Timer, Motor3_IN1_PWM_Timer_Channel); /* 开启通道输出 */
+            } else if (dir == 1) {
+                // HAL_GPIO_WritePin(Motor3_IN1_GPIO_Port, Motor3_IN1_GPIO_Pin, GPIO_PIN_RESET);
+                HAL_TIM_PWM_Start(Motor3_IN2_PWM_Timer, Motor3_IN2_PWM_Timer_Channel); /* 开启通道输出 */
+            }
+            break;
+        case 4:
+            if (dir == 0) /* 正转 */
+            {
+                // HAL_GPIO_WritePin(Motor4_IN2_GPIO_Port, Motor4_IN2_GPIO_Pin, GPIO_PIN_RESET);
+                HAL_TIM_PWM_Start(Motor4_IN1_PWM_Timer, Motor4_IN1_PWM_Timer_Channel); /* 开启通道输出 */
+            } else if (dir == 1) {
+                // HAL_GPIO_WritePin(Motor4_IN1_GPIO_Port, Motor4_IN1_GPIO_Pin, GPIO_PIN_RESET);
+                HAL_TIM_PWM_Start(Motor4_IN2_PWM_Timer, Motor4_IN2_PWM_Timer_Channel); /* 开启通道输出 */
+            }
+            break;
+        default:
+            break;
+    }
+
+#endif
 }
 
+#ifdef TB6612
 /**
  * @brief       电机PWM设置
  * @param       para:比较寄存器值
@@ -203,6 +355,7 @@ static void uMotor_PWM_Set(Motor *umotor, uint16_t para)
             break;
     }
 }
+#endif
 
 /**
  * @brief       电机控制
@@ -212,7 +365,7 @@ static void uMotor_PWM_Set(Motor *umotor, uint16_t para)
 static void Motor_PWM_Set(Motor *umotor, float para)
 {
     int val = (int)para;
-
+#ifdef TB6612
     if (val >= 0) {
         Motor_DIR_Set(umotor, 0); /* 正转 */
         uMotor_PWM_Set(umotor, val);
@@ -220,6 +373,46 @@ static void Motor_PWM_Set(Motor *umotor, float para)
         Motor_DIR_Set(umotor, 1); /* 反转 */
         uMotor_PWM_Set(umotor, -val);
     }
+#endif
+#ifdef AT8236
+    if (val >= 0) {
+        Motor_DIR_Set(umotor, 0); /* 正转 */
+        switch (umotor->id) {
+            case 1:
+                __HAL_TIM_SET_COMPARE(Motor1_IN1_PWM_Timer, Motor1_IN1_PWM_Timer_Channel, val);
+                break;
+            case 2:
+                __HAL_TIM_SET_COMPARE(Motor2_IN1_PWM_Timer, Motor2_IN1_PWM_Timer_Channel, val);
+                break;
+            case 3:
+                __HAL_TIM_SET_COMPARE(Motor3_IN1_PWM_Timer, Motor3_IN1_PWM_Timer_Channel, val);
+                break;
+            case 4:
+                __HAL_TIM_SET_COMPARE(Motor4_IN1_PWM_Timer, Motor4_IN1_PWM_Timer_Channel, val);
+                break;
+            default:
+                break;
+        }
+    } else {
+        Motor_DIR_Set(umotor, 1); /* 反转 */
+        switch (umotor->id) {
+            case 1:
+                __HAL_TIM_SET_COMPARE(Motor1_IN2_PWM_Timer, Motor1_IN2_PWM_Timer_Channel, -val);
+                break;
+            case 2:
+                __HAL_TIM_SET_COMPARE(Motor2_IN2_PWM_Timer, Motor2_IN2_PWM_Timer_Channel, -val);
+                break;
+            case 3:
+                __HAL_TIM_SET_COMPARE(Motor3_IN2_PWM_Timer, Motor3_IN2_PWM_Timer_Channel, -val);
+                break;
+            case 4:
+                __HAL_TIM_SET_COMPARE(Motor4_IN2_PWM_Timer, Motor4_IN2_PWM_Timer_Channel, -val);
+                break;
+            default:
+                break;
+        }
+    }
+#endif
 }
 
 /**
@@ -260,6 +453,11 @@ static void Motor_Speed_Cal(Motor *umotor, uint8_t ms)
     speed                      = (float)(umotor->encoder.speed * ((1000 / ms) * 60.0) / REDUCTION_RATIO / ROTO_RATIO);
     umotor->encoder.encode_old = umotor->encoder.encode_now;
     umotor->speed              = 0.52 * umotor->speed + 0.48 * speed;
+    if ((int)(umotor->speed) > 600) {
+        umotor->speed = 600.0;
+    } else if ((int)(umotor->speed) < -600) {
+        umotor->speed = -600.0;
+    }
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)

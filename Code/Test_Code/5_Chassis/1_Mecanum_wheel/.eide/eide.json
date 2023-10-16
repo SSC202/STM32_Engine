@@ -4,9 +4,9 @@
   "dependenceList": [],
   "srcDirs": [
     ".eide/deps",
+    "BSP",
     "Core",
-    "Drivers",
-    "BSP"
+    "Drivers"
   ],
   "virtualFolder": {
     "name": "<virtual_root>",
@@ -21,7 +21,7 @@
   "deviceName": null,
   "packDir": null,
   "miscInfo": {
-    "uid": "ea8bb0d510dd3b5f5621671667af7ea4"
+    "uid": "9b76ee72db287691dff21401797ee158"
   },
   "targets": {
     "Debug": {

@@ -4,8 +4,8 @@
 #include "stm32f4xx.h"
 
 /******************用户选择段********************/
-#define INCREMINENT_PID // 增量式PID
-// #define LOCATION_PID     // 全量式PID
+//#define INCREMINENT_PID // 增量式PID
+#define LOCATION_PID     // 全量式PID
 
 /* PID结构体 */
 typedef struct

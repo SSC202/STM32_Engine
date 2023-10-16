@@ -88,21 +88,24 @@ int main(void)
 
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
+    MX_TIM1_Init();
+    MX_TIM2_Init();
     MX_TIM3_Init();
     MX_TIM4_Init();
-    MX_TIM2_Init();
     MX_TIM5_Init();
     MX_TIM6_Init();
-    MX_TIM8_Init();
+    MX_TIM9_Init();
+    MX_TIM10_Init();
+    MX_TIM11_Init();
     MX_USART1_UART_Init();
     MX_USART3_UART_Init();
     /* USER CODE BEGIN 2 */
-    Motor_Init(&motor1, 1, 60, 10, 0.1);
+    Motor_Init(&motor1, 1, 70, 1, 1);
     Motor_Init(&motor2, 2, 60, 10, 0.1);
     Motor_Init(&motor3, 3, 60, 10, 0.1);
     Motor_Init(&motor4, 4, 60, 10, 0.1);
     Motor_Start(&motor1);
-    Motor_Speed_Set(&motor1, 200);
+    Motor_Speed_Set(&motor1, -200);
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -111,8 +114,7 @@ int main(void)
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
-        // Motor_Speed_Set(&motor1,200);
-        printf("%.2f\r\n", motor1.pid.Error);
+        printf("%.2f\r\n", motor1.speed);
     }
     /* USER CODE END 3 */
 }
