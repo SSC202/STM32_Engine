@@ -54,6 +54,7 @@ static volatile int encode_count4 = 0;
 
 /**
  * @brief   电机启动函数
+ * @param   umotor  电机结构体
  */
 static void uMotor_Start(Motor *umotor)
 {
@@ -119,6 +120,7 @@ static void uMotor_Start(Motor *umotor)
 
 /**
  * @brief   电机停止函数
+ * @param   umotor  电机结构体
  */
 static void Motor_Stop(Motor *umotor)
 {
@@ -175,6 +177,7 @@ static void Motor_Stop(Motor *umotor)
 
 /**
  * @brief       电机旋转方向设置函数
+ * @param       umotor  电机结构体
  * @param       dir 电机旋转方向
  */
 static void Motor_DIR_Set(Motor *umotor, uint8_t dir)
@@ -359,6 +362,7 @@ static void uMotor_PWM_Set(Motor *umotor, uint16_t para)
 
 /**
  * @brief       电机控制
+ * @param       umotor  电机结构体
  * @param       para pwm比较值 ,正数电机为正转，负数为反转
  * @retval      无
  */
@@ -417,7 +421,7 @@ static void Motor_PWM_Set(Motor *umotor, float para)
 
 /**
  * @brief       获取编码器的值
- * @param       无
+ * @param       umotor  电机结构体
  * @retval      编码器值
  */
 static int Motor_Get_Encoder(Motor *umotor)
@@ -443,7 +447,8 @@ static int Motor_Get_Encoder(Motor *umotor)
 
 /**
  * @brief       电机速度计算函数
- * @param       ms：计算速度的间隔
+ * @param       umotor  电机结构体
+ * @param       ms  计算速度的间隔
  * @retval      无
  */
 static void Motor_Speed_Cal(Motor *umotor, uint8_t ms)
@@ -594,6 +599,7 @@ void Motor_Init(Motor *umotor, uint8_t ID, float KP, float KI, float KD)
 
 /**
  * @brief   速度控制函数
+ * @param   umotor  电机结构体
  * @param   speed:速度(rpm)
  */
 void Motor_Speed_Set(Motor *umotor, float speed)
@@ -603,6 +609,7 @@ void Motor_Speed_Set(Motor *umotor, float speed)
 
 /**
  * @brief   电机开启函数
+ * @param   umotor  电机结构体
  */
 void Motor_Start(Motor *umotor)
 {

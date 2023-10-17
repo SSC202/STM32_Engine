@@ -86,14 +86,14 @@
 
 #define Motor3_IN1_PWM_Timer         &htim1        // IN1端输入PWM
 #define Motor3_IN1_PWM_Timer_Handle  TIM1          // IN1端定时器句柄
-#define Motor3_IN1_PWM_Timer_Channel TIM_CHANNEL_2 // IN1端输入通道
+#define Motor3_IN1_PWM_Timer_Channel TIM_CHANNEL_1 // IN1端输入通道
 #define Motor3_IN1_GPIO_Port         GPIOE         // IN1端端口
-#define Motor3_IN1_GPIO_Pin          GPIO_PIN_11   // IN1端端子
+#define Motor3_IN1_GPIO_Pin          GPIO_PIN_9   // IN1端端子
 #define Motor3_IN2_PWM_Timer         &htim1        // IN2端输入PWM
 #define Motor3_IN2_PWM_Timer_Handle  TIM1          // IN2端定时器句柄
-#define Motor3_IN2_PWM_Timer_Channel TIM_CHANNEL_1 // IN2端输入通道
+#define Motor3_IN2_PWM_Timer_Channel TIM_CHANNEL_2 // IN2端输入通道
 #define Motor3_IN2_GPIO_Port         GPIOE         // IN2端端口
-#define Motor3_IN2_GPIO_Pin          GPIO_PIN_9    // IN2端端子
+#define Motor3_IN2_GPIO_Pin          GPIO_PIN_11    // IN2端端子
 #define Motor3_Encoder_Timer_Handle  &htim4        // 编码器定时器
 #define Motor3_Encoder_Timer         TIM4          // 编码器定时器
 

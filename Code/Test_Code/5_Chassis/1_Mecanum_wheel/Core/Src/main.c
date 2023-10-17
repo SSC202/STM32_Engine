@@ -24,7 +24,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "motor.h"
+#include "mecanum_chassis.h"
 #include <stdio.h>
 /* USER CODE END Includes */
 
@@ -57,7 +57,9 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+float vx;
+float vy;
+float wc;
 /* USER CODE END 0 */
 
 /**
@@ -100,12 +102,15 @@ int main(void)
     MX_USART1_UART_Init();
     MX_USART3_UART_Init();
     /* USER CODE BEGIN 2 */
-    Motor_Init(&motor1, 1, 70, 1, 1);
-    Motor_Init(&motor2, 2, 60, 10, 0.1);
-    Motor_Init(&motor3, 3, 60, 10, 0.1);
-    Motor_Init(&motor4, 4, 60, 10, 0.1);
+    Motor_Init(&motor1, 1, 70, 1, 0.1);
+    Motor_Init(&motor2, 2, 70, 1, 0.1);
+    Motor_Init(&motor3, 3, 70, 1, 0.1);
+    Motor_Init(&motor4, 4, 70, 1, 0.1);
     Motor_Start(&motor1);
-    Motor_Speed_Set(&motor1, -200);
+    Motor_Start(&motor2);
+    Motor_Start(&motor3);
+    Motor_Start(&motor4);
+    Inverse_kinematic_equation(0.0, 0.0, -0.1);
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -114,7 +119,8 @@ int main(void)
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
-        printf("%.2f\r\n", motor1.speed);
+        Forward_kinematic_equation(&vx,&vy,&wc);
+        printf("%.2f\r\n", wc);
     }
     /* USER CODE END 3 */
 }
