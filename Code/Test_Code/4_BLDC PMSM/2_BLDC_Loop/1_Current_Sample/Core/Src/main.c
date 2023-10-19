@@ -112,13 +112,13 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-        // 规则组转换使�?
+        // 规则组转换使能
         HAL_ADC_Start(&hadc1);
         HAL_ADC_Start(&hadc2);
-        // 注入组转换使�?
+        // 注入组转换使能
         HAL_ADCEx_InjectedStart_IT(&hadc1);
         HAL_ADCEx_InjectedStart_IT(&hadc2);
-        // 电位器电�?
+        // 电位器电压
         temp[0] = HAL_ADC_GetValue(&hadc1);
         // 母线电压
         temp[1] = HAL_ADC_GetValue(&hadc2) * 0.02494726f;
@@ -175,13 +175,13 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 /**
- * @brief 注入组转换完成回调函�??
+ * @brief 注入组转换完成回调函�??
  */
 void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
     if (hadc == &hadc1) {
         temp[2] = hadc1.Instance->JDR1;
-        temp[2] = (temp[2] - 0x7ef) * 0.0193359375f; // 0.0193359375为运放增益，7ef,7f5,7e8为运放直流偏�?
+        temp[2] = (temp[2] - 0x7ef) * 0.0193359375f; // 0.0193359375为运放增益，7ef,7f5,7e8为运放直流偏置
         temp[3] = hadc1.Instance->JDR2;
         temp[3] = (temp[3] - 0x7f5) * 0.0193359375f;
     } else if (hadc == &hadc2) {
