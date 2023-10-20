@@ -94,7 +94,7 @@ int main(void)
     MX_USART3_UART_Init();
     /* USER CODE BEGIN 2 */
     BLDC_Motor_Init();
-    BLDC_Motor_Speed_Set(-2700);
+    BLDC_Motor_Speed_Set(500);
 
     /* USER CODE END 2 */
 

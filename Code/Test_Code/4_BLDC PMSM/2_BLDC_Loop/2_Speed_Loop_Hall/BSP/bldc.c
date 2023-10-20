@@ -4,9 +4,9 @@ BLDC_Motor motor;
 PID speed_pid;
 
 /***************************宏定义段*********************************/
-#define MAX_PWM_DUTY                  (((50000) - 1) * 0.96)                    /* 最大占空比限制 */
-#define SPEED_COEFF                   (uint32_t)((20000 * 2 / POLE_PAIRS) * 60) /* 旋转一圈变化4个信号，2对级永磁体特性，NSNS共4级数，计数频率20000*/
-#define FirstOrderRC_LPF(Yn_1, Xn, a) Yn_1 = (1 - a) * Yn_1 + a * Xn;           /* 一阶低通滤波器，Yn:out;Xn:in;a:系数 */
+#define MAX_PWM_DUTY                  (((50000) - 1) * 0.96)                        /* 最大占空比限制 */
+#define SPEED_COEFF                   (uint32_t)((20000 / (2 * POLE_PAIRS)) * 60) /* 旋转一圈变化4个信号，2对级永磁体特性，NSNS共4级数，计数频率20000*/
+#define FirstOrderRC_LPF(Yn_1, Xn, a) Yn_1 = (1 - a) * Yn_1 + a * Xn;               /* 一阶低通滤波器，Yn:out;Xn:in;a:系数 */
 
 /***************************************** 全局变量定义 *************************************************/
 const uint8_t hall_table_cw[6]  = {6, 2, 3, 1, 5, 4}; /* 顺时针旋转表 */
@@ -320,8 +320,7 @@ void BLDC_Motor_Speed_Set(int32_t speed)
 {
     if (speed > 0) {
         motor.dir = CW;
-    }
-    else if (speed < 0) {
+    } else if (speed < 0) {
         motor.dir = CCW;
     }
     speed_pid.SetPoint = speed;
