@@ -34,8 +34,6 @@ $$
 
 $P = \frac{2}{3}$时为等幅值变换，$P = \frac{\sqrt{3}}{2}$为等功率变换。
 
-![NULL](picture_2.jpg)
-
 为了使线性区调制比范围是 $[0,1]$ ，通常定义调制比为线电压幅值与直流母线电压的比值，如果采用等幅值 Clark 变换，坐标变换将不会改变电流的幅值。与等功率变换相比，等功率变换调制比范围将扩大，超出线性调制区原来的范围。所以采用等功率变换时，电流控制器输出的指令电压需要再乘以$P = \sqrt{\frac{2}{3}}$，才能给逆变器进行 PWM 调制。
 
 为节省电流采样成本，通常使用基尔霍夫定律进行化简：
@@ -58,6 +56,66 @@ i_a \\ i_b
 $$
 
 #### Clark Simulink仿真和代码生成
+
+首先按照图示进行模型构建，封装为一个子系统：
+
+![NULL](picture_2.jpg)
+
+随后加入三相电流生成模块，进行仿真：（图一为三相电流生成结果，图二为Clark变换结果）
+
+![NULL](picture_10.jpg)
+
+![NULL](picture_11.jpg)
+
+代码生成：
+
+> 1. 首先链接到数据字典：
+>
+> ![NULL](picture_12.jpg)
+>
+> ![NULL](picture_13.jpg)
+>
+> 2. 将`ia`，`ib`，`ic` 定义为全局的 Simulink signal，方便后续的在代码中观测：
+>
+> ![NULL](picture_14.jpg)
+>
+> ![NULL](picture_15.jpg)
+>
+> ![NULL](picture_16.jpg)
+>
+> ![NULL](picture_17.jpg)
+>
+> ![NULL](picture_18.jpg)
+>
+> 3. 生成代码：
+>
+> ![NULL](picture_19.jpg)
+>
+> ![NULL](picture_20.jpg)
+>
+> ![NULL](picture_21.jpg)
+>
+> ![NULL](picture_22.jpg)
+>
+> 4. 将模型视为原子单元，进行嵌入式代码生成即可。
+
+代码编写：
+
+> 1. 使用STM32CubeMX的DSP库并进行使能；
+> 2. 增加如下全局宏定义：`__TARGET_FPU_VFP`,`__FPU_PRESENT`,`ARM_MATH_CM4`；
+> 3. 将以下的生成代码导入工程：`<模型名>.c`，`<模型名>.h`，`mw_cmsis.h`，`rtwtypes.h`
+> 4. 在matlab生成的代码中，定义了全局变量和输入输出全局变量：
+>
+> ```c
+> extern ExtY rtY;	//输出结构体
+> extern ExtU	rtU;	//输入结构体
+> ```
+>
+> 5. 使用以下函数可实现模型过程：
+>
+> ```c
+> <模型名>_step();
+> ```
 
 ### 帕克 （Park） 变换和反变换
 
@@ -99,6 +157,18 @@ $$
 $i_q$产生电机的力矩，是电机力矩环（电流环）的驱动目标，$i_d$产生电机的热量，通常需要控制为0。
 
 ####  Park Simulink 仿真和代码生成
+
+Park 模型如下：
+
+![NULL](picture_23.jpg)
+
+Park 反变换模型如下：
+
+![NULL](picture_24.jpg)
+
+Park 变换结果：
+
+![NULL](picture_25.jpg)
 
 ## 2. SPWM 和 SVPWM
 
@@ -238,3 +308,40 @@ $U_{ref}T = U_4T_4 + U_6T_6 + U_0(T - T_4-T_6)$
 | 5    | 6    | $\frac{T_s + T_x - T_y}{4}$ | $\frac{T_s + T_x + T_y}{4}$ | $\frac{T_s - T_x - T_y}{4}$ |
 | 6    | 2    | $\frac{T_s - T_x - T_y}{4}$ | $\frac{T_s + T_x + T_y}{4}$ | $\frac{T_s + T_x - T_y}{4}$ |
 
+#### SVPWM Simulink 仿真和代码生成
+
+- 扇区判断：
+
+![NULL](picture_26.jpg)
+
+- 中间变量XYZ：
+
+![NULL](picture_27.jpg)
+
+- 矢量作用时间生成：
+
+![NULL](picture_28.jpg)
+
+- 切换时间生成：
+
+![NULL](picture_29.jpg)
+
+- 模块连接如下：
+
+![NULL](picture_30.jpg)
+
+- 加入占空比生成模块：
+
+![NULL](picture_31.jpg)
+
+- 使用电机仿真：
+
+![NULL](picture_32.jpg)
+
+> 电机使用默认参数即可；下图一为电流仿真结果，图二为速度仿真结果。
+>
+> ![NULL](picture_33.jpg)
+>
+> ![NULL](picture_34.jpg)
+
+[空间矢量脉冲宽度调制（SVPWM）Simulink仿真教程_simulink 仿真测量_海边的卡夫卡工程师的博客-CSDN博客](https://blog.csdn.net/Lookerkid/article/details/116200567?ops_request_misc=%7B%22request%5Fid%22%3A%22169829572816800222892665%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&request_id=169829572816800222892665&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-116200567-null-null.142^v96^pc_search_result_base7&utm_term=simulink svpwm&spm=1018.2226.3001.4187)
