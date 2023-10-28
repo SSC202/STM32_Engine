@@ -1,0 +1,1 @@
+var modelInfo = {model:"currloop"};var modelHierarchy=[{model:"currloop",relativePath:"_internal.html",parent:"null"},];
