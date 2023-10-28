@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'VF'.
  *
- * Model version                  : 1.9
+ * Model version                  : 1.3
  * Simulink Coder version         : 9.6 (R2021b) 14-May-2021
- * C/C++ source code generated on : Wed Oct 25 22:40:40 2023
+ * C/C++ source code generated on : Sat Oct 28 11:46:00 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -17,13 +17,13 @@
 
 #ifndef RTW_HEADER_VF_h_
 #define RTW_HEADER_VF_h_
+#include <math.h>
 #ifndef VF_COMMON_INCLUDES_
 #define VF_COMMON_INCLUDES_
 #include "rtwtypes.h"
 #endif                                 /* VF_COMMON_INCLUDES_ */
 
 /* Model Code Variants */
-#include "mw_cmsis.h"
 
 /* Macros for accessing real-time model data structure */
 #ifndef rtmGetErrorStatus
@@ -39,7 +39,7 @@ typedef struct tag_RTM RT_MODEL;
 
 /* Block signals and states (default storage) for system '<Root>' */
 typedef struct {
-  real32_T UnitDelay_DSTATE;           /* '<S4>/Unit Delay' */
+  real32_T UnitDelay_DSTATE;           /* '<S3>/Unit Delay' */
 } DW;
 
 /* External inputs (root inport signals with default storage) */
@@ -47,7 +47,7 @@ typedef struct {
   real_T ud;                           /* '<Root>/ud' */
   real_T uq;                           /* '<Root>/uq' */
   real_T Freq;                         /* '<Root>/Freq' */
-  real32_T ubus;                       /* '<Root>/ubus' */
+  real32_T u_bus;                      /* '<Root>/u_bus' */
 } ExtU;
 
 /* External outputs (root outports fed by signals with default storage) */
@@ -79,14 +79,12 @@ extern RT_MODEL *const rtM;
 /*-
  * These blocks were eliminated from the model due to optimizations:
  *
- * Block '<S5>/Scope1' : Unused code path elimination
- * Block '<S5>/Scope3' : Unused code path elimination
- * Block '<S12>/Scope' : Unused code path elimination
- * Block '<S12>/Scope1' : Unused code path elimination
- * Block '<S1>/Scope' : Unused code path elimination
- * Block '<S1>/Scope2' : Unused code path elimination
+ * Block '<S10>/Scope' : Unused code path elimination
+ * Block '<S10>/Scope1' : Unused code path elimination
+ * Block '<S11>/Scope' : Unused code path elimination
  * Block '<S1>/Data Type Conversion5' : Eliminate redundant data type conversion
  * Block '<S1>/Data Type Conversion6' : Eliminate redundant data type conversion
+ * Block '<S10>/Gain' : Eliminated nontunable gain of 1
  */
 
 /*-
@@ -101,25 +99,24 @@ extern RT_MODEL *const rtM;
  * MATLAB hilite_system command to trace the generated code back
  * to the parent model.  For example,
  *
- * hilite_system('svpwm/FOC_Openloop/VF')    - opens subsystem svpwm/FOC_Openloop/VF
- * hilite_system('svpwm/FOC_Openloop/VF/Kp') - opens and selects block Kp
+ * hilite_system('SVPWM/VF')    - opens subsystem SVPWM/VF
+ * hilite_system('SVPWM/VF/Kp') - opens and selects block Kp
  *
  * Here is the system hierarchy for this model
  *
- * '<Root>' : 'svpwm/FOC_Openloop'
- * '<S1>'   : 'svpwm/FOC_Openloop/VF'
- * '<S2>'   : 'svpwm/FOC_Openloop/VF/AntiPark'
- * '<S3>'   : 'svpwm/FOC_Openloop/VF/Duty'
- * '<S4>'   : 'svpwm/FOC_Openloop/VF/FreqGenerator'
- * '<S5>'   : 'svpwm/FOC_Openloop/VF/SVPWM'
- * '<S6>'   : 'svpwm/FOC_Openloop/VF/FreqGenerator/RangeLimit'
- * '<S7>'   : 'svpwm/FOC_Openloop/VF/FreqGenerator/RangeLimit/If Action Subsystem1'
- * '<S8>'   : 'svpwm/FOC_Openloop/VF/FreqGenerator/RangeLimit/If Action Subsystem2'
- * '<S9>'   : 'svpwm/FOC_Openloop/VF/FreqGenerator/RangeLimit/If Action Subsystem3'
- * '<S10>'  : 'svpwm/FOC_Openloop/VF/SVPWM/N_Sector'
- * '<S11>'  : 'svpwm/FOC_Openloop/VF/SVPWM/T1_T2_cal'
- * '<S12>'  : 'svpwm/FOC_Openloop/VF/SVPWM/T_cal'
- * '<S13>'  : 'svpwm/FOC_Openloop/VF/SVPWM/XYZ'
+ * '<Root>' : 'SVPWM'
+ * '<S1>'   : 'SVPWM/VF'
+ * '<S2>'   : 'SVPWM/VF/AntiPark'
+ * '<S3>'   : 'SVPWM/VF/FreqGenerator'
+ * '<S4>'   : 'SVPWM/VF/PWMOut'
+ * '<S5>'   : 'SVPWM/VF/SVPWM'
+ * '<S6>'   : 'SVPWM/VF/FreqGenerator/RangeLimit'
+ * '<S7>'   : 'SVPWM/VF/FreqGenerator/RangeLimit/If Action Subsystem1'
+ * '<S8>'   : 'SVPWM/VF/FreqGenerator/RangeLimit/If Action Subsystem2'
+ * '<S9>'   : 'SVPWM/VF/FreqGenerator/RangeLimit/If Action Subsystem3'
+ * '<S10>'  : 'SVPWM/VF/SVPWM/N'
+ * '<S11>'  : 'SVPWM/VF/SVPWM/t4_t6'
+ * '<S12>'  : 'SVPWM/VF/SVPWM/t_abc'
  */
 #endif                                 /* RTW_HEADER_VF_h_ */
 

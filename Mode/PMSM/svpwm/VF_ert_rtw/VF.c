@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'VF'.
  *
- * Model version                  : 1.9
+ * Model version                  : 1.3
  * Simulink Coder version         : 9.6 (R2021b) 14-May-2021
- * C/C++ source code generated on : Wed Oct 25 22:40:40 2023
+ * C/C++ source code generated on : Sat Oct 28 11:46:00 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -33,23 +33,22 @@ RT_MODEL *const rtM = &rtM_;
 /* Model step function */
 void VF_step(void)
 {
-  real_T rtb_MathFunction;
-  real_T rtb_MathFunction_h;
-  real_T rtb_MultiportSwitch;
-  real_T rtb_MultiportSwitch1;
-  real_T rtb_MultiportSwitch1_l;
-  real_T rtb_Subtract1_l;
-  int32_T rtb_Subtract2;
-  real32_T rtb_MathFunction_j;
-  real32_T rtb_SinCos4;
-  real32_T rtb_Sum;
+  real_T rtb_Divide4;
+  real_T rtb_T4;
+  real_T rtb_T6;
+  real_T rtb_T6_tmp;
+  real_T rtb_Tcm2;
+  real32_T rtb_A;
+  real32_T rtb_SinCos5;
+  real32_T rtb_Sum_n;
 
-  /* Sum: '<S4>/Sum' incorporates:
-   *  Gain: '<S4>/Gain'
+  /* Outputs for Atomic SubSystem: '<Root>/VF' */
+  /* Sum: '<S3>/Sum' incorporates:
+   *  Gain: '<S3>/Gain'
    *  Inport: '<Root>/Freq'
-   *  UnitDelay: '<S4>/Unit Delay'
+   *  UnitDelay: '<S3>/Unit Delay'
    */
-  rtb_Sum = (real32_T)(0.00062831853071795862 * rtU.Freq) +
+  rtb_Sum_n = (real32_T)(0.00062831853071795862 * rtU.Freq) +
     rtDW.UnitDelay_DSTATE;
 
   /* If: '<S6>/If' incorporates:
@@ -58,24 +57,24 @@ void VF_step(void)
    *  RelationalOperator: '<S6>/Relational Operator'
    *  RelationalOperator: '<S6>/Relational Operator1'
    */
-  if (rtb_Sum > 6.28318548F) {
+  if (rtb_Sum_n > 6.28318548F) {
     /* Outputs for IfAction SubSystem: '<S6>/If Action Subsystem1' incorporates:
      *  ActionPort: '<S7>/Action Port'
      */
     /* Sum: '<S7>/Sum' incorporates:
      *  Constant: '<S7>/Constant'
      */
-    rtb_Sum -= 6.28318548F;
+    rtb_Sum_n -= 6.28318548F;
 
     /* End of Outputs for SubSystem: '<S6>/If Action Subsystem1' */
-  } else if (rtb_Sum < 0.0F) {
+  } else if (rtb_Sum_n < 0.0F) {
     /* Outputs for IfAction SubSystem: '<S6>/If Action Subsystem3' incorporates:
      *  ActionPort: '<S9>/Action Port'
      */
     /* Sum: '<S9>/Sum' incorporates:
      *  Constant: '<S9>/Constant'
      */
-    rtb_Sum += 6.28318548F;
+    rtb_Sum_n += 6.28318548F;
 
     /* End of Outputs for SubSystem: '<S6>/If Action Subsystem3' */
   }
@@ -83,18 +82,20 @@ void VF_step(void)
   /* End of If: '<S6>/If' */
 
   /* Trigonometry: '<S1>/SinCos4' */
-  rtb_SinCos4 = arm_sin_f32(rtb_Sum);
+  rtb_A = sinf(rtb_Sum_n);
 
   /* Trigonometry: '<S1>/SinCos5' */
-  rtb_MathFunction_j = arm_cos_f32(rtb_Sum);
+  rtb_SinCos5 = cosf(rtb_Sum_n);
 
-  /* Sum: '<S2>/Subtract1' incorporates:
+  /* Gain: '<S10>/Gain1' incorporates:
+   *  Gain: '<S11>/Gain2'
    *  Inport: '<Root>/ud'
    *  Inport: '<Root>/uq'
    *  Product: '<S2>/Product2'
    *  Product: '<S2>/Product3'
+   *  Sum: '<S2>/Subtract1'
    */
-  rtb_Subtract1_l = rtU.ud * rtb_SinCos4 + rtU.uq * rtb_MathFunction_j;
+  rtb_T6 = (rtU.ud * rtb_SinCos5 - rtU.uq * rtb_A) * 0.8660254037844386;
 
   /* Sum: '<S2>/Subtract' incorporates:
    *  Inport: '<Root>/ud'
@@ -102,309 +103,254 @@ void VF_step(void)
    *  Product: '<S2>/Product'
    *  Product: '<S2>/Product1'
    */
-  rtb_MathFunction_h = rtU.ud * rtb_MathFunction_j - rtU.uq * rtb_SinCos4;
+  rtb_Tcm2 = rtU.ud * rtb_A + rtU.uq * rtb_SinCos5;
 
-  /* Gain: '<S10>/Gain4' */
-  rtb_MultiportSwitch = 0.86602538824081421 * rtb_MathFunction_h;
+  /* Gain: '<S10>/Gain2' incorporates:
+   *  Gain: '<S11>/Gain1'
+   */
+  rtb_T6_tmp = 0.5 * rtb_Tcm2;
 
-  /* Gain: '<S10>/Gain1' */
-  rtb_MultiportSwitch1_l = 0.5 * rtb_Subtract1_l;
-
-  /* Sum: '<S10>/Subtract2' incorporates:
+  /* Sum: '<S10>/Add' incorporates:
+   *  Gain: '<S10>/Gain1'
    *  Gain: '<S10>/Gain2'
    *  Gain: '<S10>/Gain3'
-   *  Sum: '<S10>/Subtract'
-   *  Sum: '<S10>/Subtract1'
+   *  Gain: '<S10>/Gain4'
+   *  Gain: '<S10>/Gain5'
+   *  Sum: '<S10>/Sum'
+   *  Sum: '<S10>/Sum1'
    *  Switch: '<S10>/Switch'
    *  Switch: '<S10>/Switch1'
    *  Switch: '<S10>/Switch2'
    */
-  rtb_Subtract2 = (((rtb_MultiportSwitch - rtb_MultiportSwitch1_l >= 0.0) << 1)
-                   + (rtb_Subtract1_l >= 0.0)) + (((0.0 - rtb_MultiportSwitch) -
-    rtb_MultiportSwitch1_l >= 0.0) << 2);
+  rtb_A = (real32_T)((((-rtb_T6 - rtb_T6_tmp > 0.0) << 2) + ((rtb_T6 -
+    rtb_T6_tmp > 0.0) << 1)) + (rtb_Tcm2 > 0.0));
 
-  /* Math: '<S1>/Math Function' incorporates:
-   *  Inport: '<Root>/Freq'
-   *
-   * About '<S1>/Math Function':
-   *  Operator: reciprocal
+  /* Product: '<S11>/Divide' incorporates:
+   *  Inport: '<Root>/u_bus'
    */
-  rtb_MathFunction = 1.0 / rtU.Freq;
-
-  /* Gain: '<S13>/Gain2' */
-  rtb_MultiportSwitch1 = 0.8660254037844386 * rtb_Subtract1_l;
-
-  /* Gain: '<S13>/Gain' */
-  rtb_MathFunction_h *= 1.5;
-
-  /* Product: '<S13>/Product' incorporates:
-   *  Inport: '<Root>/ubus'
-   *  Math: '<S13>/Math Function'
-   *
-   * About '<S13>/Math Function':
-   *  Operator: reciprocal
-   */
-  rtb_MultiportSwitch1_l = 1.0F / rtU.ubus * rtb_MathFunction;
+  rtb_Divide4 = 1.7320508075688772 / rtU.u_bus;
 
   /* MultiPortSwitch: '<S11>/Multiport Switch' incorporates:
-   *  Gain: '<S11>/Gain'
-   *  Gain: '<S11>/Gain1'
-   *  Gain: '<S11>/Gain2'
-   *  Gain: '<S13>/Gain1'
-   *  Product: '<S13>/Product1'
-   *  Product: '<S13>/Product2'
-   *  Product: '<S13>/Product3'
-   *  Sum: '<S13>/Add'
-   *  Sum: '<S13>/Subtract'
+   *  Gain: '<S11>/Gain3'
+   *  Gain: '<S11>/Gain4'
+   *  Gain: '<S11>/Gain5'
+   *  Gain: '<S11>/Gain6'
+   *  Product: '<S11>/Divide1'
+   *  Product: '<S11>/Divide2'
+   *  Product: '<S11>/Divide3'
+   *  Sum: '<S11>/Sum'
+   *  Sum: '<S11>/Sum1'
    */
-  switch (rtb_Subtract2) {
+  switch ((int32_T)rtb_A) {
    case 1:
-    rtb_MultiportSwitch = (rtb_MultiportSwitch1 - rtb_MathFunction_h) *
-      rtb_MultiportSwitch1_l;
+    rtb_T4 = (-rtb_T6 + rtb_T6_tmp) * rtb_Divide4;
 
     /* MultiPortSwitch: '<S11>/Multiport Switch1' incorporates:
-     *  Product: '<S13>/Product2'
-     *  Product: '<S13>/Product3'
-     *  Sum: '<S13>/Add'
-     *  Sum: '<S13>/Subtract'
+     *  Gain: '<S11>/Gain3'
+     *  Product: '<S11>/Divide2'
+     *  Product: '<S11>/Divide3'
+     *  Sum: '<S11>/Sum'
+     *  Sum: '<S11>/Sum1'
      */
-    rtb_MultiportSwitch1 = (rtb_MultiportSwitch1 + rtb_MathFunction_h) *
-      rtb_MultiportSwitch1_l;
+    rtb_T6 = (rtb_T6 + rtb_T6_tmp) * rtb_Divide4;
     break;
 
    case 2:
-    rtb_MultiportSwitch = (rtb_MultiportSwitch1 + rtb_MathFunction_h) *
-      rtb_MultiportSwitch1_l;
+    rtb_T4 = (rtb_T6 + rtb_T6_tmp) * rtb_Divide4;
 
     /* MultiPortSwitch: '<S11>/Multiport Switch1' incorporates:
-     *  Gain: '<S11>/Gain1'
-     *  Gain: '<S13>/Gain1'
-     *  Product: '<S13>/Product1'
-     *  Product: '<S13>/Product2'
-     *  Sum: '<S13>/Add'
+     *  Gain: '<S11>/Gain6'
+     *  Product: '<S11>/Divide1'
+     *  Product: '<S11>/Divide2'
+     *  Sum: '<S11>/Sum'
      */
-    rtb_MultiportSwitch1 = -(1.7320508075688772 * rtb_Subtract1_l *
-      rtb_MultiportSwitch1_l);
+    rtb_T6 = -(rtb_Tcm2 * rtb_Divide4);
     break;
 
    case 3:
-    rtb_MultiportSwitch = -((rtb_MultiportSwitch1 - rtb_MathFunction_h) *
-      rtb_MultiportSwitch1_l);
+    rtb_T4 = -((-rtb_T6 + rtb_T6_tmp) * rtb_Divide4);
 
     /* MultiPortSwitch: '<S11>/Multiport Switch1' incorporates:
-     *  Gain: '<S11>/Gain'
-     *  Gain: '<S13>/Gain1'
-     *  Product: '<S13>/Product1'
-     *  Product: '<S13>/Product3'
-     *  Sum: '<S13>/Subtract'
+     *  Gain: '<S11>/Gain3'
+     *  Gain: '<S11>/Gain4'
+     *  Product: '<S11>/Divide1'
+     *  Product: '<S11>/Divide3'
+     *  Sum: '<S11>/Sum1'
      */
-    rtb_MultiportSwitch1 = 1.7320508075688772 * rtb_Subtract1_l *
-      rtb_MultiportSwitch1_l;
+    rtb_T6 = rtb_Tcm2 * rtb_Divide4;
     break;
 
    case 4:
-    rtb_MultiportSwitch = -(1.7320508075688772 * rtb_Subtract1_l *
-      rtb_MultiportSwitch1_l);
+    rtb_T4 = -(rtb_Tcm2 * rtb_Divide4);
 
     /* MultiPortSwitch: '<S11>/Multiport Switch1' incorporates:
-     *  Gain: '<S11>/Gain1'
-     *  Gain: '<S13>/Gain1'
-     *  Product: '<S13>/Product1'
-     *  Product: '<S13>/Product3'
-     *  Sum: '<S13>/Subtract'
+     *  Gain: '<S11>/Gain3'
+     *  Gain: '<S11>/Gain6'
+     *  Product: '<S11>/Divide1'
+     *  Product: '<S11>/Divide3'
+     *  Sum: '<S11>/Sum1'
      */
-    rtb_MultiportSwitch1 = (rtb_MultiportSwitch1 - rtb_MathFunction_h) *
-      rtb_MultiportSwitch1_l;
+    rtb_T6 = (-rtb_T6 + rtb_T6_tmp) * rtb_Divide4;
     break;
 
    case 5:
-    rtb_MultiportSwitch = 1.7320508075688772 * rtb_Subtract1_l *
-      rtb_MultiportSwitch1_l;
+    rtb_T4 = rtb_Tcm2 * rtb_Divide4;
 
     /* MultiPortSwitch: '<S11>/Multiport Switch1' incorporates:
-     *  Gain: '<S11>/Gain2'
-     *  Gain: '<S13>/Gain1'
-     *  Product: '<S13>/Product1'
-     *  Product: '<S13>/Product2'
-     *  Sum: '<S13>/Add'
+     *  Gain: '<S11>/Gain5'
+     *  Product: '<S11>/Divide1'
+     *  Product: '<S11>/Divide2'
+     *  Sum: '<S11>/Sum'
      */
-    rtb_MultiportSwitch1 = -((rtb_MultiportSwitch1 + rtb_MathFunction_h) *
-      rtb_MultiportSwitch1_l);
+    rtb_T6 = -((rtb_T6 + rtb_T6_tmp) * rtb_Divide4);
     break;
 
    default:
-    rtb_MultiportSwitch = -((rtb_MultiportSwitch1 + rtb_MathFunction_h) *
-      rtb_MultiportSwitch1_l);
+    rtb_T4 = -((rtb_T6 + rtb_T6_tmp) * rtb_Divide4);
 
     /* MultiPortSwitch: '<S11>/Multiport Switch1' incorporates:
-     *  Gain: '<S11>/Gain'
-     *  Gain: '<S11>/Gain2'
-     *  Product: '<S13>/Product2'
-     *  Product: '<S13>/Product3'
-     *  Sum: '<S13>/Add'
-     *  Sum: '<S13>/Subtract'
+     *  Gain: '<S11>/Gain3'
+     *  Gain: '<S11>/Gain4'
+     *  Gain: '<S11>/Gain5'
+     *  Product: '<S11>/Divide2'
+     *  Product: '<S11>/Divide3'
+     *  Sum: '<S11>/Sum'
+     *  Sum: '<S11>/Sum1'
      */
-    rtb_MultiportSwitch1 = -((rtb_MultiportSwitch1 - rtb_MathFunction_h) *
-      rtb_MultiportSwitch1_l);
+    rtb_T6 = -((-rtb_T6 + rtb_T6_tmp) * rtb_Divide4);
     break;
   }
 
   /* End of MultiPortSwitch: '<S11>/Multiport Switch' */
 
+  /* Product: '<S11>/Divide4' incorporates:
+   *  Sum: '<S11>/Subtract'
+   */
+  rtb_Divide4 = 1.0 / (rtb_T4 + rtb_T6);
+
   /* Switch: '<S11>/Switch' incorporates:
-   *  Product: '<S11>/Divide'
-   *  Product: '<S11>/Divide1'
-   *  Product: '<S11>/Product'
-   *  Product: '<S11>/Product1'
+   *  Constant: '<S1>/Constant1'
+   *  Product: '<S11>/Divide5'
+   *  Product: '<S11>/Divide6'
    *  Sum: '<S11>/Add'
-   *  Sum: '<S11>/Add1'
    *  Switch: '<S11>/Switch1'
    */
-  if ((rtb_MathFunction - rtb_MultiportSwitch) - rtb_MultiportSwitch1 > 0.0) {
-    rtb_MultiportSwitch1_l = rtb_MultiportSwitch;
+  if ((rtb_T4 - 1.0) + rtb_T6 > 0.0) {
+    rtb_Tcm2 = rtb_T4 * rtb_Divide4;
+    rtb_T6 *= rtb_Divide4;
   } else {
-    /* Sum: '<S11>/Add' incorporates:
-     *  Sum: '<S11>/Add2'
-     */
-    rtb_Subtract1_l = rtb_MultiportSwitch + rtb_MultiportSwitch1;
-    rtb_MultiportSwitch1_l = rtb_MultiportSwitch * rtb_MathFunction /
-      rtb_Subtract1_l;
-    rtb_MultiportSwitch1 = rtb_MultiportSwitch1 * rtb_MathFunction /
-      rtb_Subtract1_l;
+    rtb_Tcm2 = rtb_T4;
   }
 
   /* End of Switch: '<S11>/Switch' */
 
-  /* Gain: '<S12>/Gain1' incorporates:
-   *  Sum: '<S12>/Add1'
-   */
-  rtb_Subtract1_l = ((rtb_MultiportSwitch1_l - rtb_MultiportSwitch1) +
-                     rtb_MathFunction) * 0.25;
-
   /* Gain: '<S12>/Gain' incorporates:
+   *  Constant: '<S1>/Constant1'
    *  Sum: '<S12>/Add'
    */
-  rtb_MultiportSwitch = ((rtb_MathFunction - rtb_MultiportSwitch1_l) -
-    rtb_MultiportSwitch1) * 0.25;
+  rtb_Divide4 = ((1.0 - rtb_Tcm2) - rtb_T6) * 0.25;
 
-  /* Gain: '<S12>/Gain2' incorporates:
-   *  Sum: '<S12>/Add2'
-   */
-  rtb_MathFunction_h = ((rtb_MultiportSwitch1_l + rtb_MultiportSwitch1) +
-                        rtb_MathFunction) * 0.25;
-
-  /* MultiPortSwitch: '<S12>/Multiport Switch' incorporates:
+  /* Sum: '<S12>/Add1' incorporates:
    *  Gain: '<S12>/Gain1'
+   */
+  rtb_T4 = 0.5 * rtb_Tcm2 + rtb_Divide4;
+
+  /* Sum: '<S12>/Add2' incorporates:
    *  Gain: '<S12>/Gain2'
-   *  Sum: '<S12>/Add1'
+   */
+  rtb_T6_tmp = 0.5 * rtb_T6 + rtb_T4;
+
+  /* MultiPortSwitch: '<S12>/Tcm1 ' incorporates:
+   *  Gain: '<S12>/Gain2'
    *  Sum: '<S12>/Add2'
    */
-  switch (rtb_Subtract2) {
+  switch ((int32_T)rtb_A) {
    case 1:
-    rtb_MultiportSwitch1 = ((rtb_MultiportSwitch1_l - rtb_MultiportSwitch1) +
-      rtb_MathFunction) * 0.25;
+    rtb_T6 = rtb_T4;
 
-    /* MultiPortSwitch: '<S12>/Multiport Switch1' incorporates:
-     *  Gain: '<S12>/Gain'
-     *  Gain: '<S12>/Gain1'
-     *  Sum: '<S12>/Add1'
-     */
-    rtb_MultiportSwitch1_l = rtb_MultiportSwitch;
+    /* MultiPortSwitch: '<S12>/Tcm2' */
+    rtb_Tcm2 = rtb_Divide4;
 
-    /* MultiPortSwitch: '<S12>/Multiport Switch2' incorporates:
-     *  Gain: '<S12>/Gain2'
+    /* MultiPortSwitch: '<S12>/Tcm3' incorporates:
+     *  Sum: '<S12>/Add2'
      */
-    rtb_MultiportSwitch = rtb_MathFunction_h;
+    rtb_Divide4 = rtb_T6_tmp;
     break;
 
    case 2:
-    rtb_MultiportSwitch1 = rtb_MultiportSwitch;
+    rtb_T6 = rtb_Divide4;
 
-    /* MultiPortSwitch: '<S12>/Multiport Switch1' incorporates:
-     *  Gain: '<S12>/Gain2'
+    /* MultiPortSwitch: '<S12>/Tcm2' incorporates:
+     *  Sum: '<S12>/Add2'
      */
-    rtb_MultiportSwitch1_l = rtb_MathFunction_h;
+    rtb_Tcm2 = rtb_T6_tmp;
 
-    /* MultiPortSwitch: '<S12>/Multiport Switch2' incorporates:
-     *  Gain: '<S12>/Gain1'
-     */
-    rtb_MultiportSwitch = rtb_Subtract1_l;
+    /* MultiPortSwitch: '<S12>/Tcm3' */
+    rtb_Divide4 = rtb_T4;
     break;
 
    case 3:
-    rtb_MultiportSwitch1 = rtb_MultiportSwitch;
+    rtb_T6 = rtb_Divide4;
 
-    /* MultiPortSwitch: '<S12>/Multiport Switch1' incorporates:
-     *  Gain: '<S12>/Gain1'
-     */
-    rtb_MultiportSwitch1_l = rtb_Subtract1_l;
+    /* MultiPortSwitch: '<S12>/Tcm2' */
+    rtb_Tcm2 = rtb_T4;
 
-    /* MultiPortSwitch: '<S12>/Multiport Switch2' incorporates:
-     *  Gain: '<S12>/Gain2'
+    /* MultiPortSwitch: '<S12>/Tcm3' incorporates:
+     *  Sum: '<S12>/Add2'
      */
-    rtb_MultiportSwitch = rtb_MathFunction_h;
+    rtb_Divide4 = rtb_T6_tmp;
     break;
 
    case 4:
-    rtb_MultiportSwitch1 = ((rtb_MultiportSwitch1_l + rtb_MultiportSwitch1) +
-      rtb_MathFunction) * 0.25;
+    rtb_T6 = 0.5 * rtb_T6 + rtb_T4;
 
-    /* MultiPortSwitch: '<S12>/Multiport Switch1' incorporates:
-     *  Gain: '<S12>/Gain1'
+    /* MultiPortSwitch: '<S12>/Tcm2' incorporates:
      *  Gain: '<S12>/Gain2'
      *  Sum: '<S12>/Add2'
      */
-    rtb_MultiportSwitch1_l = rtb_Subtract1_l;
+    rtb_Tcm2 = rtb_T4;
     break;
 
    case 5:
-    rtb_MultiportSwitch1 = ((rtb_MultiportSwitch1_l + rtb_MultiportSwitch1) +
-      rtb_MathFunction) * 0.25;
+    rtb_T6 = 0.5 * rtb_T6 + rtb_T4;
 
-    /* MultiPortSwitch: '<S12>/Multiport Switch1' incorporates:
-     *  Gain: '<S12>/Gain'
+    /* MultiPortSwitch: '<S12>/Tcm2' incorporates:
      *  Gain: '<S12>/Gain2'
      *  Sum: '<S12>/Add2'
      */
-    rtb_MultiportSwitch1_l = rtb_MultiportSwitch;
+    rtb_Tcm2 = rtb_Divide4;
 
-    /* MultiPortSwitch: '<S12>/Multiport Switch2' incorporates:
-     *  Gain: '<S12>/Gain1'
-     */
-    rtb_MultiportSwitch = rtb_Subtract1_l;
+    /* MultiPortSwitch: '<S12>/Tcm3' */
+    rtb_Divide4 = rtb_T4;
     break;
 
    default:
-    rtb_MultiportSwitch1 = ((rtb_MultiportSwitch1_l - rtb_MultiportSwitch1) +
-      rtb_MathFunction) * 0.25;
+    rtb_T6 = rtb_T4;
 
-    /* MultiPortSwitch: '<S12>/Multiport Switch1' incorporates:
-     *  Gain: '<S12>/Gain1'
-     *  Gain: '<S12>/Gain2'
-     *  Sum: '<S12>/Add1'
+    /* MultiPortSwitch: '<S12>/Tcm2' incorporates:
+     *  Sum: '<S12>/Add2'
      */
-    rtb_MultiportSwitch1_l = rtb_MathFunction_h;
+    rtb_Tcm2 = rtb_T6_tmp;
     break;
   }
 
-  /* End of MultiPortSwitch: '<S12>/Multiport Switch' */
+  /* End of MultiPortSwitch: '<S12>/Tcm1 ' */
 
-  /* Math: '<S3>/Math Function'
-   *
-   * About '<S3>/Math Function':
-   *  Operator: reciprocal
-   */
-  rtb_MathFunction_h = 1.0 / rtb_MathFunction;
+  /* Update for UnitDelay: '<S3>/Unit Delay' */
+  rtDW.UnitDelay_DSTATE = rtb_Sum_n;
 
   /* Outport: '<Root>/DutyOut' incorporates:
-   *  Product: '<S3>/Product'
+   *  Constant: '<S1>/Constant1'
+   *  Gain: '<S4>/Gain'
+   *  Sum: '<S4>/Add'
+   *  Sum: '<S4>/Add1'
+   *  Sum: '<S4>/Add2'
    */
-  rtY.DutyOut[0] = rtb_MultiportSwitch1 * rtb_MathFunction_h;
-  rtY.DutyOut[1] = rtb_MultiportSwitch1_l * rtb_MathFunction_h;
-  rtY.DutyOut[2] = rtb_MultiportSwitch * rtb_MathFunction_h;
+  rtY.DutyOut[0] = 1.0 - 2.0 * rtb_T6;
+  rtY.DutyOut[1] = 1.0 - 2.0 * rtb_Tcm2;
+  rtY.DutyOut[2] = 1.0 - 2.0 * rtb_Divide4;
 
-  /* Update for UnitDelay: '<S4>/Unit Delay' */
-  rtDW.UnitDelay_DSTATE = rtb_Sum;
+  /* End of Outputs for SubSystem: '<Root>/VF' */
 }
 
 /* Model initialize function */
