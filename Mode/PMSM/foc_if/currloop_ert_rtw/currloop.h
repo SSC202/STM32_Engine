@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'currloop'.
  *
- * Model version                  : 1.1
+ * Model version                  : 1.4
  * Simulink Coder version         : 9.6 (R2021b) 14-May-2021
- * C/C++ source code generated on : Sat Oct 28 18:16:52 2023
+ * C/C++ source code generated on : Sat Oct 28 19:50:01 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -42,7 +42,6 @@ typedef struct tag_RTM RT_MODEL;
 /* Block signals and states (default storage) for system '<Root>' */
 typedef struct {
   real_T Motor_State;                  /* '<S1>/State' */
-  real32_T Merge;                      /* '<S1>/Merge' */
   real32_T Merge1;                     /* '<S1>/Merge1' */
   real32_T Integrator_DSTATE;          /* '<S102>/Integrator' */
   real32_T DiscreteTimeIntegrator_DSTATE;/* '<S10>/Discrete-Time Integrator' */
@@ -89,6 +88,18 @@ extern ExtU rtU;
 
 /* External outputs (root outports fed by signals with default storage) */
 extern ExtY rtY;
+
+/*
+ * Exported Global Signals
+ *
+ * Note: Exported global signals are block signals with an exported global
+ * storage class designation.  Code generation will declare the memory for
+ * these signals and export their symbols.
+ *
+ */
+extern real32_T ThetaOpen;             /* '<S1>/Merge' */
+extern real32_T id;                    /* '<S5>/Add' */
+extern real32_T iq;                    /* '<S5>/Add1' */
 
 /* Model entry point functions */
 extern void currloop_initialize(void);

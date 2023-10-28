@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'currloop'.
  *
- * Model version                  : 1.1
+ * Model version                  : 1.4
  * Simulink Coder version         : 9.6 (R2021b) 14-May-2021
- * C/C++ source code generated on : Sat Oct 28 18:16:52 2023
+ * C/C++ source code generated on : Sat Oct 28 19:50:01 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -72,6 +72,11 @@ preprocessor word size checks.
 #endif
 
 /* Skipping ulong_long/long_long check: insufficient preprocessor integer range. */
+
+/* Exported block signals */
+real32_T ThetaOpen;                    /* '<S1>/Merge' */
+real32_T id;                           /* '<S5>/Add' */
+real32_T iq;                           /* '<S5>/Add1' */
 
 /* Exported data definition */
 
@@ -354,7 +359,6 @@ void currloop_step(void)
   real32_T rtb_Integrator;
   real32_T rtb_SignPreIntegrator;
   real32_T rtb_SignPreSat;
-  real32_T rtb_Sum1;
   real32_T rtb_Sum1_j;
   int16_T rtb_IProdOut_d;
   int16_T rtb_IProdOut_g;
@@ -435,7 +439,7 @@ void currloop_step(void)
      *  Constant: '<S8>/Constant'
      *  SignalConversion generated from: '<S8>/theta_feedback'
      */
-    rtDW.Merge = 0.0F;
+    ThetaOpen = 0.0F;
 
     /* Merge: '<S1>/Merge1' incorporates:
      *  Constant: '<S8>/Constant1'
@@ -454,7 +458,7 @@ void currloop_step(void)
      *  Constant: '<S9>/Constant'
      *  SignalConversion generated from: '<S9>/theta_feedback'
      */
-    rtDW.Merge = 0.0F;
+    ThetaOpen = 0.0F;
 
     /* Merge: '<S1>/Merge1' incorporates:
      *  Constant: '<S9>/Constant1'
@@ -477,7 +481,7 @@ void currloop_step(void)
      *  DiscreteIntegrator: '<S16>/Discrete-Time Integrator1'
      *  Math: '<S16>/Mod'
      */
-    rtDW.Merge = rt_modf_snf(rtDW.DiscreteTimeIntegrator1_DSTATE, 6.28318548F);
+    ThetaOpen = rt_modf_snf(rtDW.DiscreteTimeIntegrator1_DSTATE, 6.28318548F);
 
     /* Merge: '<S1>/Merge1' incorporates:
      *  Constant: '<S1>/Constant5'
@@ -507,7 +511,7 @@ void currloop_step(void)
      *  DiscreteIntegrator: '<S10>/Discrete-Time Integrator'
      *  Math: '<S10>/Mod'
      */
-    rtDW.Merge = rt_modf_snf(rtDW.DiscreteTimeIntegrator_DSTATE, 6.28318548F);
+    ThetaOpen = rt_modf_snf(rtDW.DiscreteTimeIntegrator_DSTATE, 6.28318548F);
 
     /* Merge: '<S1>/Merge1' incorporates:
      *  Constant: '<S1>/Constant7'
@@ -527,7 +531,7 @@ void currloop_step(void)
   /* End of SwitchCase: '<S1>/Switch Case' */
 
   /* Trigonometry: '<S1>/SinCos1' */
-  rtb_C = cosf(rtDW.Merge);
+  rtb_C = cosf(ThetaOpen);
 
   /* Gain: '<S3>/Gain2' incorporates:
    *  Inport: '<Root>/ib'
@@ -537,23 +541,22 @@ void currloop_step(void)
   rtb_DiscreteTimeIntegrator = (rtU.ib - rtU.ic) * 0.577350259F;
 
   /* Trigonometry: '<S1>/SinCos' */
-  rtb_Sum1_j = sinf(rtDW.Merge);
+  rtb_Sum1_j = sinf(ThetaOpen);
 
-  /* Sum: '<S12>/Sum1' incorporates:
-   *  Constant: '<S12>/Constant'
+  /* Sum: '<S5>/Add' incorporates:
    *  Product: '<S5>/Product'
    *  Product: '<S5>/Product1'
-   *  Sum: '<S5>/Add'
    */
-  rtb_Sum1 = 0.0F - (rtb_Integrator * rtb_C + rtb_DiscreteTimeIntegrator *
-                     rtb_Sum1_j);
+  id = rtb_Integrator * rtb_C + rtb_DiscreteTimeIntegrator * rtb_Sum1_j;
 
   /* Sum: '<S61>/Sum' incorporates:
+   *  Constant: '<S12>/Constant'
    *  Constant: '<S12>/Constant3'
    *  DiscreteIntegrator: '<S52>/Integrator'
    *  Product: '<S57>/PProd Out'
+   *  Sum: '<S12>/Sum1'
    */
-  rtb_SignPreSat = rtb_Sum1 * 0.17F + (real32_T)rtDW.Integrator_DSTATE_n *
+  rtb_SignPreSat = (0.0F - id) * 0.17F + (real32_T)rtDW.Integrator_DSTATE_n *
     0.0001F;
 
   /* Saturate: '<S59>/Saturation' */
@@ -567,13 +570,14 @@ void currloop_step(void)
 
   /* End of Saturate: '<S59>/Saturation' */
 
-  /* Sum: '<S12>/Sum7' incorporates:
+  /* Sum: '<S5>/Add1' incorporates:
    *  Product: '<S5>/Product2'
    *  Product: '<S5>/Product3'
-   *  Sum: '<S5>/Add1'
    */
-  rtb_DiscreteTimeIntegrator = rtDW.Merge1 - (rtb_DiscreteTimeIntegrator * rtb_C
-    - rtb_Integrator * rtb_Sum1_j);
+  iq = rtb_DiscreteTimeIntegrator * rtb_C - rtb_Integrator * rtb_Sum1_j;
+
+  /* Sum: '<S12>/Sum7' */
+  rtb_DiscreteTimeIntegrator = rtDW.Merge1 - iq;
 
   /* Sum: '<S111>/Sum' incorporates:
    *  Constant: '<S12>/Constant1'
@@ -856,12 +860,14 @@ void currloop_step(void)
   /* End of DeadZone: '<S45>/DeadZone' */
 
   /* Product: '<S49>/IProd Out' incorporates:
+   *  Constant: '<S12>/Constant'
    *  Constant: '<S12>/Constant4'
+   *  Sum: '<S12>/Sum1'
    */
-  rtb_IProdOut_g = (int16_T)floorf(rtb_Sum1 * 35.0F);
+  rtb_IProdOut_g = (int16_T)floorf((0.0F - id) * 35.0F);
 
   /* Gain: '<S93>/ZeroGain' */
-  rtb_Sum1 = 0.0F * rtb_Integrator;
+  rtb_C = 0.0F * rtb_Integrator;
 
   /* DeadZone: '<S95>/DeadZone' */
   if (rtb_Integrator > 12.4707661F) {
@@ -881,13 +887,13 @@ void currloop_step(void)
 
   /* Signum: '<S43>/SignPreSat' */
   if (rtb_SignPreSat < 0.0F) {
-    rtb_C = -1.0F;
+    rtb_Add1_p = -1.0F;
   } else if (rtb_SignPreSat > 0.0F) {
-    rtb_C = 1.0F;
+    rtb_Add1_p = 1.0F;
   } else if (rtb_SignPreSat == 0.0F) {
-    rtb_C = 0.0F;
+    rtb_Add1_p = 0.0F;
   } else {
-    rtb_C = (rtNaNF);
+    rtb_Add1_p = (rtNaNF);
   }
 
   /* End of Signum: '<S43>/SignPreSat' */
@@ -909,7 +915,8 @@ void currloop_step(void)
    *  RelationalOperator: '<S43>/Equal1'
    *  RelationalOperator: '<S43>/NotEqual'
    */
-  if ((rtb_Gain1_p != rtb_SignPreSat) && ((int8_T)rtb_C == rtb_IProdOut_d)) {
+  if ((rtb_Gain1_p != rtb_SignPreSat) && ((int8_T)rtb_Add1_p == rtb_IProdOut_d))
+  {
     rtb_IProdOut_g = 0;
   }
 
@@ -933,13 +940,13 @@ void currloop_step(void)
 
   /* Signum: '<S93>/SignPreIntegrator' */
   if (rtb_DiscreteTimeIntegrator < 0.0F) {
-    rtb_C = -1.0F;
+    rtb_Gain1_p = -1.0F;
   } else if (rtb_DiscreteTimeIntegrator > 0.0F) {
-    rtb_C = 1.0F;
+    rtb_Gain1_p = 1.0F;
   } else if (rtb_DiscreteTimeIntegrator == 0.0F) {
-    rtb_C = 0.0F;
+    rtb_Gain1_p = 0.0F;
   } else {
-    rtb_C = (rtNaNF);
+    rtb_Gain1_p = (rtNaNF);
   }
 
   /* End of Signum: '<S93>/SignPreIntegrator' */
@@ -952,8 +959,8 @@ void currloop_step(void)
    *  RelationalOperator: '<S93>/Equal1'
    *  RelationalOperator: '<S93>/NotEqual'
    */
-  if ((rtb_Sum1 != rtb_Integrator) && ((int8_T)rtb_SignPreSat == (int8_T)rtb_C))
-  {
+  if ((rtb_C != rtb_Integrator) && ((int8_T)rtb_SignPreSat == (int8_T)
+       rtb_Gain1_p)) {
     rtb_DiscreteTimeIntegrator = 0.0F;
   }
 

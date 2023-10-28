@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'currloop'.
  *
- * Model version                  : 1.1
+ * Model version                  : 1.4
  * Simulink Coder version         : 9.6 (R2021b) 14-May-2021
- * C/C++ source code generated on : Sat Oct 28 18:16:52 2023
+ * C/C++ source code generated on : Sat Oct 28 19:50:01 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M
