@@ -148,7 +148,7 @@ int main(void)
         /* USER CODE BEGIN 3 */
         HAL_ADC_Start(&hadc2);
         adc_vbus  = HAL_ADC_GetValue(&hadc2);
-        rtU.ubus = adc_vbus * 3.3f / 4096 * 26;
+        rtU.u_bus = adc_vbus * 3.3f / 4096 * 26;
         HAL_Delay(10);
     }
     /* USER CODE END 3 */
