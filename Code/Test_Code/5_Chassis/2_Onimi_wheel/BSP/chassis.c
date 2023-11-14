@@ -21,9 +21,9 @@ void Forward_kinematic_equation(float *vx, float *vy, float *wc)
     float rf_speed = -(RIGHT_FRONT_WHEEL.speed * (2 * PI * WHEEL_R) / 60.0);
     float rb_speed = -(RIGHT_BACKWORD_WHEEL.speed * (2 * PI * WHEEL_R) / 60.0);
 
-    *vx = WHEEL_R * (lf_speed + lb_speed + rf_speed + rb_speed) / 4.0;
-    *vy = WHEEL_R * (lf_speed + rb_speed - rf_speed - lb_speed) / 4.0;
-    *wc = WHEEL_R * (-lf_speed - lb_speed + rf_speed + rb_speed) / (4.0 * r);
+    *vx = (lf_speed + lb_speed + rf_speed + rb_speed) / 4.0;
+    *vy = (lf_speed + rb_speed - rf_speed - lb_speed) / 4.0;
+    *wc = (-lf_speed - lb_speed + rf_speed + rb_speed) / (4.0 * r);
 }
 
 /**
@@ -49,10 +49,10 @@ void Inverse_kinematic_equation(float vx, float vy, float wc)
     rb_speed = (float)(vx + vy + wc * r) / WHEEL_R;
 
     // m/s 转换为 rpm
-    float l_f_speed = lf_speed * 60.0 / (2 * PI * WHEEL_R);
-    float l_b_speed = lb_speed * 60.0 / (2 * PI * WHEEL_R);
-    float r_f_speed = -(rf_speed * 60.0 / (2 * PI * WHEEL_R));
-    float r_b_speed = -(rb_speed * 60.0 / (2 * PI * WHEEL_R));
+    float l_f_speed = lf_speed * 60.0 / (2 * PI);
+    float l_b_speed = lb_speed * 60.0 / (2 * PI);
+    float r_f_speed = -(rf_speed * 60.0 / (2 * PI));
+    float r_b_speed = -(rb_speed * 60.0 / (2 * PI));
 
     Motor_Speed_Set(&LEFT_FRONT_WHEEL, l_f_speed);
     Motor_Speed_Set(&LEFT_BACKWORD_WHEEL, l_b_speed);
@@ -80,9 +80,9 @@ void Forward_kinematic_equation(float *vx, float *vy, float *wc)
     float m2_speed = -(M2_WHEEL.speed * (2 * PI * WHEEL_R) / 60.0);
     float m3_speed = -(M3_WHEEL.speed * (2 * PI * WHEEL_R) / 60.0);
 
-    *vx = WHEEL_R * (-m2_speed / sqrt(3) + m3_speed / sqrt(3));
-    *vy = WHEEL_R * (2 * m1_speed - m2_speed - m3_speed) / 3.0;
-    *wc = WHEEL_R * (m1_speed + m2_speed + m3_speed) / (3.0 * BASE_R);
+    *vx = (-m2_speed / sqrt(3) + m3_speed / sqrt(3));
+    *vy = (2 * m1_speed - m2_speed - m3_speed) / 3.0;
+    *wc = (m1_speed + m2_speed + m3_speed) / (3.0 * BASE_R);
 }
 
 /**
@@ -102,9 +102,9 @@ void Inverse_kinematic_equation(float vx, float vy, float wc)
     m3_speed = (float)(sqrt(3) * vx / 2.0 - vy / 2.0 + BASE_R * wc) / WHEEL_R;
 
     // m/s 转换为 rpm
-    float m_1_speed = -(m1_speed * 60.0 / (2 * PI * WHEEL_R));
-    float m_2_speed = -(m2_speed * 60.0 / (2 * PI * WHEEL_R));
-    float m_3_speed = -(m3_speed * 60.0 / (2 * PI * WHEEL_R));
+    float m_1_speed = -(m1_speed * 60.0 / (2 * PI));
+    float m_2_speed = -(m2_speed * 60.0 / (2 * PI));
+    float m_3_speed = -(m3_speed * 60.0 / (2 * PI));
 
     Motor_Speed_Set(&M1_WHEEL, m_1_speed);
     Motor_Speed_Set(&M2_WHEEL, m_2_speed);
