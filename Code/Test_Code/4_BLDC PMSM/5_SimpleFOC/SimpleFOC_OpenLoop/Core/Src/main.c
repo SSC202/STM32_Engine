@@ -56,7 +56,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-float target = 9.42;
+float target = -6.28;
 /* USER CODE END 0 */
 
 /**
