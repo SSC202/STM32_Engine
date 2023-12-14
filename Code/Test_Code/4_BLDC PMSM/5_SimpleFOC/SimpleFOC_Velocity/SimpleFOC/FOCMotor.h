@@ -38,6 +38,7 @@ extern DQCurrent_s current;
 extern float sensor_offset;
 extern float zero_electric_angle;
 /******************************************************************************/
+
 float shaftAngle(void);
 float shaftVelocity(void);
 float electricalAngle(void);

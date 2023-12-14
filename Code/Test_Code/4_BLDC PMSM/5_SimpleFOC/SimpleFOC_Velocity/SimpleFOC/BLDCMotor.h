@@ -12,6 +12,7 @@ typedef enum {
 } Direction;
 
 /******************************************************************************/
+extern float target;
 extern long sensor_direction;
 extern float voltage_power_supply;
 extern float voltage_limit;
