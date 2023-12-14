@@ -11,7 +11,7 @@ unsigned long pid_vel_timestamp, pid_ang_timestamp;
 void PID_init(void)
 {
     pid_vel_P         = 0.1; // 0.1
-    pid_vel_I         = 2;   // 2
+    pid_vel_I         = 0.002;   // 2
     output_vel_ramp   = 100; // output derivative limit [volts/second]
     integral_vel_prev = 0;
     error_vel_prev    = 0;

@@ -100,7 +100,7 @@ int main(void)
     pole_pairs           = 7;
     voltage_limit        = 6;
     velocity_limit       = 20;
-    voltage_sensor_align = 4.5;
+    voltage_sensor_align = 2;
     torque_controller    = Type_voltage;
     controller           = Type_velocity;
     target               = 0;
@@ -109,7 +109,7 @@ int main(void)
     Motor_initFOC();
     PID_init();
 
-    target = 9.42;
+    target = 6.28;
     systick_CountMode();
     /* USER CODE END 2 */
 
