@@ -29,7 +29,8 @@ STM32 基础驱动：[Click Here](https://github.com/SSC202/STM32_Basic)
 | BSP_Bag                                                      | 说明                                         |
 | ------------------------------------------------------------ | -------------------------------------------- |
 | [Feetech](https://github.com/SSC202/STM32_Engine/tree/main/BSP_Bag/FeeTech) | 飞特舵机驱动库（C版本）                      |
-| [DJI](https://github.com/SSC202/STM32_Engine/tree/main/BSP_Bag/DJI) | DJI电机驱动库（旧版仅支持F4，新版支持F4/H7） |
+| [DJI](https://github.com/SSC202/STM32_Engine/tree/main/BSP_Bag/DJI) | DJI电机驱动库（支持F4/H7） |
+| [AK](https://github.com/SSC202/STM32_Engine/tree/main/BSP_Bag/AK) | CubeMars AK系列电机驱动库（支持F4） |
 
 ### 模型使用说明
 
