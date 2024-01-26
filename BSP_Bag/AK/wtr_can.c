@@ -1,12 +1,10 @@
 #if (STM32F427xx)
 #include "wtr_can.h"
-#include "can.h"
-#include "string.h"
-#include "DJI.h"
 
+/**********************************CAN1 相关定义***************************************/
 uint8_t can1_rxdata[8] = {0};
 extern CAN_HandleTypeDef hcan1;
-static uint32_t TxMailbox;
+static uint32_t TxMailbox1;
 
 CAN_TxHeaderTypeDef hcan1_tx; // CAN1 发送处理单元句柄
 CAN_RxHeaderTypeDef hcan1_rx; // CAN1 接受处理单元句柄
@@ -18,7 +16,24 @@ CAN_HANDLER can1 = {
     .CAN_Interrupt_Init = CAN1_Interrupt_Init, // FDCAN1 中断初始化方法
     .CAN_Send_MSG       = CAN1_Send_Msg,       // FDCAN1 发送消息方法
 };
+/**********************************CAN2 相关定义***************************************/
+#if (USE_CAN2 == 1)
+uint8_t can2_rxdata[8] = {0};
+extern CAN_HandleTypeDef hcan2;
+static uint32_t TxMailbox2;
 
+CAN_TxHeaderTypeDef hcan2_tx; // CAN1 发送处理单元句柄
+CAN_RxHeaderTypeDef hcan2_rx; // CAN1 接受处理单元句柄
+
+CAN_HANDLER can2 = {
+    .rx_MSG             = {0},
+    .CAN_Start          = CAN2_Start,          // FDCAN1 开始方法
+    .CAN_Rx_Filter_Init = CAN2_RX_Filter_Init, // FDCAN1 过滤器初始化方法
+    .CAN_Interrupt_Init = CAN2_Interrupt_Init, // FDCAN1 中断初始化方法
+    .CAN_Send_MSG       = CAN2_Send_Msg,       // FDCAN1 发送消息方法
+};
+#endif
+/**********************************CAN1 相关函数***************************************/
 /**
  * @brief CAN过滤器配置函数
  */
@@ -105,45 +120,129 @@ uint8_t CAN1_Send_Msg(CAN_MSG *msg)
     else
         hcan1_tx.RTR = CAN_RTR_DATA; // 数据帧
 
-    hcan1_tx.StdId = msg->id;
-    hcan1_tx.IDE   = CAN_ID_STD;
+    hcan1_tx.IDE = msg->ide;
+    if (msg->ide == CAN_ID_STD) {
+        hcan1_tx.StdId = msg->id;
+    } else if (msg->ide == CAN_ID_EXT) {
+        hcan1_tx.StdId = 0x00;
+        hcan1_tx.ExtId = msg->id;
+    }
 
     while (HAL_CAN_GetTxMailboxesFreeLevel(&hcan1) == 0)
         ;
-    if (HAL_CAN_AddTxMessage(&hcan1, &hcan1_tx, (uint8_t *)msg->buffer, &TxMailbox) != HAL_OK) {
+    if (HAL_CAN_AddTxMessage(&hcan1, &hcan1_tx, (uint8_t *)msg->buffer, &TxMailbox1) != HAL_OK) {
         Error_Handler(); // 如果CAN信息发送失败则进入死循环
+    }
+}
+#if (USE_CAN2 == 1)
+/**********************************CAN2 相关函数***************************************/
+/**
+ * @brief CAN过滤器配置函数
+ */
+void CAN2_RX_Filter_Init(void)
+{
+    CAN_FilterTypeDef sFilterConfig;
+
+    sFilterConfig.FilterBank           = 14;
+    sFilterConfig.FilterMode           = CAN_FILTERMODE_IDMASK;
+    sFilterConfig.FilterScale          = CAN_FILTERSCALE_32BIT;
+    sFilterConfig.FilterIdHigh         = 0x0000;
+    sFilterConfig.FilterIdLow          = 0x0000;
+    sFilterConfig.FilterMaskIdHigh     = 0x0000;
+    sFilterConfig.FilterMaskIdLow      = 0x0000;
+    sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
+    sFilterConfig.FilterActivation     = ENABLE;
+    sFilterConfig.SlaveStartFilterBank = 14;
+
+    if (HAL_CAN_ConfigFilter(&hcan2, &sFilterConfig) != HAL_OK) {
+        Error_Handler();
     }
 }
 
 /**
+ * @brief  设置CAN2的中断
+ */
+void CAN2_Interrupt_Init(void)
+{
+    if (HAL_CAN_ActivateNotification(&hcan2, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK) {
+        Error_Handler();
+    }
+}
+
+/**
+ * @brief  CAN2启动
+ */
+void CAN2_Start(void)
+{
+    HAL_CAN_Start(&hcan2);
+}
+
+/**
+ * @brief       CAN2发送数据
+ * @param       msg  发送数据结构体
+ * @note        只允许报文的长度是0 ~ 8,不支持大于8的报文
+ *
+ */
+uint8_t CAN2_Send_Msg(CAN_MSG *msg)
+{
+    // 选择数据的长度
+    switch (msg->len) {
+        case 0:
+            hcan2_tx.DLC = 0; /* 数据长度:0 */
+            break;
+        case 1:
+            hcan2_tx.DLC = 1; /* 数据长度:0 */
+            break;
+        case 2:
+            hcan2_tx.DLC = 2; /* 数据长度:0 */
+            break;
+        case 3:
+            hcan2_tx.DLC = 3; /* 数据长度:0 */
+            break;
+        case 4:
+            hcan2_tx.DLC = 4; /* 数据长度:0 */
+            break;
+        case 5:
+            hcan2_tx.DLC = 5; /* 数据长度:0 */
+            break;
+        case 6:
+            hcan2_tx.DLC = 6; /* 数据长度:0 */
+            break;
+        case 7:
+            hcan2_tx.DLC = 7; /* 数据长度:0 */
+            break;
+        case 8:
+            hcan2_tx.DLC = 8; /* 数据长度:0 */
+            break;
+        default:
+            return 0;
+    }
+    if (REMOTE_FRAME == msg->rtr)
+        hcan2_tx.RTR = CAN_RTR_REMOTE; // 远程帧
+    else
+        hcan2_tx.RTR = CAN_RTR_DATA; // 数据帧
+
+    hcan2_tx.StdId = msg->id;
+    hcan2_tx.IDE   = CAN_ID_STD;
+
+    while (HAL_CAN_GetTxMailboxesFreeLevel(&hcan2) == 0)
+        ;
+    if (HAL_CAN_AddTxMessage(&hcan2, &hcan2_tx, (uint8_t *)msg->buffer, &TxMailbox2) != HAL_OK) {
+        Error_Handler(); // 如果CAN信息发送失败则进入死循环
+    }
+}
+#endif
+
+/**
  * @brief CAN RX0接收中断回调函数
  */
-void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
+__weak void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
-    if (hcan->Instance == hcan1.Instance) {
-        if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &hcan1_rx, can1_rxdata) != HAL_OK) {
-            Error_Handler();
-        }
-        memcpy((uint8_t *)can1.rx_MSG.buffer, can1_rxdata, 8); // 保存CAN报文的内容
-        can1.rx_MSG.id  = hcan1_rx.StdId;                      // 保存CAN报文的ID
-        can1.rx_MSG.len = hcan1_rx.DLC;                        // 保存CAN报文的内容长度
-        /* Can message Decode */
-        if (hcan1_rx.IDE == CAN_ID_STD) {
-            DJI_CanMsgDecode(can1.rx_MSG.id, (uint8_t *)can1.rx_MSG.buffer);
-        }
-        if (hcan1_rx.IDE == CAN_ID_EXT) {
-            // vesc反馈关掉这里就不会有消息
-            ;
-            ;
-        }
-    }
+    ;
 }
 #endif
 #if (STM32H723xx)
 #include "wtr_can.h"
-#include "fdcan.h"
-#include "DJI.h"
-#include "string.h"
 
 extern FDCAN_HandleTypeDef hfdcan1;
 static FDCAN_FilterTypeDef hfdcan1_rx_filter0; // FDCAN1 滤波器0 句柄
@@ -316,31 +415,9 @@ void FDCAN1_Start(void)
 /**
  * @brief FIFO0接收中断回调函数
  */
-void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
+__weak void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 {
-    fdcan1.RXFIFO_Inter_Type = RxFifo0ITs; /* 看看中断的类型 */
-
-    // FIFO 中断类型
-    if (FDCAN_IT_RX_FIFO0_WATERMARK == RxFifo0ITs ||
-        FDCAN_IT_RX_FIFO0_NEW_MESSAGE == RxFifo0ITs ||
-        FDCAN_IT_RX_FIFO0_FULL == RxFifo0ITs) {
-        do {
-            HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &hfdcan1_rx, fdcan1_rxdata); // 提取FIFO0中接收到的数据
-            memcpy((uint8_t *)fdcan1.rx_MSG.buffer, fdcan1_rxdata, 8);                  // 保存CAN报文的内容
-            fdcan1.rx_MSG.id  = hfdcan1_rx.Identifier;                                  // 保存CAN报文的ID
-            fdcan1.rx_MSG.len = hfdcan1_rx.DataLength >> 16;                            // 保存CAN报文的内容长度
-
-            // 判断远程帧或者数据帧
-            if (hfdcan1_rx.RxFrameType == FDCAN_REMOTE_FRAME) {
-                fdcan1.rx_MSG.rtr = REMOTE_FRAME;
-            } else {
-                fdcan1.rx_MSG.rtr = DATA_FRAME;
-            }
-            fdcan1.FDCAN_Update_RXFIFO_Status(hfdcan, &fdcan1); // 更新RXFIFO的状态（了解FIFO是否有剩余报文）
-            DJI_CanMsgDecode(fdcan1.rx_MSG.id, (uint8_t *)fdcan1.rx_MSG.buffer);
-        } while (fdcan1.FxFL > 0);
-        // 循环直到FxFL等于0
-    }
+    ;
 }
 
 #endif

@@ -1,12 +1,16 @@
-#ifndef _DJI_H
-#define _DJI_H
+#ifndef __DJI_H
+#define __DJI_H
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
-#include "can.h"
-
+#if (STM32F427xx)
+#include "stm32f4xx.h"
+#endif
+#if (STM32H723xx)
+#include "stm32f7xx.h"
+#endif
     typedef struct
     {
         float KP;        // PID参数P
@@ -61,8 +65,8 @@ extern "C"
 
     extern DJI_t hDJI[8];
 
-    void CanTransmit_DJI_1234(CAN_HandleTypeDef *hcanx, int16_t cm1_iq, int16_t cm2_iq, int16_t cm3_iq, int16_t cm4_iq);
-    void CanTransmit_DJI_5678(CAN_HandleTypeDef *hcanx, int16_t cm5_iq, int16_t cm6_iq, int16_t cm7_iq, int16_t cm8_iq);
+    void CanTransmit_DJI_1234(int16_t cm1_iq, int16_t cm2_iq, int16_t cm3_iq, int16_t cm4_iq);
+    void CanTransmit_DJI_5678(int16_t cm5_iq, int16_t cm6_iq, int16_t cm7_iq, int16_t cm8_iq);
 
     void DJI_Init(void);
 
