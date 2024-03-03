@@ -1,6 +1,6 @@
 /**
  * @file    wtr_can 配置
- * @note    1. 如果使用STM32H7系列的FDCAN（通常为FDCAN1），需要进行以下配置流程：
+ * @note    1. 如果使用STM32H7系列的FDCAN，需要进行以下配置流程：
  *          (1) CubeMX 配置：
  *              Frame Format            ----        Classis Mode
  *              Mode                    ----        Normal  Mode
@@ -13,11 +13,14 @@
  *              主频540Mhz，预分频27，Normal Time Seg1/Seg2 为2，此时波特率为 1000000 bit/s
  *          (2) 代码配置：
  *              使用以下代码进行初始化
- *                  fdcan1.FDCAN_Rx_Filter_Init();
-                    fdcan1.FDCAN_Start();
-                    fdcan1.FDCAN_Interrupt_Init();
+ *                  fdcanx.FDCAN_Rx_Filter_Init();
+                    fdcanx.FDCAN_Start();
+                    fdcanx.FDCAN_Interrupt_Init();
 
- *              注意：此库指定了FDCAN1的配置，如果使用其他型号的FDCAN,请自行修改。
+ *              注意：此库指定了FDCANx的配置。
+                如果使用多FDCAN，CubeMX中配置应注意：Message RAM值应相差0x406, 即0, 0x406, 0x80C...
+                使用多FDCAN时，使用的中断均为FIFO0的中断，如果需要使用FIFO1，请自行编写代码。
+                各个FDCAN之间互相独立。
 
  *           2. 如果使用STM32F4以下系列的CAN（通常为CAN1），需要进行以下配置流程：
  *          (1) CubeMX 配置：
@@ -32,7 +35,7 @@
                 CAN2 和 CAN1 共用过滤器（但基本不会产生影响），先使能CAN1再使能CAN2（CAN2打开时必须打开CAN1）
  *
  * @author  SSC
- * @date    2023.11.23
+ * @date    2024.3.3(第三次更新)
  */
 #ifndef __WTR_CAN_H
 #define __WTR_CAN_H
@@ -99,12 +102,15 @@ void CAN2_Interrupt_Init(void);
 uint8_t CAN2_Send_Msg(CAN_MSG *msg);
 void CAN2_Start(void);
 
-
 #endif
 #if (STM32H723xx) || (STM32H743xx) // 如果使用STM32H7系列
 
 #include "stm32h7xx.h"
 #include "fdcan.h"
+/***********************CAN使能定义**********************/
+#define USE_FDCAN1 1 // 使能FDCAN1
+#define USE_FDCAN2 1 // 使能FDCAN2
+#define USE_FDCAN3 1 // 使能FDCAN3
 /***********************数据类型定义**********************/
 
 // 帧类型定义
@@ -140,20 +146,46 @@ typedef struct FDCAN_HANDLER {
 } FDCAN_HANDLER;
 
 /************************变量定义***********************/
-
+#if (USE_FDCAN1 == 1)
 extern FDCAN_RxHeaderTypeDef hfdcan1_rx; // FDCAN1 接受处理单元句柄
 extern FDCAN_TxHeaderTypeDef hfdcan1_tx; // FDCAN1 发送处理单元句柄
 extern FDCAN_HANDLER fdcan1;
 extern uint8_t fdcan1_rxdata[8];
-
+#endif
+#if (USE_FDCAN2 == 1)
+extern FDCAN_RxHeaderTypeDef hfdcan2_rx; // FDCAN2 接受处理单元句柄
+extern FDCAN_TxHeaderTypeDef hfdcan2_tx; // FDCAN2 发送处理单元句柄
+extern FDCAN_HANDLER fdcan2;
+extern uint8_t fdcan2_rxdata[8];
+#endif
+#if (USE_FDCAN3 == 1)
+extern FDCAN_RxHeaderTypeDef hfdcan3_rx; // FDCAN3 接受处理单元句柄
+extern FDCAN_TxHeaderTypeDef hfdcan3_tx; // FDCAN3 发送处理单元句柄
+extern FDCAN_HANDLER fdcan3;
+extern uint8_t fdcan3_rxdata[8];
+#endif
 /************************函数定义***********************/
-
+#if (USE_FDCAN1 == 1)
 void FDCAN1_RX_Filter_Init(void);
 void FDCAN1_Interrupt_Init(void);
 void FDCAN1_Update_RXFIFO_Status(FDCAN_HandleTypeDef *hfdcan, FDCAN_HANDLER *fdcan);
 uint8_t FDCAN1_Send_Msg(CAN_MSG *msg);
 void FDCAN1_Start(void);
-
+#endif
+#if (USE_FDCAN2 == 1)
+void FDCAN2_RX_Filter_Init(void);
+void FDCAN2_Interrupt_Init(void);
+void FDCAN2_Update_RXFIFO_Status(FDCAN_HandleTypeDef *hfdcan, FDCAN_HANDLER *fdcan);
+uint8_t FDCAN2_Send_Msg(CAN_MSG *msg);
+void FDCAN2_Start(void);
+#endif
+#if (USE_FDCAN3 == 1)
+void FDCAN3_RX_Filter_Init(void);
+void FDCAN3_Interrupt_Init(void);
+void FDCAN3_Update_RXFIFO_Status(FDCAN_HandleTypeDef *hfdcan, FDCAN_HANDLER *fdcan);
+uint8_t FDCAN3_Send_Msg(CAN_MSG *msg);
+void FDCAN3_Start(void);
+#endif
 #endif
 #ifdef __cplusplus
 }
