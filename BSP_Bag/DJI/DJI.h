@@ -71,15 +71,15 @@ typedef struct
 } DJI_t;
 
 #if (STM32F427xx)
-extern DJI_t hDJI[8][2];
+extern DJI_t hDJI[8];
 #endif
 #if (STM32H723xx)
 extern DJI_t hDJI[8][3];
 #endif
 #if (STM32F427xx)
-void CanTransmit_DJI_1234(CAN_HANDLER can, int16_t cm1_iq, int16_t cm2_iq, int16_t cm3_iq, int16_t cm4_iq);
-void CanTransmit_DJI_5678(CAN_HANDLER can, int16_t cm5_iq, int16_t cm6_iq, int16_t cm7_iq, int16_t cm8_iq);
-HAL_StatusTypeDef DJI_CanMsgDecode(uint8_t can_code, uint32_t Stdid, uint8_t *fdbData);
+void CanTransmit_DJI_1234(int16_t cm1_iq, int16_t cm2_iq, int16_t cm3_iq, int16_t cm4_iq);
+void CanTransmit_DJI_5678(int16_t cm5_iq, int16_t cm6_iq, int16_t cm7_iq, int16_t cm8_iq);
+HAL_StatusTypeDef DJI_CanMsgDecode(uint32_t Stdid, uint8_t *fdbData);
 #endif
 #if (STM32H723xx)
 void CanTransmit_DJI_1234(FDCAN_HANDLER fdcan, int16_t cm1_iq, int16_t cm2_iq, int16_t cm3_iq, int16_t cm4_iq);

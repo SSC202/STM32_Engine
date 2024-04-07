@@ -47,8 +47,7 @@ extern "C" {
 
 #include "stm32f4xx.h"
 #include "can.h"
-/***********************CAN使能定义**********************/
-#define USE_CAN2 0 // 使能CAN2
+
 /***********************数据类型定义**********************/
 
 // 帧类型定义
@@ -60,7 +59,6 @@ typedef enum {
 // 接收消息结构体定义
 typedef struct {
     __IO uint16_t id;       // CANID
-    __IO uint16_t ide;      // 数据帧类型
     CAN_FRAME_TYPE rtr;     // 远程帧，数据帧
     __IO uint8_t len;       // CAN报文长度
     __IO uint8_t buffer[8]; // CAN报文内容
@@ -79,17 +77,13 @@ typedef struct FDCAN_HANDLER {
 } CAN_HANDLER;
 
 /************************变量定义***********************/
-extern CAN_TxHeaderTypeDef hcan1_tx; // CAN1 发送处理单元句柄
-extern CAN_RxHeaderTypeDef hcan1_rx; // CAN1 接受处理单元句柄
+
 extern CAN_HANDLER can1;
 extern uint8_t can1_rxdata[8];
 
-#if (USE_CAN2 == 1)
-extern CAN_TxHeaderTypeDef hcan2_tx; // CAN2 发送处理单元句柄
-extern CAN_RxHeaderTypeDef hcan2_rx; // CAN2 接受处理单元句柄
-extern CAN_HANDLER can2;
-extern uint8_t can2_rxdata[8];
-#endif
+extern CAN_TxHeaderTypeDef hcan1_tx; // CAN1 发送处理单元句柄
+extern CAN_RxHeaderTypeDef hcan1_rx; // CAN1 接受处理单元句柄
+
 /************************函数定义***********************/
 
 void CAN1_RX_Filter_Init(void);
@@ -97,18 +91,13 @@ void CAN1_Interrupt_Init(void);
 uint8_t CAN1_Send_Msg(CAN_MSG *msg);
 void CAN1_Start(void);
 
-void CAN2_RX_Filter_Init(void);
-void CAN2_Interrupt_Init(void);
-uint8_t CAN2_Send_Msg(CAN_MSG *msg);
-void CAN2_Start(void);
-
 #endif
 #if (STM32H723xx) || (STM32H743xx) // 如果使用STM32H7系列
 
 #include "stm32h7xx.h"
 #include "fdcan.h"
 /***********************CAN使能定义**********************/
-#define USE_FDCAN1 1 // 使能FDCAN1
+#define USE_FDCAN1 0 // 使能FDCAN1
 #define USE_FDCAN2 1 // 使能FDCAN2
 #define USE_FDCAN3 1 // 使能FDCAN3
 /***********************数据类型定义**********************/

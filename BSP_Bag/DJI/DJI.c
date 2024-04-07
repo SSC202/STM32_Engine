@@ -1,11 +1,12 @@
 #include "DJI.h"
 #include "wtr_can.h"
+#include <string.h>
 
 #define LAST 0
 #define NOW  1
 
 #if (STM32F427xx)
-DJI_t hDJI[8][2];
+DJI_t hDJI[8];
 #endif
 #if (STM32H723xx)
 DJI_t hDJI[8][3];
@@ -19,50 +20,26 @@ void DJI_Init()
 #if (STM32F427xx)
     for (int i = 0; i < 8; i++) {
         // 速度环PID
-        hDJI[i][0].speedPID.KP        = 12;
-        hDJI[i][0].speedPID.KI        = 0.2;
-        hDJI[i][0].speedPID.KD        = 5;
-        hDJI[i][0].speedPID.outputMax = 8000;
+        hDJI[i].speedPID.KP        = 12;
+        hDJI[i].speedPID.KI        = 0.2;
+        hDJI[i].speedPID.KD        = 5;
+        hDJI[i].speedPID.outputMax = 8000;
 
         // 位置环PID
-        hDJI[i][0].posPID.KP        = 80.0f;
-        hDJI[i][0].posPID.KI        = 1.0f;
-        hDJI[i][0].posPID.KD        = 0.0f;
-        hDJI[i][0].posPID.outputMax = 5000;
+        hDJI[i].posPID.KP        = 80.0f;
+        hDJI[i].posPID.KI        = 1.0f;
+        hDJI[i].posPID.KD        = 0.0f;
+        hDJI[i].posPID.outputMax = 5000;
         // hDJI[i].posPID.outputMin = 1500;
 
-        if (hDJI[i][0].motorType == M3508) {
-            hDJI[i][0].reductionRate = 3591.0f / 187.0f; // 2006减速比为36 3508减速比约为19
-        } else if (hDJI[i][0].motorType == M2006) {
-            hDJI[i][0].reductionRate = 36.0f;
+        if (hDJI[i].motorType == M3508) {
+            hDJI[i].reductionRate = 3591.0f / 187.0f; // 2006减速比为36 3508减速比约为19
+        } else if (hDJI[i].motorType == M2006) {
+            hDJI[i].reductionRate = 36.0f;
         }
 
-        hDJI[i][0].encoder_resolution = 8192.0f;
+        hDJI[i].encoder_resolution = 8192.0f;
     }
-#if(USE_CAN2 == 1)
-    for (int i = 0; i < 8; i++) {
-        // 速度环PID
-        hDJI[i][1].speedPID.KP        = 12;
-        hDJI[i][1].speedPID.KI        = 0.2;
-        hDJI[i][1].speedPID.KD        = 5;
-        hDJI[i][1].speedPID.outputMax = 8000;
-
-        // 位置环PID
-        hDJI[i][1].posPID.KP        = 80.0f;
-        hDJI[i][1].posPID.KI        = 1.0f;
-        hDJI[i][1].posPID.KD        = 0.0f;
-        hDJI[i][1].posPID.outputMax = 5000;
-        // hDJI[i].posPID.outputMin = 1500;
-
-        if (hDJI[i][1].motorType == M3508) {
-            hDJI[i][1].reductionRate = 3591.0f / 187.0f; // 2006减速比为36 3508减速比约为19
-        } else if (hDJI[i][1].motorType == M2006) {
-            hDJI[i][1].reductionRate = 36.0f;
-        }
-
-        hDJI[i][1].encoder_resolution = 8192.0f;
-    }
-#endif
 #endif
 #if (STM32H723xx)
 #if (USE_FDCAN1 == 1)
@@ -185,47 +162,10 @@ void get_dji_offset(DJI_t *motor, uint8_t *fdbData)
 
 #if (STM32F427xx)
 /**
- * @brief	DJI电调数据解码函数
- * @param	Stdid	CAN数据帧ID
- * @param	fdbData	反馈值
- */
-HAL_StatusTypeDef DJI_CanMsgDecode(uint8_t can_code, uint32_t Stdid, uint8_t *fdbData)
-{
-    int i = Stdid - 0x201;
-    if (can_code == 1) {
-        if (i >= 0 && i < 8) {
-            // 上电后进行反馈数据计数，计数到第50次时设置为当前偏差
-            if (hDJI[i].FdbData.msg_cnt < 50) {
-                get_dji_offset(&hDJI[i][0], fdbData);
-                hDJI[i].FdbData.msg_cnt++;
-            } else {
-                DJI_Update(&hDJI[i][0], fdbData);
-            }
-            return HAL_OK;
-        }
-    }
-#if (USE_CAN2 == 1)
-    if (can_code == 2) {
-        if (i >= 0 && i < 8) {
-            // 上电后进行反馈数据计数，计数到第50次时设置为当前偏差
-            if (hDJI[i].FdbData.msg_cnt < 50) {
-                get_dji_offset(&hDJI[i][1], fdbData);
-                hDJI[i].FdbData.msg_cnt++;
-            } else {
-                DJI_Update(&hDJI[i][1], fdbData);
-            }
-            return HAL_OK;
-        }
-    }
-#endif
-}
-
-/**
  * @brief	DJI电机CAN发送函数，电机ID 1/2/3/4
- * @param	can	    CAN句柄(canx)
  * @param	cmx_iq	发送值，通常为最内环控制的输出值
  */
-void CanTransmit_DJI_1234(CAN_HANDLER can, int16_t cm1_iq, int16_t cm2_iq, int16_t cm3_iq, int16_t cm4_iq)
+void CanTransmit_DJI_1234(int16_t cm1_iq, int16_t cm2_iq, int16_t cm3_iq, int16_t cm4_iq)
 {
     CAN_MSG umsg;
 
@@ -247,10 +187,9 @@ void CanTransmit_DJI_1234(CAN_HANDLER can, int16_t cm1_iq, int16_t cm2_iq, int16
 
 /**
  * @brief	DJI电机CAN发送函数，电机ID 5/6/7/8
- * @param	can	    CAN句柄(canx)
  * @param	cmx_iq	发送值，通常为最内环控制的输出值
  */
-void CanTransmit_DJI_5678(CAN_HANDLER can, int16_t cm5_iq, int16_t cm6_iq, int16_t cm7_iq, int16_t cm8_iq)
+void CanTransmit_DJI_5678(int16_t cm5_iq, int16_t cm6_iq, int16_t cm7_iq, int16_t cm8_iq)
 {
     CAN_MSG umsg;
 
@@ -267,9 +206,33 @@ void CanTransmit_DJI_5678(CAN_HANDLER can, int16_t cm5_iq, int16_t cm6_iq, int16
     umsg.buffer[6] = (uint8_t)(cm8_iq >> 8);
     umsg.buffer[7] = (uint8_t)cm8_iq;
 
-    can.CAN_Send_MSG(&umsg);
+    can1.CAN_Send_MSG(&umsg);
 }
 
+/**
+ * @brief	DJI电调数据解码函数
+ * @param	Stdid	CAN数据帧ID
+ * @param	fdbData	反馈值
+ */
+HAL_StatusTypeDef DJI_CanMsgDecode(uint32_t Stdid, uint8_t *fdbData)
+{
+    int i = Stdid - 0x201;
+    if (i >= 0 && i < 8) {
+        // 上电后进行反馈数据计数，计数到第50次时设置为当前偏差
+        if (hDJI[i].FdbData.msg_cnt < 50) {
+            get_dji_offset(&hDJI[i], fdbData);
+            hDJI[i].FdbData.msg_cnt++;
+        } else {
+            DJI_Update(&hDJI[i], fdbData);
+        }
+        return HAL_OK;
+    }
+    return HAL_ERROR;
+}
+
+/**
+ * @brief CAN RX0接收中断回调函数
+ */
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
     if (hcan->Instance == hcan1.Instance) {
@@ -281,7 +244,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
         can1.rx_MSG.len = hcan1_rx.DLC;                        // 保存CAN报文的内容长度
         /* Can message Decode */
         if (hcan1_rx.IDE == CAN_ID_STD) {
-            DJI_CanMsgDecode(1, can1.rx_MSG.id, (uint8_t *)can1.rx_MSG.buffer);
+            DJI_CanMsgDecode(can1.rx_MSG.id, (uint8_t *)can1.rx_MSG.buffer);
         }
         if (hcan1_rx.IDE == CAN_ID_EXT) {
             // vesc反馈关掉这里就不会有消息
@@ -289,25 +252,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
             ;
         }
     }
-#if (USE_CAN2 == 1)
-    else if (hcan->Instance == hcan2.Instance) {
-        if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &hcan2_rx, can2_rxdata) != HAL_OK) {
-            Error_Handler();
-        }
-        memcpy((uint8_t *)can2.rx_MSG.buffer, can2_rxdata, 8); // 保存CAN报文的内容
-        can2.rx_MSG.id  = hcan2_rx.StdId;                      // 保存CAN报文的ID
-        can2.rx_MSG.len = hcan2_rx.DLC;                        // 保存CAN报文的内容长度
-        /* Can message Decode */
-        if (hcan2_rx.IDE == CAN_ID_STD) {
-            DJI_CanMsgDecode(2, can2.rx_MSG.id, (uint8_t *)can2.rx_MSG.buffer);
-        }
-        if (hcan2_rx.IDE == CAN_ID_EXT) {
-            // vesc反馈关掉这里就不会有消息
-            ;
-            ;
-        }
-    }
-#endif
 }
 
 #endif
