@@ -5,7 +5,7 @@
 
 本库是 STM32 电机驱动的笔记合集，适用于学习STM32的基础驱动后进行学习。
 
-V1.0 版本停止更新，V2.0 继续更新并加入交流异步电机的驱动教程。
+V1.0 版本停止更新，V2.0 继续更新并加入永磁同步电机(Odrive,VESC,SimpleFOC)的驱动教程。
 
 STM32 基础驱动：[Click Here](https://github.com/SSC202/STM32_Basic)
 
