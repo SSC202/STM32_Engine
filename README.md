@@ -1,9 +1,9 @@
 # STM32_Engine
-基于 STM32F407VET6 的 STM32 电机驱动学习笔记
+电机驱动学习笔记
 
 ## 本库的使用方法
 
-本库是 STM32 电机驱动的笔记合集，适用于学习STM32的基础驱动后进行学习。
+本库是电机及底盘驱动的笔记合集，适用于学习STM32的基础驱动后进行学习。
 
 V1.0 版本停止更新，V2.0 继续更新并加入永磁同步电机(Odrive,VESC,SimpleFOC)的驱动教程。
 
@@ -26,7 +26,6 @@ STM32 基础驱动：[Click Here](https://github.com/SSC202/STM32_Basic)
 |--  BSP_Bag    // 板级支持包
 |--  Code       // 测试例程
 |--  Note       // 笔记
-|--  Mode       // Simulink 仿真模型
 |--  Handbook   // 官方手册
 ```
 
