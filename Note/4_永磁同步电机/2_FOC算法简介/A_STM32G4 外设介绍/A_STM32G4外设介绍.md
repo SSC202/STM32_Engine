@@ -59,3 +59,22 @@ HAL_StatusTypeDef HAL_OPAMP_Start(OPAMP_HandleTypeDef *hopamp);
   */
 HAL_StatusTypeDef HAL_COMP_Start(COMP_HandleTypeDef *hcomp);
 ```
+
+## 3. HALL 霍尔传感器
+
+> HALL 霍尔传感器是 TIM 的扩展功能。
+
+![NULL](./assets/picture_7.jpg)
+
+HALL 定时器可以按照普通定时器配置 PSC 和 ARR 值，配置后得到的频率为采样频率。
+
+HALL 传感器功能可以使用输入滤波器，防止毛刺。
+
+HALL 传感器触发的中断是输入捕获中断。
+
+```c
+HAL_StatusTypeDef HAL_TIMEx_HallSensor_Start(TIM_HandleTypeDef *htim); 
+HAL_StatusTypeDef  HAL_TIMEx_HallSensor_Start_DMA(TIM_HandleTypeDef *htim); 
+HAL_StatusTypeDef HAL_TIMEx_HallSensor_Start_IT(TIM_HandleTypeDef *htim);
+```
+

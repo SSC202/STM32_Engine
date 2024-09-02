@@ -150,3 +150,251 @@ K_{i\omega} = \beta K_{p\omega}
 \end{cases}
 $$
 电机的转动惯量都很难得到一个较准确的值，一些电机出厂铭牌中也少有提到，根据经验值可以自己判断（即使用手动调参法）。
+
+## 4. HALL 传感器补偿
+
+无刷电机的转子上通常有若干个磁极，而霍尔传感器能够检测这些磁极的位置。在电机的定子上有霍尔传感器，它们与转子的磁极相对应。
+
+信号输出：每个霍尔传感器输出一个二进制信号（0 或 1），通常 N 为 1， S 为 0。表示其对应位置的磁极是否存在。
+
+无刷电机通常都会安装 3 个hall元器件，分为 60 度安装和 120 度安装；大部分采用 120 度安装。
+
+![NULL](./assets/picture_8.jpg)
+
+HALL 传感器的精度相对于磁编码器非常低，通常需要进行补偿得到较为准确的角度。
+
+1. HALL 初始化
+
+在电机未启动前，可以通过获取当前 HALL 状态，及转子所在扇区，将电机初始角度定义为该扇区的中点，即在当前扇区的角度上增加 30 度。
+
+![NULL](./assets/picture_9.jpg)
+
+```c
+void HALL_Init_Electrical_Angle(void)
+{
+	HALL_Handle_t *phandle = &Motor_App.HALL_Handle;
+	phandle->HallState = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8);
+	phandle->HallState |= HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_7) << 1;
+	phandle->HallState |= HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) << 2;
+	switch (phandle->HallState)
+		{
+			case STATE_5:
+			{
+				phandle->HallElAngle = PHASE_SHIFT_ANGLE + PI/6;
+				break;
+			}
+			case STATE_4:
+			{
+				phandle->HallElAngle = (PI/3.0f)+PHASE_SHIFT_ANGLE + PI/6;
+				break;
+			}
+			case STATE_6:
+			{
+				phandle->HallElAngle = (PI*2.0f/3.0f)+PHASE_SHIFT_ANGLE + PI/6;
+				break;
+			}
+			case STATE_2:
+			{
+				phandle->HallElAngle = PI + PHASE_SHIFT_ANGLE + PI/6;
+				break;
+			}
+			case STATE_3:
+			{
+				phandle->HallElAngle = (PI*4.0f/3.0f)+PHASE_SHIFT_ANGLE + PI/6;
+				break;
+			}
+			case STATE_1:
+			{
+				phandle->HallElAngle = (PI*5.0f/3.0f)+PHASE_SHIFT_ANGLE + PI/6;
+				break;
+			}
+			default:
+		 {
+			 break;
+		 }
+	 }
+}
+```
+
+2. HALL 读取速度
+
+![NULL](./assets/picture_10.jpg)
+
+> 当电机正向旋转时，HALL状态由`0x05`->`0x04`时，由 HC 的下降沿触发进入中断，在中断中获取的 HALL 状态为`0x04`，此时机械角度为 60 度。
+>
+> 而当电机反转时，HALL 状态由 `0x06` -> `0x04` 时，由 HB 的上降沿触发进入中断，在中断中获取的 HALL 状态为 `0x04`，此时认为机械角度为 120 度。
+
+```c
+void HALL_Get_Electrical_Angle(void *pHandleVoid)
+{
+	HALL_Handle_t *phandle = (HALL_Handle_t *)pHandleVoid;
+	phandle->hHighSpeedCapture = HAL_TIM_ReadCapturedValue(&htim4, TIM_CHANNEL_1);
+	phandle->bPrevHallState = phandle->HallState;
+	phandle->HallState = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8);
+	phandle->HallState |= HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_7) << 1;
+	phandle->HallState |= HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) << 2;
+	switch (phandle->HallState)
+	{
+	case STATE_5:
+	{
+		if (STATE_1 == phandle->bPrevHallState)
+		{
+			phandle->MeasuredElAngle = PHASE_SHIFT_ANGLE;
+			phandle->Direction = POSITIVE;
+		}
+		else if (STATE_4 == phandle->bPrevHallState)
+		{
+			phandle->MeasuredElAngle = PHASE_SHIFT_ANGLE + PI / 3.0f;
+			phandle->Direction = NEGATIVE;
+		}
+		else
+		{
+		}; // nothing
+		break;
+	}
+	case STATE_4:
+	{
+		if (STATE_5 == phandle->bPrevHallState)
+		{
+			phandle->MeasuredElAngle = PHASE_SHIFT_ANGLE + PI / 3.0f;
+			phandle->Direction = POSITIVE;
+		}
+		else if (STATE_6 == phandle->bPrevHallState)
+		{
+			phandle->MeasuredElAngle = PHASE_SHIFT_ANGLE + 2 * PI / 3.0f;
+			phandle->Direction = NEGATIVE;
+		}
+		else
+		{
+		}; // nothing
+		break;
+	}
+	case STATE_6:
+	{
+		if (STATE_4 == phandle->bPrevHallState)
+		{
+			phandle->MeasuredElAngle = PHASE_SHIFT_ANGLE + 2 * PI / 3.0f;
+			phandle->Direction = POSITIVE;
+		}
+		else if (STATE_2 == phandle->bPrevHallState)
+		{
+			phandle->MeasuredElAngle = PHASE_SHIFT_ANGLE + PI;
+			phandle->Direction = NEGATIVE;
+		}
+		else
+		{
+		}; // nothing
+		break;
+	}
+	case STATE_2:
+	{
+		if (STATE_6 == phandle->bPrevHallState)
+		{
+			phandle->MeasuredElAngle = PHASE_SHIFT_ANGLE + PI;
+			phandle->Direction = POSITIVE;
+		}
+		else if (STATE_3 == phandle->bPrevHallState)
+		{
+			phandle->MeasuredElAngle = PHASE_SHIFT_ANGLE + 4 * PI / 3.0f;
+			phandle->Direction = NEGATIVE;
+		}
+		else
+		{
+		}; // nothing
+		break;
+	}
+	case STATE_3:
+	{
+		if (STATE_2 == phandle->bPrevHallState)
+		{
+			phandle->MeasuredElAngle = PHASE_SHIFT_ANGLE + 4 * PI / 3.0f;
+			phandle->Direction = POSITIVE;
+		}
+		else if (STATE_1 == phandle->bPrevHallState)
+		{
+			phandle->MeasuredElAngle = PHASE_SHIFT_ANGLE + 5 * PI / 3.0f;
+			phandle->Direction = NEGATIVE;
+		}
+		else
+		{
+		}; // nothing
+		break;
+	}
+	case STATE_1:
+	{
+		if (STATE_3 == phandle->bPrevHallState)
+		{
+			phandle->MeasuredElAngle = PHASE_SHIFT_ANGLE + 5 * PI / 3.0f;
+			phandle->Direction = POSITIVE;
+		}
+		else if (STATE_5 == phandle->bPrevHallState)
+		{
+			phandle->MeasuredElAngle = PHASE_SHIFT_ANGLE;
+			phandle->Direction = NEGATIVE;
+		}
+		else
+		{
+		}; // nothing
+		break;
+	}
+	default:
+	{
+		break;
+	}
+	}
+	if (phandle->MeasuredElAngle < 0.0f)
+	{
+		phandle->MeasuredElAngle += 2.0f * PI;
+	}
+	else if (phandle->MeasuredElAngle > (2.0f * PI))
+	{
+		phandle->MeasuredElAngle -= 2.0f * PI;
+	}
+    // AvrElSpeedDpp为平均电角速度，在电流环任务中累加就得到角度
+	phandle->AvrElSpeedDpp = (PI/3)/((phandle->hHighSpeedCapture/3200000)*10000);
+    // HallSpeed 为上一个 60 度的平均速度
+	phandle->HallSpeed = (PI/3)/(phandle->hHighSpeedCapture/3200000)*30/(2*PI);
+    // 根据电机转动方向，判断转速及平均电角速度的正负
+	phandle->HallSpeed = phandle->HallSpeed * phandle->Direction;
+	phandle->AvrElSpeedDpp = phandle->AvrElSpeedDpp * phandle->Direction;
+	// HALL处理是基于之前 60° 的 HALL 时间处理的，不是当前的值，所以这么处理的前提是默认每个扇区的运行时间是不突变的，HALL 处理总归会存在误差，因此需要进行补偿
+    // 补偿方法：HALL测量到角度减去电流环中累加得到角度，除以10000后在电流环中进行补偿
+    phandle->DeltaAngle = (phandle->MeasuredElAngle - phandle->HallElAngle) / 10000;
+}
+```
+
+在电流环线程中进行补偿：
+
+```c
+	// 当HALL测量的角度等于偏置角度时，需要对累加得到的电角度做一次校准，即每转一圈（电角度）校准一次    
+	if (Motor_App.HALL_Handle.MeasuredElAngle == PHASE_SHIFT_ANGLE && Motor_App.HALL_Handle.Direction == 1)
+    {
+      // 正转校准，就是让hall获取的角度等于实际的电角度
+      Motor_App.HALL_Handle.HallElAngle = Motor_App.HALL_Handle.MeasuredElAngle;
+      Motor_App.HALL_Handle.MeasuredElAngle = Motor_App.HALL_Handle.MeasuredElAngle + Motor_App.HALL_Handle.AvrElSpeedDpp;
+      Motor_App.HALL_Handle.HallElAngle = Motor_App.HALL_Handle.HallElAngle + Motor_App.HALL_Handle.AvrElSpeedDpp;
+    }
+    else if (Motor_App.HALL_Handle.MeasuredElAngle == PHASE_SHIFT_ANGLE + PI / 3 && Motor_App.HALL_Handle.Direction == -1)
+    {
+      // 反转校准 
+      Motor_App.HALL_Handle.HallElAngle = Motor_App.HALL_Handle.MeasuredElAngle;
+      Motor_App.HALL_Handle.MeasuredElAngle = Motor_App.HALL_Handle.MeasuredElAngle + Motor_App.HALL_Handle.AvrElSpeedDpp;
+      Motor_App.HALL_Handle.HallElAngle = Motor_App.HALL_Handle.HallElAngle + Motor_App.HALL_Handle.AvrElSpeedDpp;
+    }
+    else
+    {
+      // 角度累加阶段，不校准
+      Motor_App.HALL_Handle.MeasuredElAngle = Motor_App.HALL_Handle.MeasuredElAngle + Motor_App.HALL_Handle.AvrElSpeedDpp;
+      Motor_App.HALL_Handle.HallElAngle = Motor_App.HALL_Handle.HallElAngle + Motor_App.HALL_Handle.AvrElSpeedDpp + Motor_App.HALL_Handle.DeltaAngle;
+    }
+    // 归一化
+    if (Motor_App.HALL_Handle.HallElAngle < 0.0f)
+    {
+      Motor_App.HALL_Handle.HallElAngle += 2.0f * PI;
+    }
+    else if (Motor_App.HALL_Handle.HallElAngle > (2.0f * PI))
+    {
+      Motor_App.HALL_Handle.HallElAngle -= 2.0f * PI;
+    }
+```
+
