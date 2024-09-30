@@ -1,0 +1,73 @@
+#主板参数、电机参数、编码器参数配置和位置环控制一样，已配置可直接跳转到控制器配置，没有配置的按以下步骤配置
+输入 odrivetool
+odrv0.erase_configuration()  #恢复默认参数
+
+#主板参数配置
+odrv0.config.brake_resistance = 2.0
+odrv0.config.dc_bus_undervoltage_trip_level = 8.0
+odrv0.config.dc_bus_overvoltage_trip_level = 56.0
+odrv0.config.dc_max_positive_current = 20.0
+odrv0.config.dc_max_negative_current = -3.0
+odrv0.config.max_regen_current = 0
+odrv0.save_configuration()
+
+#电机参数配置
+odrv0.axis0.motor.config.pole_pairs = 7
+odrv0.axis0.motor.config.calibration_current = 5
+odrv0.axis0.motor.config.resistance_calib_max_voltage = 2
+odrv0.axis0.motor.config.motor_type = MOTOR_TYPE_HIGH_CURRENT
+odrv0.axis0.motor.config.current_lim = 15
+odrv0.axis0.motor.config.requested_current_range = 20
+odrv0.save_configuration()
+
+#编码器参数配置
+odrv0.axis0.encoder.config.mode = ENCODER_MODE_INCREMENTAL
+odrv0.axis0.encoder.config.cpr = 16384   //4096
+odrv0.axis0.encoder.config.bandwidth = 3000
+odrv0.axis0.config.calibration_lockin.current = 5
+odrv0.axis0.config.calibration_lockin.ramp_time = 0.4
+odrv0.axis0.config.calibration_lockin.ramp_distance = 3.1415927410125732
+odrv0.axis0.config.calibration_lockin.accel = 20
+odrv0.axis0.config.calibration_lockin.vel = 40
+odrv0.save_configuration()
+
+#控制器参数配置
+odrv0.axis0.controller.config.control_mode = CONTROL_MODE_VELOCITY_CONTROL
+odrv0.axis0.controller.config.vel_limit = 50
+odrv0.axis0.controller.config.pos_gain = 30
+odrv0.axis0.controller.config.vel_gain = 0.02  #参数自己根据实际运行情况整定
+odrv0.axis0.controller.config.vel_integrator_gain = 0.2
+odrv0.axis0.controller.config.input_mode = INPUT_MODE_PASSTHROUGH  #其他信号输入模式参考https://docs.odriverobotics.com/api/odrive.controller.inputmode
+odrv0.axis0.trap_traj.config.vel_limit = 30
+odrv0.axis0.trap_traj.config.accel_limit = 5
+odrv0.axis0.trap_traj.config.decel_limit = 5
+odrv0.save_configuration()
+odrv0.reboot()
+
+#测试参数配置
+odrv0.axis0.requested_state = AXIS_STATE_MOTOR_CALIBRATION  #校准电机，2S后会听见滴声。
+dump_errors(odrv0)  #检测看是否有error有的话排除error再进行下一步
+odrv0.axis0.requested_state = AXIS_STATE_ENCODER_OFFSET_CALIBRATION #校准编码器
+dump_errors(odrv0)  #检测看是否有error有的话排除error再进行下一步
+odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL#进入闭环模式
+dump_errors(odrv0)  #检测看是否有error有的话排除error再进行下一步
+
+#此处可能会出现CONTROLLER_ERROR_OVERSPEED 错误
+#官方说：odrv0.axis0.controller.config.vel_limit_tolerance = 0，可解决，实测不行
+#     解决办法：odrv0.axis0.controller.config.vel_limit = 100000
+#                     odrv0.axis0.controller.config.vel_limit_tolerance = 10  这两个值都改的大一些，
+
+odrv0.axis0.config.startup_encoder_offset_calibration = True   #开机自动进行编码器校准
+odrv0.axis0.config.startup_closed_loop_control = True
+odrv0.save_configuration()
+odrv0.reboot()  
+
+#电机控制测试：
+
+odrv0.axis0.controller.input_vel=10   #设定转速为10转每秒（r/s）
+odrv0.axis0.controller.input_vel=0
+odrv0.axis0.controller.input_vel=-20
+odrv0.axis0.requested_state = AXIS_STATE_IDLE   #释放电机
+
+
+start_liveplotter(lambda:[odrv0.axis0.encoder.vel_estimate, odrv0.axis0.controller.vel_setpoint])
