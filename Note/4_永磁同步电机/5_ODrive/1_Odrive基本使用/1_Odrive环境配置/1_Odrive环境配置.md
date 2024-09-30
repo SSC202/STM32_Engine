@@ -18,7 +18,7 @@
 > - `green`：ODrive 处于活动状态且正在运行。
 > - `red`：发生错误，ODrive 已禁用。有关更多信息，请参阅故障排除页面。
 
-### 固件下载
+### USB通讯接口替换
 
 - 电脑安装 Python 环境，在 Python 环境下安装 `odrivetool` 包。
 
@@ -28,7 +28,7 @@
 
 - USB接口连到电脑上，电源接口接电源。
 
-- `zadig` 下载固件：https://zadig.akeo.ie/ 
+- `zadig` 下载：https://zadig.akeo.ie/ 
 
   1. 打开软件：
 
