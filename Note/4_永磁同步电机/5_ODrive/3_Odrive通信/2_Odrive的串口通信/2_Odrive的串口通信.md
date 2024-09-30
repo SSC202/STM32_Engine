@@ -114,11 +114,11 @@ command *42 ; 注释 [换行符]
 
 ## 3. Odrive 串口通信配置
 
+ODrive 主板的 GPIO1 为 TX 功能，GPIO2 为 RX 功能。
+
 ```python
-odrv0.config.uart_a_baudrate = 115200
-odrv0.config.enable_uart_a = True
-odrv0.config.gpio12_mode = GpioMode.UART_A
-odrv0.config.gpio13_mode = GpioMode.UART_A
+odrv0.config.uart_baudrate = 115200
+odrv0.config.enable_uart = True
 odrv0.save_configuration()
 ```
 
