@@ -108,6 +108,17 @@ command *42 ; 注释 [换行符]
 
 7. 系统指令
 
-   - `ss` - 保存配置.
-   - `se` - 擦除配置.
-   - `sr` - 重启.
+   - `ss` - 保存配置。
+   - `se` - 擦除配置。
+   - `sr` - 重启。
+
+## 3. Odrive 串口通信配置
+
+```python
+odrv0.config.uart_a_baudrate = 115200
+odrv0.config.enable_uart_a = True
+odrv0.config.gpio12_mode = GpioMode.UART_A
+odrv0.config.gpio13_mode = GpioMode.UART_A
+odrv0.save_configuration()
+```
+
