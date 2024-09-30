@@ -95,3 +95,35 @@ odrv0.axis0.controller.input_pos = 50
 odrv0.axis0.controller.input_pos = 0
 ```
 
+### 无感控制指令
+
+```python
+#恢复默认参数
+odrv0.erase_configuration()
+ 
+#控制器参数配置
+odrv0.axis0.controller.config.vel_gain = 0.01
+odrv0.axis0.controller.config.vel_integrator_gain = 0.05
+odrv0.axis0.controller.config.control_mode = CONTROL_MODE_VELOCITY_CONTROL  			# 无传感器控制模式，只能在速度控制模式下运行。
+odrv0.axis0.controller.input_vel = 10
+odrv0.axis0.controller.config.vel_limit = 50
+ 
+#电机参数配置
+odrv0.axis0.motor.config.current_lim =15
+odrv0.axis0.motor.config.direction = 1                                           		# 设置电机定向转动。
+odrv0.axis0.sensorless_estimator.config.pm_flux_linkage = 5.51328895422 / (7 * 980)      # 永磁磁链配置，电机极对数*电机KV。
+odrv0.axis0.requested_state = AXIS_STATE_MOTOR_CALIBRATION          				   # 校准电机，2S后会听见滴声。
+odrv0.axis0.motor.config.pre_calibrated = True                  					   # 设置重启也有效。
+odrv0.axis0.requested_state = AXIS_STATE_SENSORLESS_CONTROL         				   # 进入无传感器控制模式。
+odrv0.axis0.config.startup_sensorless_control = True                    				# 重启也有效。
+odrv0.save_configuration()
+odrv0.reboot()
+ 
+#重启后电机会定向转动校准位置
+ 
+ 
+#电机控制测试
+odrv0.axis0.controller.input_vel = 10       #设置电机转动速度为10
+odrv0.axis0.controller.input_vel = -10      #设置电机转动速度为-10
+```
+
