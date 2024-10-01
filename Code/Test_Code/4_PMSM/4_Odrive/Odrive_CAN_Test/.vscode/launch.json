@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "cwd": "${workspaceRoot}",
+            "type": "cortex-debug",
+            "request": "launch",
+            "name": "Debug: OpenOCD",
+            "servertype": "openocd",
+            "executable": "build/Debug/Odrive_CAN_Test.elf",
+            "runToEntryPoint": "main",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32f4x.cfg"
+            ],
+            "toolchainPrefix": "arm-none-eabi"
+        }
+    ]
+}

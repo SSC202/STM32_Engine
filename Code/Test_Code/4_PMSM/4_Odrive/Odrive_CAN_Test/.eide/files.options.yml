@@ -14,7 +14,4 @@
 #   '**/*.c':             -O2 -gnu ...
 
 version: "2.0"
-options:
-    Debug:
-        files: {}
-        virtualPathFiles: {}
+options: {}

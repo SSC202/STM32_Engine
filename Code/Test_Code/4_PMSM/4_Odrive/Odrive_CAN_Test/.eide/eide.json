@@ -11,7 +11,7 @@
     "name": "<virtual_root>",
     "files": [
       {
-        "path": "startup_stm32f103xe.s"
+        "path": "startup_stm32f427xx.s"
       }
     ],
     "folders": []
@@ -20,16 +20,16 @@
   "deviceName": null,
   "packDir": null,
   "miscInfo": {
-    "uid": "c7fdf7892fd9b6dc84fca8cb8c60b6d1"
+    "uid": "a637bcea7fc8364ae41a3b190e53dbd5"
   },
   "targets": {
     "Debug": {
       "excludeList": [],
       "toolchain": "GCC",
       "compileConfig": {
-        "cpuType": "Cortex-M3",
-        "floatingPointHardware": "none",
-        "scatterFilePath": "STM32F103RCTx_FLASH.ld",
+        "cpuType": "Cortex-M4",
+        "floatingPointHardware": "single",
+        "scatterFilePath": "STM32F427IIHx_FLASH.ld",
         "useCustomScatterFile": true,
         "storageLayout": {
           "RAM": [],
@@ -66,15 +66,15 @@
         "name": "default",
         "incList": [
           "Core/Inc",
-          "Drivers/STM32F1xx_HAL_Driver/Inc",
-          "Drivers/STM32F1xx_HAL_Driver/Inc/Legacy",
-          "Drivers/CMSIS/Device/ST/STM32F1xx/Include",
+          "Drivers/STM32F4xx_HAL_Driver/Inc",
+          "Drivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+          "Drivers/CMSIS/Device/ST/STM32F4xx/Include",
           "Drivers/CMSIS/Include"
         ],
         "libList": [],
         "defineList": [
           "USE_HAL_DRIVER",
-          "STM32F103xE"
+          "STM32F427xx"
         ]
       },
       "builderOptions": {
@@ -83,7 +83,7 @@
           "beforeBuildTasks": [],
           "afterBuildTasks": [],
           "global": {
-            "$float-abi-type": "softfp",
+            "$float-abi-type": "hard",
             "output-debug-info": "enable",
             "misc-control": "--specs=nosys.specs --specs=nano.specs"
           },
@@ -93,18 +93,14 @@
             "optimization": "level-debug",
             "warnings": "all-warnings",
             "one-elf-section-per-function": true,
-            "one-elf-section-per-data": true,
-            "C_FLAGS": "",
-            "CXX_FLAGS": ""
+            "one-elf-section-per-data": true
           },
-          "asm-compiler": {
-            "ASM_FLAGS": ""
-          },
+          "asm-compiler": {},
           "linker": {
             "output-format": "elf",
             "remove-unused-input-sections": true,
-            "LD_FLAGS": "",
-            "LIB_FLAGS": "-lm"
+            "LIB_FLAGS": "-lm",
+            "$toolName": "auto"
           }
         }
       }
