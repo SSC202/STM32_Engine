@@ -29,6 +29,10 @@ VESC 官网：[VESC Project (vesc-project.com)](https://vesc-project.com/)
 
 ### 固件烧录和升级
 
+> VESC 使用固件版本为5.01，硬件版本为6.0。（永刚驱动）
+>
+> VESC Tool 版本：6.05
+
 1. 使用 STM32 ST-LINK Utility 烧录原始固件（后续步骤会进行升级）
 
    ![NULL](./assets/picture_3.jpg)
@@ -65,8 +69,50 @@ VESC 官网：[VESC Project (vesc-project.com)](https://vesc-project.com/)
 
    烧录完成固件后，VESC会自动断开连接，等待10s再次连接VESC，连接成功会在软件底部提示绿色字体，证明连接成功。到此固件升级成功。
 
+### 电机连接测试
+
+首先连接电机三相线（不必连接传感器，首先使用无感方式测试）
+
+1. 配置电机
    
+      ![NULL](./assets/picture_12.jpg)
    
+      选择电机用途：Generic
    
+      ![NULL](./assets/picture_13.jpg)
    
+      选择电机功率和类型（Outrunner 为外转子电机，Inrunner 为内转子电机），注意电机功率应选择合适功率，如果功率选择偏小会使得电机振动，偏大会使得电机过热损毁。
+   
+      ![NULL](./assets/picture_14.jpg)
+   
+      选择供电电源，一般单节锂电池的操作电压在 4.2V - 3.1V 之间，当电池电压低于 3.1V，这时你还要给电池继续放电，就会对电池造成损坏。为了避免造成损坏，VESC 就会在电压低于 3.4V 的时候开始软切断电源，当低于 3.1V 的时候就会直接切断电源。这里需要填入锂电池的串数，24V的锂电池组大部分都是7串的，也有小部分6串的。
+   
+      Battery Current Max（电池电流最大值）：设置你的电池持续电流最大值，这需要参考电池规格型号。
+   
+      Battery Current Max Regen（电池回收电流最大值）：因为刹车的时候，电机会产生反向电流来给电池充电，但是电池充电电流也是有限制的，具体限制多少可以参考电池充电器充电电流。
+   
+      ![NULL](./assets/picture_15.jpg)
+   
+      极对数，减速比和温敏电阻设置，注意如果无减速箱则选择 Direct Drive，极对数填写电机极数（两倍极对数）。
+   
+      ![NULL](./assets/picture_16.jpg)
+   
+      
+   
+      随后运行电机参数测量，电机会首先啸叫（测量电感和电阻），然后高速正转并正反转（测量励磁磁场和凸极性质）：
+   
+      ![NULL](./assets/picture_17.jpg)
+   
+      测量结束，此时可以测试电机正反转（VESC Tool 6.05 好像不会产生剧烈振动）。
+
+2.  驱动电机运动
+
+   ![NULL](./assets/picture_18.jpg)
+
+   ![NULL](./assets/picture_19.jpg)
+
+   
+
+   
+
    
