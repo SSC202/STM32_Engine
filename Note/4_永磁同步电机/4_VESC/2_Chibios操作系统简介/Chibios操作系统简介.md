@@ -382,3 +382,719 @@ ChibiOS 系统包含以下组件：
 
 7. `make` 进行编译和程序生成，使用 STM32 Utility 烧录。
 
+## 2. Chibios HAL 库简介
+
+Chibios 使用了自身的硬件抽象层（Hardware Abstract Library）。
+
+### PAL(GPIO)
+
+- GPIO 模式
+
+  ```c
+  /**
+   * @name    Pads mode constants
+   * @{
+   */
+  /**
+   * @brief   After reset state.
+   * @details The state itself is not specified and is architecture dependent,
+   *          it is guaranteed to be equal to the after-reset state. It is
+   *          usually an input state.
+   */
+  #define PAL_MODE_RESET                  0U
+  /**
+   * @brief   Safe state for <b>unconnected</b> pads.
+   * @details The state itself is not specified and is architecture dependent,
+   *          it may be mapped on @p PAL_MODE_INPUT_PULLUP,
+   *          @p PAL_MODE_INPUT_PULLDOWN or @p PAL_MODE_OUTPUT_PUSHPULL for
+   *          example.
+   */
+  #define PAL_MODE_UNCONNECTED            1U
+  /**
+   * @brief   Regular input high-Z pad.
+   */
+  #define PAL_MODE_INPUT                  2U
+  /**
+   * @brief   Input pad with weak pull up resistor.
+   */
+  #define PAL_MODE_INPUT_PULLUP           3U
+  /**
+   * @brief   Input pad with weak pull down resistor.
+   */
+  #define PAL_MODE_INPUT_PULLDOWN         4U
+  /**
+   * @brief   Analog input mode.
+   */
+  #define PAL_MODE_INPUT_ANALOG           5U
+  /**
+   * @brief   Push-pull output pad.
+   */
+  #define PAL_MODE_OUTPUT_PUSHPULL        6U
+  /**
+   * @brief   Open-drain output pad.
+   */
+  #define PAL_MODE_OUTPUT_OPENDRAIN       7U
+  /** @} */
+  ```
+
+- 设置 GPIO 模式
+
+  - 设置一个引脚
+
+    ```c
+    /**
+     * @brief   Pad mode setup.
+     * @details This function programs a pad with the specified mode.
+     * @note    The operation is not guaranteed to be atomic on all the
+     *          architectures, for atomicity and/or portability reasons you may
+     *          need to enclose port I/O operations between @p osalSysLock() and
+     *          @p osalSysUnlock().
+     * @note    Programming an unknown or unsupported mode is silently ignored.
+     * @note    The function can be called from any context.
+     *
+     * @param[in] port      port identifier
+     * @param[in] pad       pad number within the port
+     * @param[in] mode      pad mode
+     *
+     * @special
+     */
+    #define palSetPadMode(port, pad, mode) pal_lld_setpadmode(port, pad, mode)
+    
+    palSetPadMode(GPIOK, 5, PAL_MODE_OUTPUT_PUSHPULL);
+    ```
+
+    > 除了指定 GPIO 组号和端口号之外，可以通过对端口直接定义直接进行配置：
+    >
+    > ```c
+    > #define LINE_LED_GREEN              PAL_LINE(GPIOK, 5U)
+    > 
+    > palSetLineMode(LINE_LED_GREEN, PAL_MODE_OUTPUT_PUSHPULL);
+    > ```
+
+  - 设置一组引脚
+  
+    ```c
+    /**
+     * @brief   Pads group mode setup.
+     * @details This function programs a pads group belonging to the same port
+     *          with the specified mode.
+     * @note    The operation is not guaranteed to be atomic on all the
+     *          architectures, for atomicity and/or portability reasons you may
+     *          need to enclose port I/O operations between @p osalSysLock() and
+     *          @p osalSysUnlock().
+     * @note    Programming an unknown or unsupported mode is silently ignored.
+     * @note    The function can be called from any context.
+     *
+     * @param[in] port      端口组号
+     * @param[in] mask      掩码，1为更改
+     * @param[in] offset    位偏移量
+     * @param[in] mode      模式
+     *
+     * @special
+     */
+    #define palSetGroupMode(port, mask, offset, mode)                           \
+      pal_lld_setgroupmode(port, mask, offset, mode)
+    
+    /* The following statements are equivalent. However, the last statement 
+       sacrifices some compactness in exchange for clarity. */
+    palSetGroupMode(GPIOA, 0x0070, 0, PAL_MODE_OUTPUT_PUSHPULL);
+    palSetGroupMode(GPIOA, 0x0007, 4, PAL_MODE_OUTPUT_PUSHPULL);
+    palSetGroupMode(GPIOA, PAL_PORT_BIT(4) | PAL_PORT_BIT(5) | PAL_PORT_BIT(6), 
+                    0, PAL_MODE_OUTPUT_PUSHPULL);
+    ```
+  
+- GPIO 输出
+
+  ```c
+  /**
+   * @brief   Sets a pad logic state to @p PAL_HIGH.
+   * @note    The operation is not guaranteed to be atomic on all the
+   *          architectures, for atomicity and/or portability reasons you may
+   *          need to enclose port I/O operations between @p osalSysLock() and
+   *          @p osalSysUnlock().
+   * @note    The function can be called from any context.
+   *
+   * @param[in] port      port identifier
+   * @param[in] pad       pad number within the port
+   *
+   * @special
+   */
+  #define palSetPad(port, pad) pal_lld_setpad(port, pad)
+  /**
+   * @brief   Clears a pad logic state to @p PAL_LOW.
+   * @note    The operation is not guaranteed to be atomic on all the
+   *          architectures, for atomicity and/or portability reasons you may
+   *          need to enclose port I/O operations between @p osalSysLock() and
+   *          @p osalSysUnlock().
+   * @note    The function can be called from any context.
+   *
+   * @param[in] port      port identifier
+   * @param[in] pad       pad number within the port
+   *
+   * @special
+   */
+  #define palClearPad(port, pad) pal_lld_clearpad(port, pad)
+  /**
+   * @brief   Toggles a pad logic state.
+   * @note    The operation is not guaranteed to be atomic on all the
+   *          architectures, for atomicity and/or portability reasons you may
+   *          need to enclose port I/O operations between @p osalSysLock() and
+   *          @p osalSysUnlock().
+   * @note    The function can be called from any context.
+   *
+   * @param[in] port      port identifier
+   * @param[in] pad       pad number within the port
+   *
+   * @special
+   */
+  #define palTogglePad(port, pad) pal_lld_togglepad(port, pad)
+  
+  /**
+   * @brief   Sets a line logic state to @p PAL_HIGH.
+   * @note    The operation is not guaranteed to be atomic on all the
+   *          architectures, for atomicity and/or portability reasons you may
+   *          need to enclose port I/O operations between @p osalSysLock() and
+   *          @p osalSysUnlock().
+   * @note    The function can be called from any context.
+   *
+   * @param[in] line      line identifier
+   *
+   * @special
+   */
+  #define palSetLine(line) palSetPad(PAL_PORT(line), PAL_PAD(line))
+  /**
+   * @brief   Clears a line logic state to @p PAL_LOW.
+   * @note    The operation is not guaranteed to be atomic on all the
+   *          architectures, for atomicity and/or portability reasons you may
+   *          need to enclose port I/O operations between @p osalSysLock() and
+   *          @p osalSysUnlock().
+   * @note    The function can be called from any context.
+   *
+   * @param[in] line      line identifier
+   *
+   * @special
+   */
+  #define palClearLine(line) palClearPad(PAL_PORT(line), PAL_PAD(line))
+  /**
+   * @brief   Toggles a line logic state.
+   * @note    The operation is not guaranteed to be atomic on all the
+   *          architectures, for atomicity and/or portability reasons you may
+   *          need to enclose port I/O operations between @p osalSysLock() and
+   *          @p osalSysUnlock().
+   * @note    The function can be called from any context.
+   *
+   * @param[in] line      line identifier
+   *
+   * @special
+   */
+  #define palToggleLine(line) palTogglePad(PAL_PORT(line), PAL_PAD(line))
+  
+  /**
+   * @brief   Writes a logic state on an output pad.
+   * @note    The operation is not guaranteed to be atomic on all the
+   *          architectures, for atomicity and/or portability reasons you may
+   *          need to enclose port I/O operations between @p osalSysLock() and
+   *          @p osalSysUnlock().
+   * @note    The function can be called from any context.
+   *
+   * @param[in] port      port identifier
+   * @param[in] pad       pad number within the port
+   * @param[in] bit       logic value, the value must be @p PAL_LOW or
+   *                      @p PAL_HIGH
+   *
+   * @special
+   */
+  #define palWritePad(port, pad, bit) pal_lld_writepad(port, pad, bit)
+  /**
+   * @brief   Writes a logic state on an output line.
+   * @note    The operation is not guaranteed to be atomic on all the
+   *          architectures, for atomicity and/or portability reasons you may
+   *          need to enclose port I/O operations between @p osalSysLock() and
+   *          @p osalSysUnlock().
+   * @note    The function can be called from any context.
+   *
+   * @param[in] line      line identifier
+   * @param[in] bit       logic value, the value must be @p PAL_LOW or
+   *                      @p PAL_HIGH
+   *
+   * @special
+   */
+  #define palWriteLine(line, bit) pal_lld_writeline(line, bit)
+  ```
+
+- GPIO 数字输入
+
+  - 检测一个引脚的输入
+
+    ```c
+    /* Defining a lines. */
+    #define LINE_INPUT                  PAL_LINE(GPIOA, 3U)
+    /* Configuring the line as Input pull-up. */
+    palSetLineMode(LINE_INPUT, PAL_MODE_INPUT_PULLUP);
+    if(palReadLine(LINE_INPUT) == PAL_HIGH) {
+      /* The line is high. */
+    }
+    else {
+      /* The line is low. */
+    }
+    ```
+
+  - 检测一组引脚的输入
+
+    ```c
+    /* Defining the GPIO mask. */
+    #define GPIOC_MASK                  PAL_PORT_BIT(0) | PAL_PORT_BIT(1) | \
+                                        PAL_PORT_BIT(2) | PAL_PORT_BIT(3)
+                                        
+    /* Configuring the lines as Input pull-up. */
+    palSetGroupMode(GPIOC, GPIOC_MASK, 0, PAL_MODE_INPUT_PULLUP);
+    /* Reading the GPIOC group status. */
+    uint16_t group_status = palReadGroup(GPIOC, GPIOC_MASK, 0);
+    if(group_status & PAL_PORT_BIT(0)) {
+      /* PC0 is high. */
+    }
+    else {
+      /* PC0 is low. */
+    }
+    if(group_status & PAL_PORT_BIT(1)) {
+      /* PC1 is high. */
+    }
+    else {
+      /* PC1 is low. */
+    }
+    if(group_status & PAL_PORT_BIT(2)) {
+      /* PC2 is high. */
+    }
+    else {
+      /* PC2 is low. */
+    }
+    if(group_status & PAL_PORT_BIT(3)) {
+      /* PC3 is high. */
+    }
+    else {
+      /* PC3 is low. */
+    }
+    ```
+
+### EXTI 
+
+- 使能中断（`halconf.h`）
+
+  ```c
+  /*===========================================================================*/
+  /* PAL driver related settings.                                              */
+  /*===========================================================================*/
+  /**
+   * @brief   Enables synchronous APIs.
+   * @note    Disabling this option saves both code and data space.
+   */
+  #if !defined(PAL_USE_CALLBACKS) || defined(__DOXYGEN__)
+  #define PAL_USE_CALLBACKS                   TRUE
+  #endif
+  /**
+   * @brief   Enables synchronous APIs.
+   * @note    Disabling this option saves both code and data space.
+   */
+  #if !defined(PAL_USE_WAIT) || defined(__DOXYGEN__)
+  #define PAL_USE_WAIT                        TRUE
+  #endif
+  ```
+
+  > - `PAL_USE_CALLBACKS` 使能回调函数；
+  > - `PAL_USE_WAIT` 使能中断事件；
+
+  ```c
+  /**
+   * @brief   Pad event enable.
+   * @note    Programming an unknown or unsupported mode is silently ignored.
+   *
+   * @param[in] port      port identifier
+   * @param[in] pad       pad number within the port
+   * @param[in] mode      pad event mode
+   *
+   * @api
+   */
+  #define palEnablePadEvent(port, pad, mode)                                  \
+    do {                                                                      \
+      osalSysLock();                                                          \
+      palEnablePadEventI(port, pad, mode);                                    \
+      osalSysUnlock();                                                        \
+    } while (false)
+  
+  /* Enabling the Event Listening on PA3 for a Falling Edge. */
+  palEnablePadEvent(GPIOA, 3, PAL_EVENT_MODE_FALLING_EDGE);
+  ```
+
+  > 不能在同一条线路上两次调用 `palEnablePadEvent` 或 `palEnableLineEvent`。
+
+  外部中断模式选择：
+
+  ```c
+  /**
+   * @name    PAL event modes
+   * @{
+   */
+  #define PAL_EVENT_MODE_EDGES_MASK   3U  /**< @brief Mask of edges field.    */
+  #define PAL_EVENT_MODE_DISABLED     0U  /**< @brief Channel disabled.       */
+  #define PAL_EVENT_MODE_RISING_EDGE  1U  /**< @brief Rising edge callback.   */
+  #define PAL_EVENT_MODE_FALLING_EDGE 2U  /**< @brief Falling edge callback.  */
+  #define PAL_EVENT_MODE_BOTH_EDGES   3U  /**< @brief Both edges callback.    */
+  /** @} */
+  ```
+
+- 回调函数
+
+  ```c
+  #if (PAL_USE_CALLBACKS == TRUE) || defined(__DOXYGEN__)
+  /**
+   * @brief   Associates a callback to a pad.
+   *
+   * @param[in] port      port identifier
+   * @param[in] pad       pad number within the port
+   * @param[in] cb        event callback function
+   * @param[in] arg       callback argument
+   *
+   * @api
+   */
+  #define palSetPadCallback(port, pad, cb, arg)                               \
+    do {                                                                      \
+      osalSysLock();                                                          \
+      palSetPadCallbackI(port, pad, cb, arg);                                 \
+      osalSysUnlock();                                                        \
+    } while (false)
+  /**
+   * @brief   Associates a callback to a line.
+   *
+   * @param[in] line      line identifier
+   * @param[in] cb        event callback function
+   * @param[in] arg       callback argument
+   *
+   * @api
+   */
+  #define palSetLineCallback(line, cb, arg)                                   \
+    do {                                                                      \
+      osalSysLock();                                                          \
+      palSetLineCallbackI(line, cb, arg);                                     \
+      osalSysUnlock();                                                        \
+    } while (false)
+  #endif /* PAL_USE_CALLBACKS == TRUE */
+  ```
+
+- 示例
+
+  ```c
+  #include "ch.h"
+  #include "hal.h"
+  #define MY_LINE                     PAL_LINE(GPIOA, 3U)
+  /* Callback associated to the event. */
+  static void my_callback(void *arg) {
+    (void)arg;
+    /* HERE GOES OUR ACTION. */
+  }
+  /* Application entry point. */
+  int main(void) {
+    /* ChibiOS/HAL and ChibiOS/RT initialization. */
+    halInit();
+    chSysInit();
+   /* Configuring the Line as Input Pull Up.*/
+    palSetLineMode(MY_LINE, PAL_MODE_INPUT_PULLUP);
+   /* Enabling the event on the Line for a Falling edge. */
+    palEnableLineEvent(MY_LINE, PAL_EVENT_MODE_FALLING_EDGE);
+   /* Associating a callback to the Line. */
+    palSetLineCallback(MY_LINE, my_callback, NULL);
+    /* main() thread loop. */
+    while (true) {
+      palToggleLine(LINE_LED_GREEN);
+      chThdSleepMilliseconds(500);
+    }
+  }
+  ```
+
+### SD(UART)
+
+![NULL](./assets/picture_1.jpg)
+
+> - `SD_UNINIT`：驱动程序设置前的初始状态。一旦使用 `halInit()` 初始化系统并启用串行驱动程序和分配外围设备，此状态就会改变。
+> - `SD_STOP`：在此状态下，驱动程序处于非活动状态。UART 外设不从时钟树接收任何电源，处于低功耗状态以节省能源。
+> - `SD_READY`：驱动程序已准备好启动或已在运行。时钟树处于活动状态，UART 已设置并准备好进行数据传输。
+
+- UART 配置（`halconf.h`）
+
+  ```c
+  /*===========================================================================*/
+  /* SERIAL driver related settings.                                           */
+  /*===========================================================================*/
+  /**
+   * @brief   Default bit rate.
+   * @details Configuration parameter, this is the baud rate selected for the
+   *          default configuration.
+   */
+  #if !defined(SERIAL_DEFAULT_BITRATE) || defined(__DOXYGEN__)
+  #define SERIAL_DEFAULT_BITRATE              38400
+  #endif
+  /**
+   * @brief   Serial buffers size.
+   * @details Configuration parameter, you can change the depth of the queue
+   *          buffers depending on the requirements of your application.
+   * @note    The default is 16 bytes for both the transmission and receive
+   *          buffers.
+   */
+  #if !defined(SERIAL_BUFFERS_SIZE) || defined(__DOXYGEN__)
+  #define SERIAL_BUFFERS_SIZE                 16
+  #endif
+  ```
+
+  > 可以自定义串口配置：
+  >
+  > ```c
+  > /*
+  >  * Serial configuration (115200 bps, 8-bit odd parity, 2 stop bits, no flow control).
+  >  */
+  > const SerialConfig serialcfg = {
+  >   .speed = 115200,
+  >   .cr1 = USART_CR1_PCE | USART_CR1_PS,  // Enables parity check and sets odd parity
+  >   .cr2 = USART_CR2_STOP_1,              // Configures 2 stop bits
+  >   .cr3 = 0U                             // No additional settings
+  > };
+  > ```
+
+- UART 使用
+
+  ```c
+  /**
+   * @brief   启动 UART 驱动程序
+   *
+   * @param[in] sdp       pointer to a @p SerialDriver object
+   * @param[in] config    the architecture-dependent serial driver configuration.
+   *                      If this parameter is set to @p NULL then a default
+   *                      configuration is used.
+   * @return              The operation status.
+   *
+   * @api
+   */
+  msg_t sdStart(SerialDriver *sdp, const SerialConfig *config)
+      
+  /**
+   * @brief   停止 UART 驱动程序
+   * @details Any thread waiting on the driver's queues will be awakened with
+   *          the message @p MSG_RESET.
+   *
+   * @param[in] sdp       pointer to a @p SerialDriver object
+   *
+   * @api
+   */
+  void sdStop(SerialDriver *sdp);
+  
+  /**
+   * @brief   UART 发送字符
+   * @note    This function bypasses the indirect access to the channel and
+   *          writes directly on the output queue. This is faster but cannot
+   *          be used to write to different channels implementations.
+   *
+   * @param[in] sdp       pointer to a @p SerialDriver object
+   * @param[in] b         the byte value to be written in the output queue
+   * @return              The operation status.
+   * @retval MSG_OK       if the operation succeeded.
+   * @retval MSG_RESET    if the @p SerialDriver has been stopped.
+   *
+   * @api
+   */
+  #define sdPut(sdp, b) oqPut(&(sdp)->oqueue, b)
+  
+  /**
+   * @brief   UART 读取字符
+   * @note    This function bypasses the indirect access to the channel and
+   *          reads directly from the input queue. This is faster but cannot
+   *          be used to read from different channels implementations.
+   *
+   * @param[in] sdp       pointer to a @p SerialDriver object
+   * @return              A byte value from the input queue.
+   * @retval MSG_RESET    if the @p SerialDriver has been stopped.
+   *
+   * @api
+   */
+  #define sdGet(sdp) iqGet(&(sdp)->iqueue)
+  
+  /**
+   * @brief   UART 发送函数(轮询)
+   * @note    This function bypasses the indirect access to the channel and
+   *          writes directly to the output queue. This is faster but cannot
+   *          be used to write from different channels implementations.
+   *
+   * @param[in] sdp       pointer to a @p SerialDriver object
+   * @param[in] b         pointer to the data buffer
+   * @param[in] n         the maximum amount of data to be transferred, the
+   *                      value 0 is reserved
+   *
+   * @api
+   */
+  #define sdWrite(sdp, b, n) oqWriteTimeout(&(sdp)->oqueue, b, n, TIME_INFINITE)
+  
+  /**
+   * @brief   UART 读取函数(轮询)
+   * @note    This function bypasses the indirect access to the channel and
+   *          reads directly from the input queue. This is faster but cannot
+   *          be used to read from different channels implementations.
+   *
+   * @param[in] sdp       pointer to a @p SerialDriver object
+   * @param[in] b         pointer to the data buffer
+   * @param[in] n         the maximum amount of data to be transferred, the
+   *                      value 0 is reserved
+   *
+   * @api
+   */
+  #define sdRead(sdp, b, n) iqReadTimeout(&(sdp)->iqueue, b, n, TIME_INFINITE)
+  
+  /**
+   * @brief   Direct write to a @p SerialDriver with timeout specification.
+   * @note    This function bypasses the indirect access to the channel and
+   *          writes directly on the output queue. This is faster but cannot
+   *          be used to write to different channels implementations.
+   *
+   * @param[in] sdp       pointer to a @p SerialDriver object
+   * @param[in] b         the byte value to be written in the output queue
+   * @param[in] t         the number of ticks before the operation timeouts,
+   *                      the following special values are allowed:
+   *                      - @a TIME_IMMEDIATE immediate timeout.
+   *                      - @a TIME_INFINITE no timeout.
+   *                      .
+   * @return              The operation status.
+   * @retval MSG_OK       if the operation succeeded.
+   * @retval MSG_TIMEOUT  if the specified time expired.
+   * @retval MSG_RESET    if the @p SerialDriver has been stopped.
+   *
+   * @api
+   */
+  #define sdPutTimeout(sdp, b, t) oqPutTimeout(&(sdp)->oqueue, b, t)
+  
+  /**
+   * @brief   Direct read from a @p SerialDriver with timeout specification.
+   * @note    This function bypasses the indirect access to the channel and
+   *          reads directly from the input queue. This is faster but cannot
+   *          be used to read from different channels implementations.
+   *
+   * @param[in] sdp       pointer to a @p SerialDriver object
+   * @param[in] t         the number of ticks before the operation timeouts,
+   *                      the following special values are allowed:
+   *                      - @a TIME_IMMEDIATE immediate timeout.
+   *                      - @a TIME_INFINITE no timeout.
+   *                      .
+   * @return              A byte value from the input queue.
+   * @retval MSG_TIMEOUT  if the specified time expired.
+   * @retval MSG_RESET    if the @p SerialDriver has been stopped.
+   *
+   * @api
+   */
+  #define sdGetTimeout(sdp, t) iqGetTimeout(&(sdp)->iqueue, t)
+  
+  /**
+   * @brief   Direct blocking write to a @p SerialDriver with timeout
+   *          specification.
+   * @note    This function bypasses the indirect access to the channel and
+   *          writes directly to the output queue. This is faster but cannot
+   *          be used to write to different channels implementations.
+   *
+   * @param[in] sdp       pointer to a @p SerialDriver object
+   * @param[in] b         pointer to the data buffer
+   * @param[in] n         the maximum amount of data to be transferred, the
+   *                      value 0 is reserved
+   * @param[in] t         the number of ticks before the operation timeouts,
+   *                      the following special values are allowed:
+   *                      - @a TIME_IMMEDIATE immediate timeout.
+   *                      - @a TIME_INFINITE no timeout.
+   *                      .
+   * @return              The number of bytes effectively transferred.
+   *
+   * @api
+   */
+  #define sdWriteTimeout(sdp, b, n, t)                                        \
+    oqWriteTimeout(&(sdp)->oqueue, b, n, t)
+  
+  /**
+   * @brief   Direct blocking read from a @p SerialDriver with timeout
+   *          specification.
+   * @note    This function bypasses the indirect access to the channel and
+   *          reads directly from the input queue. This is faster but cannot
+   *          be used to read from different channels implementations.
+   *
+   * @param[in] sdp       pointer to a @p SerialDriver object
+   * @param[in] b         pointer to the data buffer
+   * @param[in] n         the maximum amount of data to be transferred, the
+   *                      value 0 is reserved
+   * @param[in] t         the number of ticks before the operation timeouts,
+   *                      the following special values are allowed:
+   *                      - @a TIME_IMMEDIATE immediate timeout.
+   *                      - @a TIME_INFINITE no timeout.
+   *                      .
+   * @return              The number of bytes effectively transferred.
+   *
+   * @api
+   */
+  #define sdReadTimeout(sdp, b, n, t) iqReadTimeout(&(sdp)->iqueue, b, n, t)
+  ```
+
+- UART 中断 API 
+
+  ```c
+  /**
+   * @brief   Direct write to a @p SerialDriver.
+   * @note    This function bypasses the indirect access to the channel and
+   *          writes directly on the output queue. This is faster but cannot
+   *          be used to write to different channels implementations.
+   *
+   * @param[in] sdp       pointer to a @p SerialDriver object
+   * @param[in] b         the byte value to be written in the output queue
+   * @return              The operation status.
+   * @retval MSG_OK       if the operation succeeded.
+   * @retval MSG_TIMEOUT  if the queue is full.
+   *
+   * @iclass
+   */
+  #define sdPutI(sdp, b) oqPutI(&(sdp)->oqueue, b)
+  /**
+   * @brief   Direct read from a @p SerialDriver.
+   * @note    This function bypasses the indirect access to the channel and
+   *          reads directly from the input queue. This is faster but cannot
+   *          be used to read from different channels implementations.
+   *
+   * @param[in] sdp       pointer to a @p SerialDriver object
+   * @return              A byte value from the input queue.
+   * @retval MSG_TIMEOUT  if the queue is empty.
+   *
+   * @iclass
+   */
+  #define sdGetI(sdp) iqGetI(&(sdp)->iqueue)
+  /**
+   * @brief   Direct non-blocking write to a @p SerialDriver.
+   * @note    This function bypasses the indirect access to the channel and
+   *          writes directly to the output queue. This is faster but cannot
+   *          be used to write from different channels implementations.
+   *
+   * @param[in] sdp       pointer to a @p SerialDriver object
+   * @param[in] b         pointer to the data buffer
+   * @param[in] n         the maximum amount of data to be transferred, the
+   *                      value 0 is reserved
+   * @return              The number of bytes effectively transferred.
+   *
+   * @iclass
+   */
+  #define sdWriteI(sdp, b, n) oqWriteI(&(sdp)->oqueue, b, n)
+  /**
+   * @brief   Direct non-blocking read from a @p SerialDriver.
+   * @note    This function bypasses the indirect access to the channel and
+   *          reads directly from the input queue. This is faster but cannot
+   *          be used to read from different channels implementations.
+   *
+   * @param[in] sdp       pointer to a @p SerialDriver object
+   * @param[in] b         pointer to the data buffer
+   * @param[in] n         the maximum amount of data to be transferred, the
+   *                      value 0 is reserved
+   * @return              The number of bytes effectively transferred.
+   *
+   * @iclass
+   */
+  #define sdReadI(sdp, b, n) iqReadI(&(sdp)->iqueue, b, n)
+  ```
+
+  
+
