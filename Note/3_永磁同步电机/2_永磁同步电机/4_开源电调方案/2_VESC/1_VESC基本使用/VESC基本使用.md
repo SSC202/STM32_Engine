@@ -103,7 +103,7 @@ VESC 官网：[VESC Project (vesc-project.com)](https://vesc-project.com/)
    
       ![NULL](./assets/picture_17.jpg)
    
-      测量结束，此时可以测试电机正反转（VESC Tool 6.05 好像不会产生剧烈振动）。
+      测量结束，此时可以测试电机正反转。
 
 2.  驱动电机运动
 
@@ -111,8 +111,36 @@ VESC 官网：[VESC Project (vesc-project.com)](https://vesc-project.com/)
 
    ![NULL](./assets/picture_19.jpg)
 
-   
+## 3. 其他测试
 
-   
+### HALL 传感器测试
+
+带 HALL 传感器的电机的 HALL 传感器 UVW 三相接入 HALL_1 HALL_2 HALL_3 接口上并向 HALL 传感器提供 5V 电源。
+
+![NULL](./assets/picture_20.jpg)
+
+> 如果仍然显示 Sensorless ，请检查 HALL 接线或者 PCB 布线问题。
+
+HALL 传感器运行时，Encoder 不会显示数据，因为 HALL 实际上包含速度信息而非位置信息。得到的数据源于观测器得到的电角度值。
+
+HALL 重校正：
+
+![NULL](./assets/picture_21.jpg)
+
+### ABZ 传感器测试
+
+MakerBase 的 VESC 支持 ABZ 传感器。ABZ 传感器的 IBA 三信号线接入 HALL1-3 （引脚对应由硬件决定）。
+
+上电后，会进入无传感器状态，需要自行配置 Encoder。
+
+![NULL](./assets/picture_22.jpg)
+
+![NULL](./assets/picture_23.jpg)
+
+此时Encoder可以显示角度：
+
+![NULL](./assets/picture_24.jpg)
+
+### AS5047P SPI 测试
 
    
