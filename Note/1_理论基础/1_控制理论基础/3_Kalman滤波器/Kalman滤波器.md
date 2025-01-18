@@ -306,3 +306,80 @@ $$
 
 ## 5. Unscented Kalman Filter
 
+对于非线性问题，扩展 Kalman Filter 除了计算量大，还有线性误差的影响，有没有别的方法。而无迹 Kalman Filter 则通过无迹变换（Unscented Transform，UT）来求出预测模型的均值和方差。
+
+UKF生成了一些点，来近似非线性。由这些点来决定实际 $x$ 和 $P$ 的取值范围。UKF的采样点就是把不能解决的非线性单个变量的不确定性，用多个采样点的不确定性近似了。
+
+- UT 变换
+
+  **<font color="#dddd00">例4</font> 对于随机变量$X～N(0,1)$，$Y=g(X)$，求$E(Y)$，$D(Y)$。**
+
+  > 精确解：
+  > $$
+  > E(Y) = E(g(X)) = \int^{+\infty}_{-\infty}g(x)\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx \\
+  > E(Y^2) = \int^{+\infty}_{-\infty}g^2(x)\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx \\
+  > D(Y) = E(Y^2) - E^2(Y)
+  > $$
+  > 精确解是不好计算的，使用 UT 变换取近似解。
+  >
+  > 取三个带权重的粒子代替 $N(0,1)$ :
+  > $$
+  > x_1 = E(X),w_1=\frac{\lambda}{1+\lambda}\\
+  > x_2 = E(X) - \sqrt{(1+\lambda)D(X)},w_2 = \frac{1}{2(1+\lambda)}\\
+  > x_3 = E(X) + \sqrt{(1+\lambda)D(X)},w_3 = \frac{1}{2(1+\lambda)}
+  > $$
+  > $\lambda$ 为大于 0 的参数，可以任意取值。$\lambda$ 越大，粒子散布越开。
+  > $$
+  > y_i = f(x_i) 
+  > $$
+  > 此时可以求出 $E(Y)$ 和 $D(Y)$。
+
+  UT 变换得到的结果仍然是近似的。
+
+  > - 对于二阶以上的函数，EKF 不可能还原出 $E(Y)$ 和 $D(Y)$。但是 UT 变换可以还原出 $E(Y)$，UT 变换不能还原三阶以上的 $E(Y)$ 和 $D(Y)$。
+
+- UKF 过程
+
+  1. UT 变换求出采样点
+     $$
+     \bold{X}_k^{(i)} = [\bold{x}_k , \bold{x}_k+\sqrt{(\lambda+n_x)\bold{P}_k^{(i)}},\bold{x}_k-\sqrt{(\lambda+n_x)\bold{P}_k^{(i)}}]
+     $$
+     $n_x$ 为状态向量的维度，一共得到 $2n+1$ 个采样点。通常取 $\lambda = 3 - n_x$。$\sqrt{\bold{P}_k}^{(i)}$ 为正定矩阵分解为 $pp^T$ 后 $p$ 的第 $i$ 列。
+
+  2. 求出采样点的权重
+     $$
+     \bold \omega_k^{(1)} = \frac{\lambda}{n_x+\lambda} \\
+     \bold \omega_k^{(i)} = \frac{1}{2(n_x+\lambda)}
+     $$
+  
+  3. 对采样点变换并求出先验估计
+     $$
+     \bold x_{k+1}^{-(i)} =f(\bold x_{k}^{(i)}) \\
+     \hat{\bold x}_{k+1}^- = \sum_{i=1}^{2n_x+1}\omega_k^{(i)}\bold x_{k+1}^{-(i)} \\
+     \bold P_{k+1}^- = \sum_{i=1}^{2n_x+1}\omega_k^{(i)}(\bold x_{k+1}^{-(i)}-\hat{\bold x}_{k+1}^-)(\bold x_{k+1}^{-(i)}-\hat{\bold x}_{k+1}^-)^T + \bold Q
+     $$
+     
+  4. 对先验估计再次 UT 变换
+     $$
+     \hat{\bold{X}}_{k+1}^{-(i)} = [\hat{\bold{x}}_{k+1}^- , \hat{\bold{x}}_{k+1}^-+\sqrt{(\lambda+n_x)\hat{\bold{P}}_{k+1}^{-(i)}},\hat{\bold{x}}_{k+1}^--\sqrt{(\lambda+n_x)\hat{\bold{P}}_{k+1}^{-(i)}}]
+     $$
+  
+  5. 求出输出量的均值和方差
+     $$
+     \bold y_{k+1}^{-(i)} =h(\hat{\bold{x}}_{k+1}^{-(i)}) \\
+     \hat{\bold y}_{k+1} = \sum_{i=1}^{2n_x+1}\omega_k^{(i)}\bold {\hat{y}}_{k+1}^{-(i)} \\
+     \bold P_{y(k+1)} = \sum_{i=1}^{2n_x+1}\omega_k^{(i)}(\bold y_{k+1}^{-(i)}-\hat{\bold y}_{k+1})(\bold y_{k+1}^{-(i)}-\hat{\bold y}_{k+1})^T + \bold R
+     $$
+     这里是输出估计值的方差，实际上和输出估计值误差的方差是一致的（见随机控制理论）。
+  
+  6. 求互协方差矩阵并求出 Kalman 增益： 
+     $$
+     \bold P_{xy} = \sum_{i=1}^{2n_x+1}(\bold x_{k+1}^{-(i)}-\hat{\bold x}_{k+1}^-)(\bold y_{k+1}^{-(i)}-\hat{\bold y}_{k+1})^T \\
+     \bold K_{k+1} = \bold P_{xy} \bold P_y^{-1}
+     $$
+  
+  7. 数据融合
+     $$
+     \hat{\bold x}_{k+1}^+ = \hat{\bold x}_{k+1}^-+\bold K_{k+1}(\bold y_{k+1}-\hat{\bold y}_{k+1}) \\
+     \bold P_{k+1}^+ = \bold P_{k+1}^- + \bold K_{k+1} \bold P_y \bold K_{k+1}^T
+     $$

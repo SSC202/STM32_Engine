@@ -143,4 +143,17 @@ MakerBase 的 VESC 支持 ABZ 传感器。ABZ 传感器的 IBA 三信号线接�
 
 ### AS5047P SPI 测试
 
-   
+注意 SPI 线接入 HALL 接口（对于 Makerbase 75200 V2.0 不需要更改任何硬件，按照说明书接线）。
+
+> Makerbase 75200 V2.0 ：
+>
+> HALL3 --- CSn
+>
+> HALL2 --- MISO
+>
+> HALL1 --- SCK
+>
+> 3V3 -- MOSI
+
+上电进行 FOC 模式时，如果自检时间更长，而且自检结束后进入 Encoder 模式，则编码器连接成功。（若失败则大概率为接线错误或SPI信号被干扰）
+
