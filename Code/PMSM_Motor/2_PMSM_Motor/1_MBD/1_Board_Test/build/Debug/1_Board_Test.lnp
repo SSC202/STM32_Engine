@@ -1,1 +1,0 @@
--mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mcpu=cortex-m4 -T "f:/STM32SSC/STM32/STM32SSC_Engine/Code/PMSM_Motor/2_PMSM_Motor/1_MBD/1_Board_Test/STM32G431CBUx_FLASH.ld" -Wl,--print-memory-usage --specs=nosys.specs --specs=nano.specs -u _printf_float -u _scanf_float -Wl,--gc-sections -Wl,-Map=./build/Debug/1_Board_Test.map
