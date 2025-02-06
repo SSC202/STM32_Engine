@@ -1,0 +1,74 @@
+[2024-08-15 21:01:11]	[info] incremental build: 42 source files changed
+These source files will be recompiled
+---
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Core\Src\adc.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Core\Src\comp.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Core\Src\dac.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Core\Src\gpio.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Core\Src\main.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Core\Src\opamp.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Core\Src\stm32g4xx_hal_msp.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Core\Src\stm32g4xx_it.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Core\Src\syscalls.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Core\Src\sysmem.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Core\Src\system_stm32g4xx.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Core\Src\tim.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Core\Src\usart.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_adc.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_adc_ex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_comp.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_cortex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_dac.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_dac_ex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_dma.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_dma_ex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_exti.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_flash.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_flash_ex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_flash_ramfunc.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_gpio.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_opamp.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_opamp_ex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_pwr.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_pwr_ex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_rcc.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_rcc_ex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_tim.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_tim_ex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_uart.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_uart_ex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_ll_adc.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\MATLAB\IF_Mode0.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Usercode\userdebug.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Usercode\usermain.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\startup_stm32g431xx.s': object (.o) file not exist
+
+[2024-08-15 21:01:12]	link failed !, exit code: 1
+   at unify_builder.Program.Main(String[] args_)
+---
+d:/environment_install/gnu arm toolchain/gnu arm embedded toolchain/10 2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/bin/ld.exe: ./build/Debug/.obj/Usercode/userdebug.o: in function `_isatty':
+e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF/./Usercode/userdebug.c:26: multiple definition of `_isatty'; ./build/Debug/.obj/Core/Src/syscalls.o:e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF/./Core/Src/syscalls.c:110: first defined here
+d:/environment_install/gnu arm toolchain/gnu arm embedded toolchain/10 2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/bin/ld.exe: ./build/Debug/.obj/Usercode/userdebug.o: in function `_close':
+e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF/./Usercode/userdebug.c:47: multiple definition of `_close'; ./build/Debug/.obj/Core/Src/syscalls.o:e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF/./Core/Src/syscalls.c:96: first defined here
+d:/environment_install/gnu arm toolchain/gnu arm embedded toolchain/10 2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/bin/ld.exe: ./build/Debug/.obj/Usercode/userdebug.o: in function `_lseek':
+e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF/./Usercode/userdebug.c:54: multiple definition of `_lseek'; ./build/Debug/.obj/Core/Src/syscalls.o:e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF/./Core/Src/syscalls.c:118: first defined here
+d:/environment_install/gnu arm toolchain/gnu arm embedded toolchain/10 2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/bin/ld.exe: ./build/Debug/.obj/Usercode/userdebug.o: in function `_fstat':
+e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF/./Usercode/userdebug.c:77: multiple definition of `_fstat'; ./build/Debug/.obj/Core/Src/syscalls.o:e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF/./Core/Src/syscalls.c:102: first defined here
+Memory region         Used Size  Region Size  %age Used
+             RAM:        2936 B        32 KB      8.96%
+           FLASH:       53640 B       112 KB     46.77%
+collect2.exe: error: ld returned 1 exit status
+
+
+[2024-08-15 21:01:49]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\3_IF\Core\Src\syscalls.c': source file has been changed.
+
+[2024-08-15 21:01:49]	[done]
+	build successfully !
+
+[2024-08-15 21:02:51]	[done]
+	build successfully !
+

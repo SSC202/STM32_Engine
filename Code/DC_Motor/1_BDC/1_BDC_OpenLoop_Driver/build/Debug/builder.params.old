@@ -1,0 +1,123 @@
+{
+    "name": "1_BDC_OpenLoop_Driver",
+    "target": "Debug",
+    "toolchain": "GCC",
+    "toolchainLocation": "R:\\User_Download\\Environment_Install\\GNU Arm Toolchain\\GNU Arm Embedded Toolchain\\10 2021.10",
+    "toolchainCfgFile": "c:\\Users\\ssc\\.vscode\\extensions\\cl.eide-3.13.2023060401\\res\\data\\models\\win32/arm.gcc.model.json",
+    "buildMode": "fast|multhread",
+    "showRepathOnLog": true,
+    "threadNum": 8,
+    "rootDir": "s:\\STM32SSC\\STM32\\STM32SSC_Engine\\Code\\Test_Code\\1_BDC_OpenLoop_Driver",
+    "dumpPath": "build\\Debug",
+    "outDir": "build\\Debug",
+    "incDirs": [
+        ".eide/deps",
+        "Core/Inc",
+        "Drivers/STM32F4xx_HAL_Driver/Inc",
+        "Drivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+        "Drivers/CMSIS/Device/ST/STM32F4xx/Include",
+        "Drivers/CMSIS/Include",
+        "BSP",
+        "Core/Src",
+        "Drivers/STM32F4xx_HAL_Driver/Src"
+    ],
+    "libDirs": [],
+    "defines": [
+        "USE_HAL_DRIVER",
+        "STM32F407xx"
+    ],
+    "sourceList": [
+        "BSP/io_retargetToUart.c",
+        "BSP/motor.c",
+        "Core/Src/gpio.c",
+        "Core/Src/main.c",
+        "Core/Src/stm32f4xx_hal_msp.c",
+        "Core/Src/stm32f4xx_it.c",
+        "Core/Src/system_stm32f4xx.c",
+        "Core/Src/tim.c",
+        "Core/Src/usart.c",
+        "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c",
+        "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c",
+        "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c",
+        "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c",
+        "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c",
+        "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c",
+        "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c",
+        "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c",
+        "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c",
+        "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c",
+        "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c",
+        "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c",
+        "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c",
+        "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c",
+        "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c",
+        "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c",
+        "startup_stm32f407xx.s"
+    ],
+    "sourceParams": {},
+    "sourceParamsMtime": 1695803439134.2827,
+    "options": {
+        "version": 5,
+        "beforeBuildTasks": [],
+        "afterBuildTasks": [],
+        "global": {
+            "$float-abi-type": "softfp",
+            "output-debug-info": "enable",
+            "misc-control": "--specs=nosys.specs --specs=nano.specs",
+            "toolPrefix": "arm-none-eabi-",
+            "microcontroller-cpu": "cortex-m4-sp",
+            "microcontroller-fpu": "cortex-m4-sp",
+            "microcontroller-float": "cortex-m4-sp",
+            "target": "cortex-m4-sp"
+        },
+        "c/cpp-compiler": {
+            "language-c": "c11",
+            "language-cpp": "c++11",
+            "optimization": "level-debug",
+            "warnings": "all-warnings",
+            "one-elf-section-per-function": true,
+            "one-elf-section-per-data": true,
+            "C_FLAGS": "",
+            "CXX_FLAGS": ""
+        },
+        "asm-compiler": {
+            "ASM_FLAGS": ""
+        },
+        "linker": {
+            "output-format": "elf",
+            "remove-unused-input-sections": true,
+            "LD_FLAGS": "",
+            "LIB_FLAGS": "-lm",
+            "link-scatter": [
+                "\"s:/STM32SSC/STM32/STM32SSC_Engine/Code/Test_Code/1_BDC_OpenLoop_Driver/STM32F407VETx_FLASH.ld\""
+            ]
+        }
+    },
+    "env": {
+        "workspaceFolder": "s:\\STM32SSC\\STM32\\STM32SSC_Engine\\Code\\Test_Code\\1_BDC_OpenLoop_Driver",
+        "workspaceFolderBasename": "1_BDC_OpenLoop_Driver",
+        "OutDir": "s:\\STM32SSC\\STM32\\STM32SSC_Engine\\Code\\Test_Code\\1_BDC_OpenLoop_Driver\\build\\Debug",
+        "OutDirRoot": "build",
+        "OutDirBase": "build\\Debug",
+        "ProjectName": "1_BDC_OpenLoop_Driver",
+        "ConfigName": "Debug",
+        "ProjectRoot": "s:\\STM32SSC\\STM32\\STM32SSC_Engine\\Code\\Test_Code\\1_BDC_OpenLoop_Driver",
+        "ExecutableName": "s:\\STM32SSC\\STM32\\STM32SSC_Engine\\Code\\Test_Code\\1_BDC_OpenLoop_Driver\\build\\Debug\\1_BDC_OpenLoop_Driver",
+        "SYS_Platform": "win32",
+        "SYS_DirSep": "\\",
+        "SYS_DirSeparator": "\\",
+        "SYS_PathSep": ";",
+        "SYS_PathSeparator": ";",
+        "SYS_EOL": "\r\n",
+        "ToolchainRoot": "R:\\User_Download\\Environment_Install\\GNU Arm Toolchain\\GNU Arm Embedded Toolchain\\10 2021.10"
+    },
+    "sha": {
+        "c/cpp-defines": "6fb1138e1eb34669ca45eb53f4ff62b9",
+        "beforeBuildTasks": "d751713988987e9331980363e24189ce",
+        "afterBuildTasks": "d751713988987e9331980363e24189ce",
+        "global": "195cf06e5e5fdeaf185421dc9c5836b0",
+        "c/cpp-compiler": "292b10e2fef533def4cb15297b4e0391",
+        "asm-compiler": "dd2e48fddd09233278cb37447cf1e693",
+        "linker": "7fa7f91910842e54cbd5d81fe8c9b431"
+    }
+}

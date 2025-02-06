@@ -1,0 +1,3 @@
+tool: GCC
+fileName: 1_Board_Test.map
+elfName: 1_Board_Test.elf

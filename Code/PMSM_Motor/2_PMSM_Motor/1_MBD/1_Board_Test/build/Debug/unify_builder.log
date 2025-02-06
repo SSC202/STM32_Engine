@@ -1,0 +1,226 @@
+[2024-08-03 21:33:29]	[info] incremental build: 23 source files changed
+These source files will be recompiled
+---
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\gpio.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\main.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\stm32g4xx_hal_msp.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\stm32g4xx_it.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\syscalls.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\sysmem.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\system_stm32g4xx.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_cortex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_dma.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_dma_ex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_exti.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_flash.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_flash_ex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_flash_ramfunc.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_gpio.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_pwr.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_pwr_ex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_rcc.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_rcc_ex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_tim.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_tim_ex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\startup_stm32g431xx.s': object (.o) file not exist
+
+[2024-08-03 21:33:31]	[done]
+	build successfully !
+
+[2024-08-03 21:36:35]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\main.c': source file has been changed.
+
+[2024-08-03 21:36:35]	[done]
+	build successfully !
+
+[2024-08-03 22:30:00]	[info] incremental build: 32 source files changed
+These source files will be recompiled
+---
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\adc.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\gpio.c': source file has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\main.c': source file has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\opamp.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\stm32g4xx_hal_msp.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\stm32g4xx_it.c': source file has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\system_stm32g4xx.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\usart.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_adc.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_adc_ex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_cortex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_dma.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_dma_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_exti.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_flash.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_flash_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_flash_ramfunc.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_gpio.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_opamp.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_opamp_ex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_pwr.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_pwr_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_rcc.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_rcc_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_tim.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_tim_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_uart.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_uart_ex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_ll_adc.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Usercode\userdebug.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Usercode\usermain.c': object (.o) file not exist
+
+[2024-08-03 22:30:01]	link failed !, exit code: 1
+   at unify_builder.Program.Main(String[] args_)
+---
+d:/environment_install/gnu arm toolchain/gnu arm embedded toolchain/10 2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/bin/ld.exe: ./build/Debug/.obj/Usercode/userdebug.o: in function `_isatty':
+e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test/./Usercode/userdebug.c:26: multiple definition of `_isatty'; ./build/Debug/.obj/Core/Src/syscalls.o:e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test/./Core/Src/syscalls.c:110: first defined here
+d:/environment_install/gnu arm toolchain/gnu arm embedded toolchain/10 2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/bin/ld.exe: ./build/Debug/.obj/Usercode/userdebug.o: in function `_close':
+e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test/./Usercode/userdebug.c:47: multiple definition of `_close'; ./build/Debug/.obj/Core/Src/syscalls.o:e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test/./Core/Src/syscalls.c:96: first defined here
+d:/environment_install/gnu arm toolchain/gnu arm embedded toolchain/10 2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/bin/ld.exe: ./build/Debug/.obj/Usercode/userdebug.o: in function `_lseek':
+e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test/./Usercode/userdebug.c:54: multiple definition of `_lseek'; ./build/Debug/.obj/Core/Src/syscalls.o:e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test/./Core/Src/syscalls.c:118: first defined here
+d:/environment_install/gnu arm toolchain/gnu arm embedded toolchain/10 2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/bin/ld.exe: ./build/Debug/.obj/Usercode/userdebug.o: in function `_fstat':
+e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test/./Usercode/userdebug.c:77: multiple definition of `_fstat'; ./build/Debug/.obj/Core/Src/syscalls.o:e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test/./Core/Src/syscalls.c:102: first defined here
+Memory region         Used Size  Region Size  %age Used
+             RAM:        2128 B        32 KB      6.49%
+           FLASH:       14020 B       112 KB     12.22%
+collect2.exe: error: ld returned 1 exit status
+
+
+[2024-08-03 22:30:16]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\syscalls.c': source file has been changed.
+
+[2024-08-03 22:30:16]	[done]
+	build successfully !
+
+[2024-08-03 22:32:45]	[info] incremental build: 2 source files changed
+These source files will be recompiled
+---
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\main.c': source file has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Usercode\usermain.c': source file has been changed.
+
+[2024-08-03 22:32:45]	[done]
+	build successfully !
+
+[2024-08-03 22:33:35]	[done]
+	build successfully !
+
+[2024-08-03 22:37:01]	[info] incremental build: 2 source files changed
+These source files will be recompiled
+---
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\main.c': source file has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Usercode\usermain.c': source file has been changed.
+
+[2024-08-03 22:37:01]	[done]
+	build successfully !
+
+[2024-08-03 22:49:08]	[info] incremental build: 32 source files changed
+These source files will be recompiled
+---
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\adc.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\gpio.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\main.c': source file has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\opamp.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\stm32g4xx_hal_msp.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\stm32g4xx_it.c': source file has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\system_stm32g4xx.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\tim.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\usart.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_adc.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_adc_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_cortex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_dma.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_dma_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_exti.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_flash.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_flash_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_flash_ramfunc.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_gpio.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_opamp.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_opamp_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_pwr.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_pwr_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_rcc.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_rcc_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_tim.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_tim_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_uart.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_uart_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Usercode\userdebug.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Usercode\usermain.c': source file has been changed.
+
+[2024-08-03 22:49:09]	[done]
+	build successfully !
+
+[2024-08-03 23:10:31]	[info] incremental build: 37 source files changed
+These source files will be recompiled
+---
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\adc.c': source file has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\comp.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\dac.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\gpio.c': source file has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\main.c': source file has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\opamp.c': source file has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\stm32g4xx_hal_msp.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\stm32g4xx_it.c': source file has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\system_stm32g4xx.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\tim.c': source file has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Src\usart.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_adc.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_adc_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_comp.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_cortex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_dac.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_dac_ex.c': object (.o) file not exist
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_dma.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_dma_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_exti.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_flash.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_flash_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_flash_ramfunc.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_gpio.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_opamp.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_opamp_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_pwr.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_pwr_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_rcc.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_rcc_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_tim.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_tim_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_uart.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_uart_ex.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Usercode\userdebug.c': dependence 'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Core\Inc\stm32g4xx_hal_conf.h' has been changed.
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Usercode\usermain.c': source file has been changed.
+
+[2024-08-03 23:10:31]	compilation failed at : "e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Usercode\usermain.c", exit code: 1
+command: 
+  "D:\Environment_Install\GNU Arm Toolchain\GNU Arm Embedded Toolchain\10 2021.10\bin\arm-none-eabi-gcc.exe" -c -xc -mthumb -std=c11 -ICore/Inc -IDrivers/STM32G4xx_HAL_Driver/Inc -IDrivers/STM32G4xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32G4xx/Include -IDrivers/CMSIS/Include -ICore/Src -IDrivers/STM32G4xx_HAL_Driver/Src -IUsercode -DUSE_HAL_DRIVER -DSTM32G431xx -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mcpu=cortex-m4 -Og -Wall -g --specs=nosys.specs --specs=nano.specs -u _printf_float -u _scanf_float -ffunction-sections -fdata-sections -o ./build/Debug/.obj/Usercode/usermain.o -MMD ./Usercode/usermain.c
+   at unify_builder.Program.compileByMulThread(Int32 thrNum, CmdInfo[] cmds_, List`1 errLogs)
+   at unify_builder.Program.Main(String[] args_)
+---
+./Usercode/usermain.c: In function 'usermain':
+./Usercode/usermain.c:51:66: error: 'i_a' undeclared (first use in this function)
+   51 |         printf("%.2f,%.2f,%.2f,%.2f\r\n", potentiometer_voltage, i_a, i_b, i_c);
+      |                                                                  ^~~
+./Usercode/usermain.c:51:66: note: each undeclared identifier is reported only once for each function it appears in
+./Usercode/usermain.c:51:71: error: 'i_b' undeclared (first use in this function)
+   51 |         printf("%.2f,%.2f,%.2f,%.2f\r\n", potentiometer_voltage, i_a, i_b, i_c);
+      |                                                                       ^~~
+./Usercode/usermain.c:51:76: error: 'i_c' undeclared (first use in this function)
+   51 |         printf("%.2f,%.2f,%.2f,%.2f\r\n", potentiometer_voltage, i_a, i_b, i_c);
+      |                                                                            ^~~
+
+[2024-08-03 23:10:53]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'e:\STM32SSC\STM32\STM32SSC_Engine\Code\Test_Code\4_PMSM\1_FOC\1_Board_Test\Usercode\usermain.c': source file has been changed.
+
+[2024-08-03 23:10:53]	[done]
+	build successfully !
+

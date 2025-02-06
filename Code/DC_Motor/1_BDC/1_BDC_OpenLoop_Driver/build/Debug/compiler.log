@@ -1,0 +1,10 @@
+>>> cc
+
+
+
+>>> ld
+
+Memory region         Used Size  Region Size  %age Used
+             RAM:        1896 B       128 KB      1.45%
+          CCMRAM:          0 GB        64 KB      0.00%
+           FLASH:       11368 B       512 KB      2.17%

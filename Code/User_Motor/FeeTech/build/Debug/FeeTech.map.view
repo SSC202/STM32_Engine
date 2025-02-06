@@ -1,0 +1,3 @@
+tool: GCC
+fileName: FeeTech.map
+elfName: FeeTech.elf

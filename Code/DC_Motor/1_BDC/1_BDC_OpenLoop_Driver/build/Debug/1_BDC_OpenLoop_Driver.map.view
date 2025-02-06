@@ -1,0 +1,3 @@
+tool: GCC
+fileName: 1_BDC_OpenLoop_Driver.map
+elfName: 1_BDC_OpenLoop_Driver.elf
