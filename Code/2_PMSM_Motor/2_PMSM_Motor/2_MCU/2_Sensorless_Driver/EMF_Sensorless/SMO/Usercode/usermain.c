@@ -10,7 +10,7 @@ enum SYSTEM_SAMPLE_STATE
     SAMPLE_RUN   // 采样运行
 };
 enum SYSTEM_SAMPLE_STATE system_sample_state = SAMPLE_INIT; // 系统采样状态
-const float system_sample_time = 1e-4;                      // 系统运行频率 10kHz(PWM 40kHz)
+const float system_sample_time = 2e-4;                      // 系统运行频率 10kHz(PWM 40kHz)
 uint8_t system_enable = 0;                                  // 系统使能标志位
 uint8_t system_print = 0;                                   // 系统打印标志位
 
@@ -51,7 +51,7 @@ void usermain()
     LPF_Init(&i_alpha_lpf, 100, system_sample_time);
     LPF_Init(&i_beta_lpf, 100, system_sample_time);
     // SMO 初始化
-    SMO_Init(&smo, 2, 100, 10000, 20000, 10, system_sample_time);
+    SMO_Init(&smo, 2, 10, 10000, 20000, 10, system_sample_time);
     // 编码器初始化
     Encoder_Init(&encoder, POLE_PAIRS, ENCODER_DIRECT, ENCODER_OFFSET);
     // 电流采样校准

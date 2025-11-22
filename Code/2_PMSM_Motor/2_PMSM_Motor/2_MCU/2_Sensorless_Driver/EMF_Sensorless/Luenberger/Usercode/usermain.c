@@ -10,7 +10,7 @@ enum SYSTEM_SAMPLE_STATE
     SAMPLE_RUN   // 采样运行
 };
 enum SYSTEM_SAMPLE_STATE system_sample_state = SAMPLE_INIT; // 系统采样状态
-const float system_sample_time = 1e-4;                      // 系统运行频率 10kHz(PWM 40kHz)
+const float system_sample_time = 2e-4;                      // 系统运行频率 10kHz(PWM 40kHz)
 uint8_t system_enable = 0;                                  // 系统使能标志位
 uint8_t system_print = 0;                                   // 系统打印标志位
 

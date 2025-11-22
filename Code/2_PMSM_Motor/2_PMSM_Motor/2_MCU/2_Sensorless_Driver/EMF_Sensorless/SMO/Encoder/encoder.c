@@ -40,7 +40,7 @@ void Encoder_Get_Angle_Speed(Encoder_t *encoder)
         encoder->encoder_theta_diff = encoder->encoder_theta_diff + 2 * M_PI;
     }
     float speed;
-    speed                       = encoder->encoder_theta_diff * 10000.0f;
+    speed                       = encoder->encoder_theta_diff / (2e-4);
     encoder->last_encoder_theta = encoder->curr_encoder_theta;
     encoder->encoder_speed      = 0.4f * speed + 0.6f * encoder->encoder_speed; // 一阶低通滤波
 }

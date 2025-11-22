@@ -10,7 +10,7 @@ enum SYSTEM_SAMPLE_STATE
     SAMPLE_RUN   // 采样运行
 };
 enum SYSTEM_SAMPLE_STATE system_sample_state = SAMPLE_INIT; // 系统采样状态
-const float system_sample_time = 1e-4;                      // 系统运行频率 10kHz(PWM 40kHz)
+const float system_sample_time = 2e-4;                      // 系统运行频率 10kHz(PWM 40kHz)
 uint8_t system_enable = 0;                                  // 系统使能标志位
 uint8_t system_print = 0;                                   // 系统打印标志位
 
@@ -51,7 +51,7 @@ void usermain()
     LPF_Init(&i_alpha_lpf, 100, system_sample_time);
     LPF_Init(&i_beta_lpf, 100, system_sample_time);
     // 非线性磁链观测器初始化
-    Nonlinear_Observer_Init(&non_obs, 10000000, 10000, 20000, 10, system_sample_time);
+    Nonlinear_Observer_Init(&non_obs, 10000000, 0.00015, 10, 20, 10, system_sample_time);
     // 编码器初始化
     Encoder_Init(&encoder, POLE_PAIRS, ENCODER_DIRECT, ENCODER_OFFSET);
     // 电流采样校准
@@ -89,9 +89,6 @@ void usermain()
             break;
         case 4:
             printf("x:%.4f,%.4f\r\n", non_obs.x1, non_obs.x2);
-            break;
-        case 5:
-            printf("x:%.4f,%.4f\r\n", non_obs.flux_hat.alpha, non_obs.flux_hat.beta);
             break;
         default:
             break;

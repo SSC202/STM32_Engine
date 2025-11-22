@@ -14,7 +14,7 @@ void Encoder_Init(Encoder_t *encoder, uint8_t pole_pairs, int encoder_direct, fl
 {
     MT6701_Init();
 
-    encoder->pole_pairs     = pole_pairs;
+    encoder->pole_pairs = pole_pairs;
     encoder->encoder_direct = encoder_direct;
     encoder->encoder_offset = offset;
 }
@@ -25,22 +25,24 @@ void Encoder_Init(Encoder_t *encoder, uint8_t pole_pairs, int encoder_direct, fl
  */
 void Encoder_Get_Angle_Speed(Encoder_t *encoder)
 {
- 
     float theta;
 
     MT6701_Get_Angle(&theta);
-	
+
     encoder->curr_encoder_theta = theta;
-    encoder->electric_theta     = normalize((encoder->pole_pairs * encoder->encoder_direct), encoder->curr_encoder_theta, encoder->encoder_offset);
+    encoder->electric_theta = normalize((encoder->pole_pairs * encoder->encoder_direct), encoder->curr_encoder_theta, encoder->encoder_offset);
     // 差分法计算速度 / 累积角度计算
     encoder->encoder_theta_diff = encoder->curr_encoder_theta - encoder->last_encoder_theta;
-    if (encoder->encoder_theta_diff > M_PI) {
+    if (encoder->encoder_theta_diff > M_PI)
+    {
         encoder->encoder_theta_diff = encoder->encoder_theta_diff - 2 * M_PI;
-    } else if (encoder->encoder_theta_diff < -M_PI) {
+    }
+    else if (encoder->encoder_theta_diff < -M_PI)
+    {
         encoder->encoder_theta_diff = encoder->encoder_theta_diff + 2 * M_PI;
     }
     float speed;
-    speed                       = encoder->encoder_theta_diff * 10000.0f;
+    speed = encoder->encoder_theta_diff / ((float)(2e-4));
     encoder->last_encoder_theta = encoder->curr_encoder_theta;
-    encoder->encoder_speed      = 0.4f * speed + 0.6f * encoder->encoder_speed; // 一阶低通滤波
+    encoder->encoder_speed = 0.4f * speed + 0.6f * encoder->encoder_speed; // 一阶低通滤波
 }

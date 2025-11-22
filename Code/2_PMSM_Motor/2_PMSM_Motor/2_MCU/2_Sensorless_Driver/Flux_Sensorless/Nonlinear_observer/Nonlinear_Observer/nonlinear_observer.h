@@ -17,8 +17,8 @@ typedef struct
     uint8_t enable; // 算法使能
 
     // 临时变量
-    float x1;              // x1 观测值
-    float x2;              // x2 观测值
+    float x1; // x1 观测值
+    float x2; // x2 观测值
 
     // 输出参数
     float theta_obs; // 估计角度
@@ -32,13 +32,14 @@ typedef struct
 
     // 初始化
     float gamma;       // 磁链观测器增益
+    float flux;        // 磁链值
     float sample_time; // 采样时间
     PID_t pll;         // 锁相环
     LPF_t speed_lpf;   // 电角速度低通滤波器
 
 } Nonlinear_Observer_TypeDef;
 
-void Nonlinear_Observer_Init(Nonlinear_Observer_TypeDef *lun, float gamma, float pll_kp, float pll_ki, float fc, float sample_time);
+void Nonlinear_Observer_Init(Nonlinear_Observer_TypeDef *lun, float gamma, float flux, float pll_kp, float pll_ki, float fc, float sample_time);
 void Nonlinear_Observer_Update(Nonlinear_Observer_TypeDef *obs);
 
 #endif

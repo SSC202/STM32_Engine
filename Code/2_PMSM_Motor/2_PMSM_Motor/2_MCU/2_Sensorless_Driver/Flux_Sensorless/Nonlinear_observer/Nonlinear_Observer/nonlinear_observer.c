@@ -27,7 +27,7 @@ void Nonlinear_Observer_Update(Nonlinear_Observer_TypeDef *obs)
     if (obs->enable != 0)
     {
         eta = eta1 * eta1 + eta2 * eta2;
-        eta_err = Flux_f * Flux_f - eta;
+        eta_err = obs->flux * obs->flux - eta;
     }
     else
     {
@@ -55,8 +55,8 @@ void Nonlinear_Observer_Update(Nonlinear_Observer_TypeDef *obs)
     // 2. 锁相环获取电角速度和电角度
     float flux_sig;
 
-    float flux_alpha = (obs->x1 - Ls * obs->i.alpha) / Flux_f;
-    float flux_beta = (obs->x2 - Ls * obs->i.beta) / Flux_f;
+    float flux_alpha = (obs->x1 - Ls * obs->i.alpha) / obs->flux;
+    float flux_beta = (obs->x2 - Ls * obs->i.beta) / obs->flux;
 
     flux_sig = -flux_alpha * sinf(obs->theta_obs) + flux_beta * cosf(obs->theta_obs);
 
